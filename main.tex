@@ -3,7 +3,7 @@
 
 \usepackage[colorlinks=false]{hyperref} 
 
-\usepackage{amsmath}
+\usepackage[fleqn]{amsmath}
 \usepackage{mathtools}
 \usepackage{amsfonts}
 \usepackage{multirow}
@@ -15,7 +15,7 @@
 \usepackage{booktabs}
 \usepackage[nottoc,numbib]{tocbibind}
 
-
+\numberwithin{equation}{section}
 
 \usepackage{placeins}
 \usepackage{graphicx}
@@ -27,7 +27,7 @@
 
 \usepackage[toc,page]{appendix}
 
-\usepackage[backend=biber, style=numeric, sorting=none, giveninits=true]{biblatex}
+\usepackage[backend=biber, style=numeric, sorting=none, uniquename=init, giveninits=true, url=false]{biblatex}
 \addbibresource{references.bib}
 \setcounter{biburlnumpenalty}{100}
 \setcounter{biburlucpenalty}{100}
@@ -67,7 +67,7 @@
 \input{Preconditioning}
 \input{NumericalSimulations}
 \input{Discussion}
-\printbibliography
-\include{Appendix}
+\input{Appendix}
+\printbibliography[heading=bibintoc]
 \end{document}
 from 
