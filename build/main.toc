@@ -1,0 +1,53 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{List of Figures}{5}{section*.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{List of Tables}{5}{section*.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Introduction}{6}{section.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}Method of Regularized Stokeslets}{6}{section.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1}Stokes flow}{6}{subsection.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2}Regularising the Stokeslet}{6}{subsection.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.2.1}Derivation of the Stokeslet}{7}{subsubsection.2.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.2.2}Specific Blob}{9}{subsubsection.2.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Nearest}{10}{section.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}Kernel-Independent Fast Multipole Method}{10}{section.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.1}Hierarchical decomposition of the computational domain}{10}{subsection.4.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2}Equivalent surfaces/coronas}{10}{subsection.4.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.3}Numerical approximation of the force densities}{10}{subsection.4.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4}Evaluation}{10}{subsection.4.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.5}FFT acceleration}{10}{subsection.4.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.6}Comparison of KIFMM method vs Direct solver}{10}{subsection.4.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Preconditioning}{10}{section.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6}Numerical Simulations}{10}{section.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.1}Cilia}{10}{subsection.6.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.2}Sperm}{10}{subsection.6.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7}Results}{10}{section.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {8}Discussion}{10}{section.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A}Pseudocode}{10}{appendix.A}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.1}Upwards pass}{10}{subsection.A.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.2}Downward pass}{10}{subsection.A.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{References}{10}{section*.6}%

@@ -1,0 +1,558 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{Trombley2019BasicFlows}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=150b0940baf32e0f0823f9c5cc758088}{%
+           family={Trombley},
+           familyi={T\bibinitperiod},
+           given={Christopher\bibnamedelima I.},
+           giveni={C\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8bcac67cb6ac1b17e28562fbe986ca07}{%
+           family={Ekiel-Jeżewska},
+           familyi={E\bibinithyphendelim J\bibinitperiod},
+           given={Maria\bibnamedelima L.},
+           giveni={M\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer, Cham}%
+      }
+      \strng{namehash}{2a55688699c7d2668d87ac0a1e6e7dd7}
+      \strng{fullhash}{2a55688699c7d2668d87ac0a1e6e7dd7}
+      \strng{bibnamehash}{2a55688699c7d2668d87ac0a1e6e7dd7}
+      \strng{authorbibnamehash}{2a55688699c7d2668d87ac0a1e6e7dd7}
+      \strng{authornamehash}{2a55688699c7d2668d87ac0a1e6e7dd7}
+      \strng{authorfullhash}{2a55688699c7d2668d87ac0a1e6e7dd7}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{Basic Concepts of Stokes Flows}}
+      \field{year}{2019}
+      \field{pages}{35\bibrangedash 50}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1007/978-3-030-23370-9{\_}2
+      \endverb
+      \verb{urlraw}
+      \verb https://link.springer.com/chapter/10.1007/978-3-030-23370-9_2
+      \endverb
+      \verb{url}
+      \verb https://link.springer.com/chapter/10.1007/978-3-030-23370-9_2
+      \endverb
+    \endentry
+    \entry{Blake1972AOrganisms}{article}{}
+      \name{author}{1}{}{%
+        {{un=1,uniquepart=given,hash=2d6a46447f93c627b4e8b886d766d110}{%
+           family={Blake},
+           familyi={B\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod},
+           givenun=1}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{2d6a46447f93c627b4e8b886d766d110}
+      \strng{fullhash}{2d6a46447f93c627b4e8b886d766d110}
+      \strng{bibnamehash}{2d6a46447f93c627b4e8b886d766d110}
+      \strng{authorbibnamehash}{2d6a46447f93c627b4e8b886d766d110}
+      \strng{authornamehash}{2d6a46447f93c627b4e8b886d766d110}
+      \strng{authorfullhash}{2d6a46447f93c627b4e8b886d766d110}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1469-7645}
+      \field{journaltitle}{Journal of Fluid Mechanics}
+      \field{number}{1}
+      \field{title}{{A model for the micro-structure in ciliated organisms}}
+      \field{volume}{55}
+      \field{year}{1972}
+      \field{pages}{1\bibrangedash 23}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 10.1017/S0022112072001612
+      \endverb
+      \verb{urlraw}
+      \verb https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/model-for-the-microstructure-in-ciliated-organisms/28F71B1A944CB4FE3578BADD0A4E83AC
+      \endverb
+      \verb{url}
+      \verb https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/model-for-the-microstructure-in-ciliated-organisms/28F71B1A944CB4FE3578BADD0A4E83AC
+      \endverb
+    \endentry
+    \entry{Higdon1979APropulsion}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=24f6e5d0650f602900f673946d7c576f}{%
+           family={Higdon},
+           familyi={H\bibinitperiod},
+           given={J.\bibnamedelimi J.L.},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{24f6e5d0650f602900f673946d7c576f}
+      \strng{fullhash}{24f6e5d0650f602900f673946d7c576f}
+      \strng{bibnamehash}{24f6e5d0650f602900f673946d7c576f}
+      \strng{authorbibnamehash}{24f6e5d0650f602900f673946d7c576f}
+      \strng{authornamehash}{24f6e5d0650f602900f673946d7c576f}
+      \strng{authorfullhash}{24f6e5d0650f602900f673946d7c576f}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1469-7645}
+      \field{journaltitle}{Journal of Fluid Mechanics}
+      \field{number}{4}
+      \field{title}{{A hydrodynamic analysis of flagellar propulsion}}
+      \field{volume}{90}
+      \field{year}{1979}
+      \field{pages}{685\bibrangedash 711}
+      \range{pages}{27}
+      \verb{doi}
+      \verb 10.1017/S0022112079002482
+      \endverb
+      \verb{urlraw}
+      \verb https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/hydrodynamic-analysis-of-flagellar-propulsion/DDF73BA47AAC5747AA410CDF84B39ACD
+      \endverb
+      \verb{url}
+      \verb https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/hydrodynamic-analysis-of-flagellar-propulsion/DDF73BA47AAC5747AA410CDF84B39ACD
+      \endverb
+    \endentry
+    \entry{Smith2009MathematicalFluids}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=19ac2ba23df7982b48533342aa3ea75e}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={D.\bibnamedelimi J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c374bde1848f9040ae70fa8b49c1c511}{%
+           family={Gaffney},
+           familyi={G\bibinitperiod},
+           given={E.\bibnamedelimi A.},
+           giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=1,uniquepart=given,hash=1c99995c753900532fb241b048045917}{%
+           family={Blake},
+           familyi={B\bibinitperiod},
+           given={J.\bibnamedelimi R.},
+           giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=1}}%
+      }
+      \list{publisher}{1}{%
+        {The Royal Society Publishing}%
+      }
+      \strng{namehash}{6712dc1e388bb51aef2d4ad6fef56780}
+      \strng{fullhash}{6712dc1e388bb51aef2d4ad6fef56780}
+      \strng{bibnamehash}{6712dc1e388bb51aef2d4ad6fef56780}
+      \strng{authorbibnamehash}{6712dc1e388bb51aef2d4ad6fef56780}
+      \strng{authornamehash}{6712dc1e388bb51aef2d4ad6fef56780}
+      \strng{authorfullhash}{6712dc1e388bb51aef2d4ad6fef56780}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{14712946}
+      \field{journaltitle}{Proceedings of the Royal Society A: Mathematical, Physical and Engineering Sciences}
+      \field{month}{8}
+      \field{number}{2108}
+      \field{title}{{Mathematical modelling of cilia-driven transport of biological fluids}}
+      \field{volume}{465}
+      \field{year}{2009}
+      \field{pages}{2417\bibrangedash 2439}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 10.1098/rspa.2009.0018
+      \endverb
+      \verb{urlraw}
+      \verb https://royalsocietypublishing.org/doi/abs/10.1098/rspa.2009.0018
+      \endverb
+      \verb{url}
+      \verb https://royalsocietypublishing.org/doi/abs/10.1098/rspa.2009.0018
+      \endverb
+      \keyw{Cilia,Mucus,Slender-body theory,Stokeslet,Transport,Viscoelastic}
+    \endentry
+    \entry{Liron1978StokesPipe}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=5ec82c7447e37bfaae7a3ad2fbcbaf56}{%
+           family={Liron},
+           familyi={L\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a0bbf7488e99e0ca4d5da007502547d6}{%
+           family={Shahar},
+           familyi={S\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{76d4855e0890e0668fef7bf953d0b507}
+      \strng{fullhash}{76d4855e0890e0668fef7bf953d0b507}
+      \strng{bibnamehash}{76d4855e0890e0668fef7bf953d0b507}
+      \strng{authorbibnamehash}{76d4855e0890e0668fef7bf953d0b507}
+      \strng{authornamehash}{76d4855e0890e0668fef7bf953d0b507}
+      \strng{authorfullhash}{76d4855e0890e0668fef7bf953d0b507}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1469-7645}
+      \field{journaltitle}{Journal of Fluid Mechanics}
+      \field{number}{4}
+      \field{title}{{Stokes flow due to a Stokeslet in a pipe}}
+      \field{volume}{86}
+      \field{year}{1978}
+      \field{pages}{727\bibrangedash 744}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1017/S0022112078001366
+      \endverb
+      \verb{urlraw}
+      \verb https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/stokes-flow-due-to-a-stokeslet-in-a-pipe/80336A7354A9F625C47822BFBA3BABDE
+      \endverb
+      \verb{url}
+      \verb https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/stokes-flow-due-to-a-stokeslet-in-a-pipe/80336A7354A9F625C47822BFBA3BABDE
+      \endverb
+    \endentry
+    \entry{Liron1976StokesPlates}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=5ec82c7447e37bfaae7a3ad2fbcbaf56}{%
+           family={Liron},
+           familyi={L\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a2190e084f93f0a829eeebbb3129385d}{%
+           family={Mochon},
+           familyi={M\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{e6215b4c8cfbfbc17fa787efb24af55d}
+      \strng{fullhash}{e6215b4c8cfbfbc17fa787efb24af55d}
+      \strng{bibnamehash}{e6215b4c8cfbfbc17fa787efb24af55d}
+      \strng{authorbibnamehash}{e6215b4c8cfbfbc17fa787efb24af55d}
+      \strng{authornamehash}{e6215b4c8cfbfbc17fa787efb24af55d}
+      \strng{authorfullhash}{e6215b4c8cfbfbc17fa787efb24af55d}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1573-2703}
+      \field{journaltitle}{Journal of Engineering Mathematics 1976 10:4}
+      \field{month}{10}
+      \field{number}{4}
+      \field{title}{{Stokes flow for a stokeslet between two parallel flat plates}}
+      \field{volume}{10}
+      \field{year}{1976}
+      \field{pages}{287\bibrangedash 303}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1007/BF01535565
+      \endverb
+      \verb{urlraw}
+      \verb https://link.springer.com/article/10.1007/BF01535565
+      \endverb
+      \verb{url}
+      \verb https://link.springer.com/article/10.1007/BF01535565
+      \endverb
+      \keyw{Applications of Mathematics,Computational Mathematics and Numerical Analysis,Mathematical Modeling and Industrial Mathematics,Mathematical and Computational Engineering,Theoretical and Applied Mechanics}
+    \endentry
+    \entry{Hancock1953TheLiquids}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=04ace67d07ca7fec083ad9a2cb83439b}{%
+           family={Hancock},
+           familyi={H\bibinitperiod},
+           given={G.\bibnamedelimi J.},
+           giveni={G\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {The Royal Society London}%
+      }
+      \strng{namehash}{04ace67d07ca7fec083ad9a2cb83439b}
+      \strng{fullhash}{04ace67d07ca7fec083ad9a2cb83439b}
+      \strng{bibnamehash}{04ace67d07ca7fec083ad9a2cb83439b}
+      \strng{authorbibnamehash}{04ace67d07ca7fec083ad9a2cb83439b}
+      \strng{authornamehash}{04ace67d07ca7fec083ad9a2cb83439b}
+      \strng{authorfullhash}{04ace67d07ca7fec083ad9a2cb83439b}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0080-4630}
+      \field{journaltitle}{Proceedings of the Royal Society of London. Series A. Mathematical and Physical Sciences}
+      \field{month}{3}
+      \field{number}{1128}
+      \field{title}{{The self-propulsion of microscopic organisms through liquids}}
+      \field{volume}{217}
+      \field{year}{1953}
+      \field{pages}{96\bibrangedash 121}
+      \range{pages}{26}
+      \verb{doi}
+      \verb 10.1098/rspa.1953.0048
+      \endverb
+      \verb{urlraw}
+      \verb https://royalsocietypublishing.org/doi/abs/10.1098/rspa.1953.0048
+      \endverb
+      \verb{url}
+      \verb https://royalsocietypublishing.org/doi/abs/10.1098/rspa.1953.0048
+      \endverb
+    \endentry
+    \entry{Batchelor2000AnDynamics}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=c9981a4cb1fa67e9638e3e167ac5cb2b}{%
+           family={Batchelor},
+           familyi={B\bibinitperiod},
+           given={G.\bibnamedelimi K.},
+           giveni={G\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{c9981a4cb1fa67e9638e3e167ac5cb2b}
+      \strng{fullhash}{c9981a4cb1fa67e9638e3e167ac5cb2b}
+      \strng{bibnamehash}{c9981a4cb1fa67e9638e3e167ac5cb2b}
+      \strng{authorbibnamehash}{c9981a4cb1fa67e9638e3e167ac5cb2b}
+      \strng{authornamehash}{c9981a4cb1fa67e9638e3e167ac5cb2b}
+      \strng{authorfullhash}{c9981a4cb1fa67e9638e3e167ac5cb2b}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9780521663960}
+      \field{journaltitle}{An Introduction to Fluid Dynamics}
+      \field{month}{2}
+      \field{title}{{An Introduction to Fluid Dynamics}}
+      \field{year}{2000}
+      \verb{doi}
+      \verb 10.1017/CBO9780511800955
+      \endverb
+      \verb{urlraw}
+      \verb https://www.cambridge.org/core/books/an-introduction-to-fluid-dynamics/18AA1576B9C579CE25621E80F9266993
+      \endverb
+      \verb{url}
+      \verb https://www.cambridge.org/core/books/an-introduction-to-fluid-dynamics/18AA1576B9C579CE25621E80F9266993
+      \endverb
+    \endentry
+    \entry{Pozrikidis1992BoundaryFlow}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=9000772132dac88fd7f85b70480fc944}{%
+           family={Pozrikidis},
+           familyi={P\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{9000772132dac88fd7f85b70480fc944}
+      \strng{fullhash}{9000772132dac88fd7f85b70480fc944}
+      \strng{bibnamehash}{9000772132dac88fd7f85b70480fc944}
+      \strng{authorbibnamehash}{9000772132dac88fd7f85b70480fc944}
+      \strng{authornamehash}{9000772132dac88fd7f85b70480fc944}
+      \strng{authorfullhash}{9000772132dac88fd7f85b70480fc944}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Boundary Integral and Singularity Methods for Linearized Viscous Flow}
+      \field{isbn}{9780521406932}
+      \field{month}{2}
+      \field{title}{{Boundary Integral and Singularity Methods for Linearized Viscous Flow}}
+      \field{year}{1992}
+      \verb{doi}
+      \verb 10.1017/cbo9780511624124
+      \endverb
+      \verb{urlraw}
+      \verb https://www-cambridge-org.ezproxye.bham.ac.uk/core/books/boundary-integral-and-singularity-methods-for-linearized-viscous-flow/219AA1CE5DE05AE67096EA59692E25B3
+      \endverb
+      \verb{url}
+      \verb https://www-cambridge-org.ezproxye.bham.ac.uk/core/books/boundary-integral-and-singularity-methods-for-linearized-viscous-flow/219AA1CE5DE05AE67096EA59692E25B3
+      \endverb
+    \endentry
+    \entry{Cortez2005}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=ad8e4bc92476f579668fab49a0ac7cb0}{%
+           family={Cortez},
+           familyi={C\bibinitperiod},
+           given={Ricardo},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e8476529a2589fdd661a1fbc49bd3a2a}{%
+           family={Fauci},
+           familyi={F\bibinitperiod},
+           given={Lisa},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=653ee397da18cdd632749e924d264909}{%
+           family={Medovikov},
+           familyi={M\bibinitperiod},
+           given={Alexei},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {American Institute of PhysicsAIP}%
+      }
+      \strng{namehash}{793b1dde03565fd65077541fbc374cbe}
+      \strng{fullhash}{793b1dde03565fd65077541fbc374cbe}
+      \strng{bibnamehash}{793b1dde03565fd65077541fbc374cbe}
+      \strng{authorbibnamehash}{793b1dde03565fd65077541fbc374cbe}
+      \strng{authornamehash}{793b1dde03565fd65077541fbc374cbe}
+      \strng{authorfullhash}{793b1dde03565fd65077541fbc374cbe}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1070-6631}
+      \field{journaltitle}{Physics of Fluids}
+      \field{month}{2}
+      \field{number}{3}
+      \field{title}{{The method of regularized Stokeslets in three dimensions: Analysis, validation, and application to helical swimming}}
+      \field{volume}{17}
+      \field{year}{2005}
+      \field{pages}{031504}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1063/1.1830486
+      \endverb
+      \verb{urlraw}
+      \verb https://aip.scitation.org/doi/abs/10.1063/1.1830486
+      \endverb
+      \verb{url}
+      \verb https://aip.scitation.org/doi/abs/10.1063/1.1830486
+      \endverb
+      \keyw{biological fluid dynamics,cell motility,microorganisms,non-Newtonian fluids,pipe flow,rotational flow}
+    \endentry
+    \entry{Olson2013ModelingFormulation}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=a9b3dd2f8981d4345077f1693ef09fe3}{%
+           family={Olson},
+           familyi={O\bibinitperiod},
+           given={Sarah\bibnamedelima D.},
+           giveni={S\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8e62936db4f8c3459ec5718435b0d065}{%
+           family={Lim},
+           familyi={L\bibinitperiod},
+           given={Sookkyung},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ad8e4bc92476f579668fab49a0ac7cb0}{%
+           family={Cortez},
+           familyi={C\bibinitperiod},
+           given={Ricardo},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Academic Press}%
+      }
+      \strng{namehash}{6d0063d5465bc75b02cbf5a1d2664339}
+      \strng{fullhash}{6d0063d5465bc75b02cbf5a1d2664339}
+      \strng{bibnamehash}{6d0063d5465bc75b02cbf5a1d2664339}
+      \strng{authorbibnamehash}{6d0063d5465bc75b02cbf5a1d2664339}
+      \strng{authornamehash}{6d0063d5465bc75b02cbf5a1d2664339}
+      \strng{authorfullhash}{6d0063d5465bc75b02cbf5a1d2664339}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0021-9991}
+      \field{journaltitle}{Journal of Computational Physics}
+      \field{month}{4}
+      \field{title}{{Modeling the dynamics of an elastic rod with intrinsic curvature and twist using a regularized Stokes formulation}}
+      \field{volume}{238}
+      \field{year}{2013}
+      \field{pages}{169\bibrangedash 187}
+      \range{pages}{19}
+      \verb{doi}
+      \verb 10.1016/J.JCP.2012.12.026
+      \endverb
+      \keyw{Fluid-structure interaction,Immersed boundary method,Kirchhoff rod theory,Regularized Stokeslets}
+    \endentry
+    \entry{Nguyen2014ReductionFlow}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=348720e0e9646dab5e081b9e4c0fa0fe}{%
+           family={Nguyen},
+           familyi={N\bibinitperiod},
+           given={Hoang\bibnamedelima Ngan},
+           giveni={H\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ad8e4bc92476f579668fab49a0ac7cb0}{%
+           family={Cortez},
+           familyi={C\bibinitperiod},
+           given={Ricardo},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Global Science Press}%
+      }
+      \strng{namehash}{df0d1004d13c82dbd4f948ce6f16f5b6}
+      \strng{fullhash}{df0d1004d13c82dbd4f948ce6f16f5b6}
+      \strng{bibnamehash}{df0d1004d13c82dbd4f948ce6f16f5b6}
+      \strng{authorbibnamehash}{df0d1004d13c82dbd4f948ce6f16f5b6}
+      \strng{authornamehash}{df0d1004d13c82dbd4f948ce6f16f5b6}
+      \strng{authorfullhash}{df0d1004d13c82dbd4f948ce6f16f5b6}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{19917120}
+      \field{journaltitle}{Communications in Computational Physics}
+      \field{number}{1}
+      \field{title}{{Reduction of the regularization error of the method of regularized stokeslets for a rigid object immersed in a three-dimensional stokes flow}}
+      \field{volume}{15}
+      \field{year}{2014}
+      \field{pages}{126\bibrangedash 152}
+      \range{pages}{27}
+      \verb{doi}
+      \verb 10.4208/CICP.021112.290413A
+      \endverb
+      \verb{urlraw}
+      \verb https://www.researchgate.net/publication/279897586_Reduction_of_the_Regularization_Error_of_the_Method_of_Regularized_Stokeslets_for_a_Rigid_Object_Immersed_in_a_Three-Dimensional_Stokes_Flow
+      \endverb
+      \verb{url}
+      \verb https://www.researchgate.net/publication/279897586_Reduction_of_the_Regularization_Error_of_the_Method_of_Regularized_Stokeslets_for_a_Rigid_Object_Immersed_in_a_Three-Dimensional_Stokes_Flow
+      \endverb
+      \keyw{Boundary integral equation,Nearly singular integral,Regularized Stokeslet,Stokes flow}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
