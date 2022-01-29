@@ -1,0 +1,6 @@
+PWD C:/Users/Sam/OneDrive - University of Birmingham/Uni/Disitation/Latex
+INPUT c:/texlive/2021/texmf.cnf
+INPUT c:/texlive/2021/texmf-dist/web2c/texmf.cnf
+INPUT c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT KIFMM.tex
+OUTPUT build/KIFMM.log
