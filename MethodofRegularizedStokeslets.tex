@@ -1,8 +1,8 @@
 \section{Method of Regularized Stokeslets}
 \subsection{Stokes flow}
-When we look at many physical systems, particularly in biology, we find that the inertial forces withing the fluid are small in comparison to that of the viscous terms. In these cases we can take the limit of the Navier-Stokes equation (\cref{eq:NavierStokes})where $R e=\rho u L/\mu \to 0 $ \cite{Trombley2019BasicFlows}. Within biological system we find that these cases occur when either we are looking at highly viscous fluids where $\mu$ is large or at small length scales where $L$ (The typical scale of the system) is very small such as when looking looking at cells, microorganism or flows around small capillaries \cite{Blake1972AOrganisms, Higdon1979APropulsion, Smith2009MathematicalFluids}. As well as biological models we can use it in more general fluid dynamics, where we have stokes flow, with complex boundaries \cite{Liron1978StokesPipe, Liron1976StokesPlates}.
+When we look at many physical systems, particularly in biology, we find that the inertial forces within the fluid are small in comparison to that of the viscous terms. In these cases we can take the limit of the Navier-Stokes equation (\cref{eq:NavierStokes})where $R e=\rho u L/\mu \to 0 $ \cite{Trombley2019BasicFlows}. Within biological systems, we find that these cases occur when either we are looking at highly viscous fluids where $\mu$ is large or at small length scales where $L$ (The typical scale of the system) is very small such as when looking at cells, microorganism or flows around small capillaries \cite{Blake1972AOrganisms, Higdon1979APropulsion, Smith2009MathematicalFluids}. As well as biological models we can use it in more general fluid dynamics, where we have stokes flow, with complex boundaries \cite{Liron1978StokesPipe, Liron1976StokesPlates}.
 
-The steady state Stokes equations in two or three dimensions are
+The steady-state Stokes equations in two or three dimensions are
 \begin{subequations}
 \label{eq:StokesFlow}
 \begin{align}
@@ -12,7 +12,7 @@ The steady state Stokes equations in two or three dimensions are
 \end{subequations}
 where $\mathbf{u}$ is the velocity of the fluid, $\mathbf{F}$ is the external force, $p$ is the pressure and $\mu$ is the fluid viscosity.
 We can derive a singular fundamental solution to the Stokes equations which we will call a \textit{Stokeslet}. The Stokeslet represents the solution for the velocity of the fluid given that the external force $\mathbf{F}$ acting on the fluid is concentrated at a single point $\mathbf{F} = \mathbf{f_0}\delta(\mathbf{x})$ \cite{Hancock1953TheLiquids, Batchelor2000AnDynamics, Pozrikidis1992BoundaryFlow}.
-Through Similar methods to that show later for deriving regularized Stokeslet Equation (\cref{eq:regstokeslet2}) we can derive the singular fundamental solutions to the stokes equations as
+Through Similar methods to that shown later for deriving regularized Stokeslet Equation (\cref{eq:regstokeslet2}) we can derive the singular fundamental solutions to the Stokes equations as
 \begin{equation}
 \label{eq:singularsolutions}
 \begin{aligned}
@@ -29,7 +29,7 @@ where $\mathbf{f_{0}}$ is the force per unit area, exerted by the fluid on the s
 
 
 \subsection{Regularising the Stokeslet}
-While the singular Stokeslet provides a useful mechanism to solve boundary integral equations, it relies on the surfaces on which they are concentrated on to be smooth such that the velocity is integrable and the fluid bounded in the neighbourhood of the surface. However if we consider non smooth surfaces or curves instead of surfaces then the resulting equations for velocity become non singular and much harder so work with.
+While the singular Stokeslet provides a useful mechanism to solve boundary integral equations, it relies on the surfaces on which they are concentrated to be smooth such that the velocity is integrable and the fluid bounded in the neighbourhood of the surface. However, if we consider non-smooth surfaces or curves instead of surfaces then the resulting equations for velocity become non-singular and much harder so work with.
 
 \begin{figure}
     \centering
@@ -38,7 +38,7 @@ While the singular Stokeslet provides a useful mechanism to solve boundary integ
     \label{fig:blobfunc}
 \end{figure}
 
-In order to remove these singularities we use a "blob function" which instead of approximating at force at a singular point we instead approximate as a sphere centred at the the same point. While the radius of the sphere is often infinite the blob function decays rapidly away from the centre with the largest contribution obtained in the close vicinity of the centre. We introduce a control parameter $\epsilon$ independent of any discretization which controls the rate of decay. The effect of this control parameter can be seen in Fig.\cref{fig:blobfunc}. In order to obtain similar results to that of the singular solutions we dictate that $\int \phi^\epsilon(r)dr=1$ for all values of $\epsilon$. This allows us to preserve the results obtained for the singular kernels for distances away from the point in which the force is exerted and obtains different results close to the point. In order to retain the singular solution we have that as $\epsilon \to 0$ our blob function must tend to the Dirac delta. For simplicity of the paper and the application to wider range of problems we will only consider spherically symmetric function such as those in \cref{eq:blobfunc,eq:blobfunc2} \cite{Cortez2005,Olson2013ModelingFormulation,Nguyen2014ReductionFlow}.
+In order to remove these singularities, we use a "blob function" which instead of approximating at force at a singular point we instead approximate as a sphere centred at the same point. While the radius of the sphere is often infinite the blob function decays rapidly away from the centre with the largest contribution obtained in the close vicinity of the centre. We introduce a control parameter $\epsilon$ independent of any discretization which controls the rate of decay. The effect of this control parameter can be seen in Fig.\cref{fig:blobfunc}. In order to obtain similar results to that of the singular solutions, we dictate that $\int \phi^\epsilon(r)dr=1$ for all values of $\epsilon$. This allows us to preserve the results obtained for the singular kernels for distances away from the point in which the force is exerted and obtains different results close to the point. In order to retain the singular solution, we have that as $\epsilon \to 0$ our blob function must tend to the Dirac delta. For simplicity of the paper and the application to a wider range of problems, we will only consider spherically symmetric functions such as those in \cref{eq:blobfunc,eq:blobfunc2} \cite{Cortez2005,Olson2013ModelingFormulation,Nguyen2014ReductionFlow}.
 \begin{equation}
 \label{eq:blobfunc}
     \phi^\epsilon(r)= \frac{15 \epsilon^4}{8\pi\left( r^2 +\epsilon^2 \right)^{7/2}}
@@ -48,7 +48,7 @@ In order to remove these singularities we use a "blob function" which instead of
 \label{eq:blobfunc2}
     \psi_{\epsilon}(r)=\frac{15 \epsilon^{6}\left(5-\frac{2 r^{2}}{\epsilon^{2}}\right)}{16 \pi\left(r^{2}+\epsilon^{2}\right)^{9 / 2}} \quad\quad \psi_{\epsilon}(r)=\frac{5 \epsilon^{2}-2 r^{2}}{2 \pi^{3 / 2} \epsilon^{5}} e^{-r^{2} / \epsilon^{2}}
 \end{equation}
-For the derivation of the regularized Stokeslets and all further numerical analysis we will use \cref{eq:blobfunc} due to its popularity in external literature and the simplicity of the kernel it generates.
+For the derivation of the regularized Stokeslets and all further numerical analysis, we will use \cref{eq:blobfunc} due to its popularity in external literature and the simplicity of the kernel it generates.
 
 \subsubsection{Derivation of the Regularized Stokeslet}
 By concentrating the force onto a finite area using the blob function rather than a singular point as with the delta function. We therefore convert the stokes equations given in \cref{eq:StokesFlow} to a new set of equation for which we will derive a set of solutions,
@@ -59,15 +59,14 @@ By concentrating the force onto a finite area using the blob function rather tha
     \nabla \cdot \boldsymbol{u} &= 0 \label{eq:RegStokesFlow2}
 \end{align}
 \end{subequations}
-where $f_0$ is the force per unit area as define in the previous section.
-In order to simplify notation from this point on-wards we will use the Einstein summation convention where repeated indices are summed over. We introduce the regularized Stokeslet function $S^\epsilon(\mathbf{x},\mathbf{x_0})$ which is the Green's function for the velocity $u^\epsilon(\mathbf{x})$. We can now write the solution to \cref{eq:RegStokesFlow} as
+where $f_0$ is the force per unit area as defined in the previous section.
+In order to simplify notation from this point onwards, we will use the Einstein summation convention where repeated indices are summed over. We introduce the regularized Stokeslet function $S^\epsilon(\mathbf{x},\mathbf{x_0})$ which is the Green's function for the velocity $u^\epsilon(\mathbf{x})$. We can now write the solution to \cref{eq:RegStokesFlow} as
 \begin{equation}
 \label{eq:regvelsol}
     u_i(\mathbf{x}) = \frac{1}{8\pi\mu}S^\epsilon_{ij}(\mathbf{x},\mathbf{x_0})f_{0,j}
 \end{equation}
-The pressure and stress tensor associated with that flow can also be also be written as
+The pressure and stress tensor associated with that flow can also be written as
 \begin{equation}
-  \begin
 \label{eq:regpressuresol}
     p(\mathbf{x}) = \frac{1}{8\pi}P^\epsilon_{j}(\mathbf{x},\mathbf{x_0})f_{0,j}
 \end{equation}
@@ -143,7 +142,7 @@ where $r=|\mathbf{x}-\mathbf{x_0}|$. We now substitute \cref{eq:G,eq:B} into \cr
 \end{subequations}
 We can easily check that these provide results consistent with those found by the singular solutions as in the limit $\epsilon \to 0$ we obtain the same results stated in \cref{eq:singularsolutions}.
 
-\subsubsection{Boudnary intergral equations}
+\subsubsection{Boundary integral equations}
 
 The solution to stokes equations
 \begin{equation}
@@ -153,7 +152,7 @@ The solution to stokes equations
       \nabla \cdot \boldsymbol{u} &= 0
 \end{aligned}
 \end{equation}
-and regularized stokes equation
+and regularized Stokes equation
 \begin{equation}
     \label{eq:BIE2}
 \begin{aligned}
@@ -162,9 +161,9 @@ and regularized stokes equation
 \end{aligned}
 \end{equation}
 
-are linked through the cutoff function and obtain the same results in the limit as $\epsilon \to 0$. It is assumed that the regularized solution is a flow generated by a a point force of strength $\mathbf{f_0}$ located at a point $\mathbf{x_0}$ while the non-regularized solution is absent of all forces.
+are linked through the cutoff function and obtain the same results in the limit as $\epsilon \to 0$. It is assumed that the regularized solution is a flow generated by a point force of strength $\mathbf{f_0}$ located at a point $\mathbf{x_0}$ while the non-regularized solution is absent of all forces.
 
-We let D be a solid body and assume the point $\mathbf{x}$ is outside of D. Then we have that ($\mathbf{u},p$) satifies \cref{eq:BIE1} with
+We let D be a solid body and assume the point $\mathbf{x}$ is outside of D. Then we have that ($\mathbf{u},p$) satisfies \cref{eq:BIE1} with
 \begin{equation*}
 \sigma_{ij}(\mathbf{x}) = -\delta_{ik}p(\mathbf{x}) + \mu\left( \frac{\partial u_i}{\partial x_k} + \frac{\partial u_k}{\partial x_i} \right)
 \end{equation*}
@@ -181,31 +180,31 @@ We note that $\partial \sigma^\epsilon_{ik}(\mathbf{x})/ \partial x_k = -f_{0_i}
   u_j f_{0,j}\psi^\epsilon(\mathbf{x}-\mathbf{x_0})
 \end{aligned}
 \end{equation*}
-where we have replaced the summantion over i with a summation over j without affecting the result.
-We now substitute in \cref{eq:regstresssol, eq:regvelsol} to obtain
+where we have replaced the summation over $i$ with a summation over $j$ without affecting the result.
+We now substitute in \cref{eq:regstresssol,eq:regvelsol} to obtain
 \begin{equation*}
   \frac{1}{8\pi\mu}\frac{\partial}{\partial x_k}(S^\epsilon_{ij}f_{0,j}\sigma_{ik} - \mu u_i T^\epsilon_{ijk}f_{0,j}) = u_j f_{0,j}\psi_\epsilon(\mathbf{x}-\mathbf{x_0})
 \end{equation*}
-as $f_{0,j}$ is constant we can take it out of the derivative on the left hand side and note that it is now arbitary and as such $\mathbf{u}$ and $p$ obay the relation
+as $f_{0,j}$ is constant we can take it out of the derivative on the left-hand side and note that it is now arbitrary and as such $\mathbf{u}$ and $p$ obay the relation
 \begin{equation}
   \label{eq:reciprocalrelation}
   \frac{1}{8\pi\mu}\frac{\partial}{\partial x_k}(S^\epsilon_{ij}\sigma_{ik} - \mu u_i T^\epsilon_{ijk}) = u_j\psi_\epsilon(\mathbf{x}-\mathbf{x_0})
 \end{equation}
-Suppose we now let $S$ be the area between the solid body $D$ and a sphere with radius such that all of $D$ is contained within. We will denote $\partial S$ to the the surface of $S$, note that this contains the surface of the sphere and $\partial D$. If we now intergrate the above equation over $S$ then we get that
+Suppose we now let $S$ be the area between the solid body $D$ and a sphere with a radius such that all of $D$ is contained within. We will denote $\partial S$ to the surface of $S$, note that this contains the surface of the sphere and $\partial D$. If we now integrate the above equation over $S$ then we get that
 \begin{equation*}
   \int_{S} \left[\frac{1}{8\pi\mu}\frac{\partial}{\partial x_k}(S^\epsilon_{ij}\sigma_{ik} - \mu u_i T^\epsilon_{ijk})\right] dV(\mathbf{x}) = \int_{S} u_j\psi_\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
 \end{equation*}
-Taking the divergece theorem of the Left hand side we get that
+Taking the divergence theorem of the Left-hand side we get that
 \begin{equation*}
   \frac{1}{8\pi\mu}\int_{\partial S} \left[S^\epsilon_{ij}\sigma_{ik} - \mu u_i T^\epsilon_{ijk}\right]n_k ds(\mathbf{x}) = \int_{S} u_j\psi_\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
 \end{equation*}
-where $\mathbf{n}$ is the outwards unit normal vector of the surface of $S$. If we take the limit as the radius of the sphere tends to infinty, we find that the only contributions come from $\partial D$. We will introduce the traction on the surface of the sphere as $f_i = -\sigma_{ik}n_k$ and therefore we obtain that
+where $\mathbf{n}$ is the outwards unit normal vector of the surface of $S$. If we take the limit as the radius of the sphere tends to infinity, we find that the only contributions come from $\partial D$. We will introduce the traction on the surface of the sphere as $f_i = -\sigma_{ik}n_k$ and therefore we obtain that
 \begin{equation}
   \label{eq:BIE3}
     \frac{1}{8\pi\mu}\int_{\partial D} S^\epsilon_{ij}f_i ds(\mathbf{x}) - \frac{1}{8\pi}\int_{\partial D} u_i T^\epsilon_{ijk}n_k ds(\mathbf{x}) = \int_{S} u_j\psi_\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
 \end{equation}
 
-Concidering the fluid inside of the solid body $D$ we relise that the velocity must satify the zero-deformation condition
+Considering the fluid inside of the solid body $D$ we realise that the velocity must satisfy the zero-deformation condition
 \begin{equation*}
   \frac{\partial u_i}{\partial k} + \frac{\partial u_k}{\partial i} = 0
 \end{equation*}
@@ -213,20 +212,57 @@ This gives us that $\sigma_{ik} = -p\delta_{ik}$ so we have that for each j
 \begin{equation*}
   \int_{D} \frac{\partial}{\partial x_k}\left[S^\epsilon_{ij}\sigma_{ik}\right]dV(\mathbf{X}) = -p\int_{D} \frac{\partial}{\partial x_k}\left[S^\epsilon_{kj}\right]dV(\mathbf{X}) = 0
 \end{equation*}
-from the incompressability condition \cref{eq:regcondition2}. If we now intergrate \cref{eq:reciprocalrelation} over $D$ instead of $S$ and use the above intergal we have that
+from the incompressibility condition \cref{eq:regcondition2}. If we now integrate \cref{eq:reciprocalrelation} over $D$ instead of $S$ and use the above integral we have that
 \begin{equation}
   \label{eq:BIE4}
 \frac{1}{8\pi}\int_{\partial D} u_iT^\epsilon_{ijk}n_k ds(\mathbf{x}) = \int_D u_j \psi^\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
 \end{equation}
-We note now that the sum over \cref{eq:BIE3,eq:BIE4} will give us the intergral over $\mathbb{R}^{3}$. Using the fact that that the velocity is continous on the boundary $\partial D$ we obtain the final boundary intergral equation
+We note now that the sum over \cref{eq:BIE3,eq:BIE4} will give us the integral over $\mathbb{R}^{3}$. Using the fact that the velocity is continuous on the boundary $\partial D$ we obtain the final boundary integral equation
 \begin{equation}
   \label{eq:BIE}
     \int_{\mathbb{R}^{3}} u_{j}(\mathbf{x}) \phi_{\epsilon}\left(\mathbf{x}-\mathbf{x}_{0}\right) d V(\mathbf{x})=-\frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\mathbf{x}, \mathbf{x}_{0}\right) f_{i} d s(\mathbf{x})
 \end{equation}
-As the traction $\mathbf{f}$ denotes the force exserted by the fluid on the body it must have the oposite sign to the Stokeslet strength $\mathbf{f_0}$ and as such $\mathbf{f_0} = -\mathbf{f}$.
-The analytical computation of \cref{eq:BIE} is possible for certain cases allowing for the computation of the fluid velocity given perscribed body forces on the fluid, however they are often hard or impossible to do by had. We can easierly discretize the boundary intergral equation to obtain a formula for the velocity of the fluid at a point $\mathbf{x_0}$. We discretize the intergral into the sum over N Stokeslets located along the surface of $D$ and obtain
+As the traction $\mathbf{f}$ denotes the force exerted by the fluid on the body it must have the opposite sign to the Stokeslet strength $\mathbf{f_0}$ and as such $\mathbf{f_0} = -\mathbf{f}$.
+The analytical computation of \cref{eq:BIE} is possible for certain cases allowing for the computation of the fluid velocity given prescribed body forces on the fluid, however, they are often hard or impossible to do by hand. We can easily discretize the boundary integral equation to obtain a formula for the velocity of the fluid at a point $\mathbf{x_0}$. We discretize the integral into the sum over N Stokeslets located along the surface of $D$ and obtain
 \begin{equation}
 \label{eq:Stokesletsum}
     u_{j}\left(\mathbf{x}_{0}\right)=\frac{1}{8 \pi \mu} \sum_{n=1}^{N} \sum_{i=1}^{3} S_{i j}^{\epsilon}\left(\mathbf{x}_{n}, \mathbf{x}_{0}\right) f_{n, i} A_{n}
 \end{equation}
-where $f_{n, i}$ is the $i$th component of the force on the fluid at $\mathbf{x_n}$ and $A_n$ is the corresponding quadrature weight of the $n$th Stokeslet.
+where $f_{n, i}$ is the $i$th component of the force on the fluid at $\mathbf{x_n}$ and $A_n$ is the corresponding quadrature weight of the $n$th Stokeslet. The computation of this sum can be viewed as the product of a dense $3M \times 3N$ with a $3N \times 1$ vector. Where N is the number of Stokelets and $M$ is the number of collocation points in which we wish to compute the velocity at. This is useful as it allows for easy implementation in software such as Matlab where we can make use of highly optimised BLAS (Basic Linear Algebra Subprograms) and LAPACK (Linear Algebra PACKage) packages over direct computations in the code. This allows for the software to use the latest in hardware and software optimisations such as improved multicore algorithms and across multiple types of hardware with no changes to the higher-level code. 
+The computation of this Matrix vector product can be written as 
+\begin{equation}
+\label{eq:matrixvectorproduct}
+    U = A \cdot F
+\end{equation}
+In order to form an equation of this form we choose to write 
+\small
+\begin{equation*}
+    U = [u_1(x_{0,1}), \; u_2(x_{0,1}), \; u_3(x_{0,}), \; u_1(x_{0,2}), \; u_2(x_{0,2}), \; u_3(x_{0,2}), \; \dots \; u_1(x_{0,M}), \; u_2(x_{0,M}), \; u_3(x_{0,M})]^{T}
+\end{equation*}
+\normalsize
+and 
+\small
+\begin{equation*}
+    F = [f_{1,1}A_1, \; f_{1,2}A_1, \; f_{1,3}A_1, \; f_{2,1}A_2, \; f_{2,2}A_2, \; f_{2,3}A_2, \; \dots \; f_{N,1}A_N, \; f_{N,2}A_N, \; f_{N,3}A_N]^{T}
+\end{equation*}
+\normalsize
+This gives the form of A as 
+\small
+\begin{equation*}
+A = 
+\begingroup
+\setlength\arraycolsep{1pt}
+\begin{bmatrix}
+S^{\epsilon}_{1,1}(\mathbf{x_1},\mathbf{x_{0,1}}) & S^{\epsilon}_{2,1}(\mathbf{x_1},\mathbf{x_{0,1}}) & S^{\epsilon}_{3,1}(\mathbf{x_1},\mathbf{x_{0,1}}) & \dots & S^{\epsilon}_{1,1}(\mathbf{x_N},\mathbf{x_{0,1}}) & S^{\epsilon}_{2,1}(\mathbf{x_N},\mathbf{x_{0,1}}) & S^{\epsilon}_{3,1}(\mathbf{x_N},\mathbf{x_{0,1}})\\
+S^{\epsilon}_{1,2}(\mathbf{x_1},\mathbf{x_{0,1}}) & S^{\epsilon}_{2,2}(\mathbf{x_1},\mathbf{x_{0,1}}) & S^{\epsilon}_{3,2}(\mathbf{x_1},\mathbf{x_{0,1}}) & \dots & S^{\epsilon}_{1,2}(\mathbf{x_N},\mathbf{x_{0,1}}) & S^{\epsilon}_{2,2}(\mathbf{x_N},\mathbf{x_{0,1}}) & S^{\epsilon}_{3,2}(\mathbf{x_N},\mathbf{x_{0,1}})\\
+S^{\epsilon}_{1,3}(\mathbf{x_1},\mathbf{x_{0,1}}) & S^{\epsilon}_{2,3}(\mathbf{x_1},\mathbf{x_{0,1}}) & S^{\epsilon}_{3,3}(\mathbf{x_1},\mathbf{x_{0,1}}) & \dots & S^{\epsilon}_{1,3}(\mathbf{x_N},\mathbf{x_{0,1}}) & S^{\epsilon}_{2,3}(\mathbf{x_N},\mathbf{x_{0,1}}) & S^{\epsilon}_{3,3}(\mathbf{x_N},\mathbf{x_{0,1}})\\
+\vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+S^{\epsilon}_{1,1}(\mathbf{x_1},\mathbf{x_{0,M}}) & S^{\epsilon}_{2,1}(\mathbf{x_1},\mathbf{x_{0,M}}) & S^{\epsilon}_{3,1}(\mathbf{x_1},\mathbf{x_{0,M}}) & \dots & S^{\epsilon}_{1,1}(\mathbf{x_N},\mathbf{x_{0,M}}) & S^{\epsilon}_{2,1}(\mathbf{x_N},\mathbf{x_{0,M}}) & S^{\epsilon}_{3,1}(\mathbf{x_N},\mathbf{x_{0,M}})  \\
+S^{\epsilon}_{1,2}(\mathbf{x_1},\mathbf{x_{0,M}}) & S^{\epsilon}_{2,2}(\mathbf{x_1},\mathbf{x_{0,M}}) & S^{\epsilon}_{3,2}(\mathbf{x_1},\mathbf{x_{0,M}}) & \dots & S^{\epsilon}_{1,2}(\mathbf{x_N},\mathbf{x_{0,M}}) & S^{\epsilon}_{2,2}(\mathbf{x_N},\mathbf{x_{0,M}}) & S^{\epsilon}_{3,2}(\mathbf{x_N},\mathbf{x_{0,M}}) \\
+S^{\epsilon}_{1,3}(\mathbf{x_1},\mathbf{x_{0,M}}) & S^{\epsilon}_{2,3}(\mathbf{x_1},\mathbf{x_{0,M}}) & S^{\epsilon}_{3,3}(\mathbf{x_1},\mathbf{x_{0,M}}) & \dots & S^{\epsilon}_{1,3}(\mathbf{x_N},\mathbf{x_{0,M}}) & S^{\epsilon}_{2,3}(\mathbf{x_N},\mathbf{x_{0,M}}) & S^{\epsilon}_{3,3}(\mathbf{x_N},\mathbf{x_{0,M}}) \\
+\end{bmatrix}
+\endgroup
+\end{equation*}
+\normalsize
+We will from now on refer to the computation of the velocities at the set of points $\{ \mathbf{x_{0,n}} \}$ through the direct computation of the full vector-matrix product as the direct solution.
+We do note that this particular choose in the structure of $U$ and $F$ is not unique and other literature may use different arrangements however they will all produce the same result. 
