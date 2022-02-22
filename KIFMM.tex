@@ -1,13 +1,129 @@
 \section{Kernel-Independent Fast Multipole Method}
-If we consider a many body problem formed of $N$ source/quadrature points $\{\mathbf{X_{0,n}}\}$ each with an associated potential/Force $\{\mathbf{f_{0,n}}\}$ that we will evaluate on $M$ collocation points $\{\mathbf{x_m}\}$ then we can compute the velocity at each $\mathbf{x_m}$ $m=1,2,\dots,M$ through
+If we consider a many body problem formed of $N$ potential/quadrature points $\{\mathbf{x_{0}}_n\}$ each with an associated potential/force $\{\mathbf{f_{0}}_n\}$ that we will evaluate on $M$ collocation points $\{\mathbf{x}_m\}$ then we can compute the velocity at each $\mathbf{x}_m$ where $m=1,2,\dots,M$ through
 \begin{equation*}
-    \mathbf{u}(\mathbf{x_j}) = \sum_{i=1}^N \Phi(\mathbf{x_{0,j}},\mathbf{x_i})\mathbf{f_{0,i}}
+    \mathbf{u}(\mathbf{x}) = \sum_{i=1}^N \Phi(\mathbf{x},\mathbf{x_{0}}_i)\mathbf{f_{0}}_i
 \end{equation*}
-where $\Phi$ is the green's function associated with the underlying partial differential equation governing the dynamics of the system. In particular $\Phi$ is $S^\epsilon$ for our kernel for the regularised Stokeslet kernel where we compute the velocity at as set of collocation points based on a set of body forces defined on solid boundaries within the fluid. This can we written as a matrix-vector product as described in \cref{eq:matrixvectorproduct}. This thas a computational complexity of $\mathcal{O}(NM)$ which for either a large number of collocation points or quadrature points quickly becomes prohibitive. In order to compute large systems we need to look at faster methods to approximate this vector matrix product, the fast multipole method (FMM) can approximate \cref{eq:matrixvectorproduct} with complexity $\mathcal{O}(N+M)$. The FMM algorithm uses Taylor expansion of the kernel about the quadrature points in order to approximate long range interaction between distant quadrature and target points \cite{Beatson1997AMethods,Tornberg2008,Wang2007AEquations,Yokota}. This method proves time consuming to find for particular kernels such for regularised Stokeslets, it also means that the entire program is kernel dependent and any changes to the kernel needs a complete recalculation of the method.
-We instead use a new algorithm based on the ideas of FMM to create a kernel independent fast multipole algorithm (KIFMM) \cite{Ying2004, Ying2005,Rostami2016Kernel-independentStokeslets,Yan}. Using equivalent potentials instead of Taylor expansions we can approximate long range interactions using only kernel evaluations without computing every particle to particle interaction. This dramatically reduces the number of kernel evaluations verses the direct solution. 
+where $\Phi$ is the green's function associated with the underlying partial differential equation governing the dynamics of the system. In particular, $\Phi=S^\epsilon$ is our kernel for the case of regularised Stokeslet where we compute the velocity of the fluid at a set of collocation points based on a set of body forces defined on solid boundaries within the fluid. This can be written as a matrix-vector product as described in \cref{eq:matrixvectorproduct}. This direct solution has a computational complexity of $\mathcal{O}(NM)$ which for either a large number of collocation points or quadrature points quickly becomes prohibitive. In order to compute large systems we need to look at faster methods to approximate this vector-matrix product. One such set of methods is the familiy of fast multipole method's which can approximate \cref{eq:matrixvectorproduct} with complexity $\mathcal{O}(N+M)$. The standard fast multipole method (FMM) algorithm uses multipole expansion's of the kernel about the quadrature points in order to approximate long-range interaction between distant quadrature and target points \cite{Beatson,Tornberg2008,Wang2007AEquations,Yokota}. This method proves time-consuming to find for particular kernels such as regularised Stokeslets where the corresponding expansions first need to be computed by hand, it also means that the entire program is kernel dependent and any changes to the kernel need a complete recalculation of the expansions employed.
+We instead we will look at an adaption to the FMM algorithm to create a kernel independent fast multipole algorithm (KIFMM) \cite{Ying2004, Ying2005,Rostami2016Kernel-independentStokeslets,Yan}. Using equivalent potentials instead of multipole expansions we can approximate long-range interactions using only kernel evaluations without computing every particle to particle interaction. This dramatically reduces the number of kernel evaluations compared to computation by the direct solution. 
+
 \subsection{Hierarchical decomposition of the computational domain}
-Both FMM and KIFMM are based of the Hierarchical decomposition of the computational domain. We let $\mathcal{D}$ be the computational domain, which we define to be a cube in $\mathcal{R}^3$ such that it encompasses all points in $\{\mathbf{x_{0,n}}\}$ and $\{\mathbf{x_m}\}$. We typically definite this to be the smallest possible cube which includes all the points. The FMM method builds a Octree structure of cubes in 3D with the cube $\mathcal{D}$ as the root node.  
-\subsection{Equivalent surfaces/coronas}
-\subsection{Numerical approximation of the force densities}
+Both FMM and KIFMM are based on the Hierarchical decomposition of the computational domain. We let $\mathcal{D}$ be the computational domain, which we define to be a cube in $\mathcal{R}^3$ such that it encompasses all points in $\{\mathbf{x_{0,n}}\}$ and $\{\mathbf{x_m}\}$. We typically define this to be the smallest possible cube which includes all the points. The FMM method builds an Octree structure of cubes in 3D with the cube $\mathcal{D}$ as the root node. We will label this node the Level $0$ partition where no subdivision had occurred. Each subsequent division is made of $8$ equal-sized cubes each with a side length of half of the cube above. For each level, we subdivide a node into its $8$ children if the number of source points or target points within the cube is greater than some threshold $s\geq 1$. For efficiency we only pass the type nodes which exceed this threshold. This subdivision creates a new level $L+1$ containing the children of all subdivided nodes in level $L$. We refer to the node on level $L$ as the parent of nodes on level $L+1$. This process is repeated until all cubes have less than $s$ source or target points contained within them which we will refer to as leaf nodes.
+
+\begin{figure}[ht]
+    \centering
+    \resizebox{.6\linewidth}{!}{\input{Images/Figure2}}
+    \caption{A 3D example of a 4 level Octree generated on a set of random points. Black, red, blue and green cubes represents nodes on Level 1, 2, 3 and 4 of the Octree respectively.}
+    \label{fig:Decompostionexample}
+\end{figure}
+
+This creates an adaptive Octree where leaf nodes exist on multiple levels of the tree as only cubes with greater than $s$ source or target points subdivided, an example of a simple decompostion can be seen in \cref{fig:Decompostionexample}. In the non-adaptive case if any node has greater than $s$ source points then all nodes on that level are subdivided creating $8^L$ new nodes. We might choose to implement a tree of this form when the potential distribution is uniform as it reduces the types and complexity of the interactions described later but we will only consider the adaptive case in this discussion as it is more efficient in non-uniform cases.
+
+\subsubsection{Interaction Lists}
+For any node $B$ in the Octree, we define its relation to neighbouring node through 4 interaction lists $I_U^B, I_V^B, I_X^B$ and $I_W^B$. 
+
+The list $I^B_U$ contains $B$ itself and all leaf nodes which are adjacent to $B$. The $U$ list is empty for any non-leaf nodes.
+
+The list $I_V^B$ contains all nodes which are children of the nodes which are neighbours of $B$'s parent. This means all nodes in $I_U^B$ are of the same level as B.
+
+If $B$ is a leaf node then the interaction list $I_W^B$ contains all descendants of $B$'s neighbours whose parents are adjacent to $B$ but are not adjacent to $B$ themselves. In order to not compute the effect of the node twice we only include nodes $A$ where $A$ and all its all decedents of $A$ obey the condition above. If $B$ is not a leaf node then $I_W^B$ is empty.
+
+The list $I_X^B$ contain all nodes $A$ in which $B$ appears in the interaction list $I_W^A$.
+
+\begin{figure}[ht]
+    \centering
+    \include{Images/Figure1}
+    \caption{A 2D example of the interaction lists $I_U^B, I_V^B, I_X^B$ and $I_W^B$ for a node $B$}
+    \label{fig:InteractionsLists}
+\end{figure}
+
+
+In the figure \ref{fig:InteractionsLists} we show the 2D interactions list for a node $B$ for a random arrangement of nodes, note that these might not all be leaf nodes. These lists contain all the nodes from which we need to consider the contributions as well as the node's parent. In order to how these nodes interact with each other, we will define the near and far-field of each node. We will denote the near field of a node $B$ to be $\mathcal{N}(B)$ and is the set of all nodes in $I_U^B$ and $I_X^B$ and the far-field $\mathcal{F}(B)$ to be all remaining nodes. While geometrically these definitions may be convoluted with nodes in the far-field being geometrically closer than those in the near field they provide definitions for which nodes need to be computed directly or through the use of equivalent surfaces.
+
+\subsection{Equivalent surfaces}
+
+The KIFMM makes use of two equivalent surfaces for each node in the Octree to approximate the effect between source and source points inside and outside the node. The upwards equivalent surface is taken to be the boundary of the node $B$ (denoted $\Omega^U$) and the downwards equivalent surface to be the surface of a cube of width three times larger centred on the node $B$ (denoted $\Omega^D$) as illustrated in \cref{fig:UpandDownsurf} \cite{Ying2004}. Upon both of these surfaces we denote a equivalent potential densities $\mathbf{f}^{BU}_\mathbf{0}(\mathbf{y})$ and $\mathbf{f}^{BD}_\mathbf{0}(\mathbf{y})$ for the upwards and downwards equivalent surface's of $B$ respectively. The upward equivalent surface is used to approximate the effect of all source points contained within the node and its decedents \cite{Rostami2016Kernel-independentStokeslets}. As such we can say that for every point $\mathbf{x}\in\mathcal{F}(B)$ the velocity induced by that of the equivalent surface is the same as that induced by all source points in $B$, this gives us
+\begin{equation}
+\label{eq:upsurfint}
+    \forall \;\mathbf{x} \in \mathcal{F}(B): \quad \int_{\Omega^U} S^\epsilon(\mathbf{x}, \mathbf{y}) \mathbf{f}^{BU}(\mathbf{y}) d \mathbf{y}=\sum_{\mathbf{x_0}_j \in B} S^\epsilon\left(\mathbf{x}, \mathbf{x_0}_j\right) \mathbf{f_0}_{j}
+\end{equation}
+
+The same can be applied to the downwards equivalent surface where instead the contributions are obtained from source points in $\mathcal{F}(B)$, we can say that for any point in $B$ the velocity induced by the downwards surface equals that induced by the source points in $\mathcal{F}(B)$, which again gives us that
+\begin{equation}
+\label{eq:downsurfint}
+    \forall \;\mathbf{x} \in B: \quad \int_{\Omega^D} S^\epsilon(\mathbf{x}, \mathbf{y}) \mathbf{f}^{BD}(\mathbf{y}) d \mathbf{y}=\sum_{\mathbf{x_0}_j \in \mathcal{F}(B)} S^\epsilon\left(\mathbf{x}, \mathbf{x_0}_j\right) \mathbf{f_0}_{j}
+\end{equation}
+
+\begin{figure}[ht]
+    \centering
+    \resizebox{.6\linewidth}{!}{\input{Images/Figure3}}
+    \caption{A diagram representing the upwards and downwards equivalent surface for a arbitrary node with bounds given in black. Both surfaces are discredited by a $6 \times 6 \times 6$ set of quadrature points. The upwards equivalent surface (black) lies on the boundary of the node while the downward equivalent surface (blue) is a cube with sides 3 larger centred on the node. }
+    \label{fig:UpandDownsurf}
+\end{figure}
+
+In order to be able to use these equivalent potentials densities we form a quadrature rule over an equally spaced uniform Cartesian grid with $N_q$ quadrature point. While the number of quadrature points in the upwards and downwards equivalent surfaces does not need to be the same for convenience we will take this to be the case. We will indicate the quadrature points the the upwards equivalent potential for a node $B$ with $\mathbf{q}^{BU}_m$ for $m=1,\dots,N_q$ and $\mathbf{q}^{BD}_m$ for $m=1,\dots,N_q$ indicating the positions of the quadrature points for the downwards equivalent potential. Now each of these quadrature points has a corresponding equivalent potential denoted by $\mathbf{f}^{BU}(\mathbf{q}^{BU}_m)$ and $\mathbf{f}^{BD}(\mathbf{q}^{BD}_m)$ for the upward and downward equivalent potentials respectively. Writing the left-hand side of \cref{eq:upsurfint,eq:downsurfint} using this quadrature rule we obtain that
+\begin{equation}
+\label{eq:L2Mfar}
+    \forall \;\mathbf{x} \in \mathcal{F}(B): \quad \mathbf{u}(\mathbf{x})= \frac{1}{8 \pi \mu} \sum_{m=1}^{N_{q}} A_{m}^{BU} S^\epsilon\left(\mathbf{x}, \mathbf{q}_{m}^{B U}\right) \mathbf{f}^{B U}\left(\mathbf{q}_{m}^{B U}\right)
+\end{equation}
+and the contribution to the velocity $\mathbf{u}(\mathbf{x})$ for $\mathbf{x} \in B$ from source points in $\mathcal{F}(B)$ as
+\begin{equation}
+\label{eq:L2Mnear}
+    \forall \;\mathbf{x} \in B: \quad \mathbf{u}(\mathbf{x})= \frac{1}{8 \pi \mu} \sum_{m=1}^{N_{q}} A_{m}^{BD} S^\epsilon\left(\mathbf{x}, \mathbf{q}_{m}^{B D}\right) \mathbf{f}^{B D}\left(\mathbf{q}_{m}^{B D}\right)
+\end{equation}
+Where $A_{m}^{BU}$ and $A_{m}^{BD}$ are corresponding quadrature weights. We will not explicitly calculate these weights and take them to be part of their corresponding equivalent potential. The advantage of using \cref{eq:L2Mnear,eq:L2Mfar} is to avoid the direct computation of source points and target points and instead use the quadrature points as an approximation of the particles within the box.
+
+We note that the downward equivalent surface lies in the $\mathcal{F}(B)$ and the downward equivalent surface lies in $B$, we obtain the following systems
+\begin{equation}
+\label{eq:upsum}
+    \sum_{m=1}^{N_{q}} A_{m}^{BU} S^\epsilon\left(\mathbf{q}^{BD}_{k}, \mathbf{q}_{m}^{B U}\right) \mathbf{f}^{B U}\left(\mathbf{q}_{m}^{B U}\right)=\sum_{\mathbf{x_0}_{j} \in B} S^\epsilon\left(\mathbf{q}^{BD}_{k}, \mathbf{x_0}_{j}\right) \mathbf{f_0}_{j}, \quad k=1,\dots,N_q
+\end{equation}
+and
+\begin{equation}
+\label{eq:downsum}
+    \sum_{m=1}^{N_{q}} A_{m}^{BD} S^\epsilon\left(\mathbf{q}^{BU}_{k}, \mathbf{q}_{m}^{B D}\right) \mathbf{f}^{B D}\left(\mathbf{q}_{m}^{B D}\right)=\sum_{\mathbf{x_0}_{j} \in \mathcal{F}(B)} S^\epsilon\left(\mathbf{q}^{BU}_{k}, \mathbf{x_0}_{j}\right) \mathbf{f_0}_{j}, \quad k=1,\dots,N_q
+\end{equation}
+We will use \cref{eq:upsum,eq:downsum} in order to construct the upwards and downwards potential of all nodes through the approximation the left-hand sides of the equation. 
+
 \subsection{Evaluation}
+The Fast Multipole method is based on two passes, one up the tree in order to construct the upwards equivalent surfaces from source potentials and a further downward pass where we construct the downward equivalent potentials before finally evaluating the velocities at the target points. 
+
+\subsubsection{Upward Pass}
+The upwards pass involves the postorder traversal of the tree from the smallest node up to the root node and solving \cref{eq:upsum} for each node. For each leaf node, we can evaluate the right-hand side of \cref{eq:upsum} directly. Now for each non-leaf node $B$ in the tree instead of summing over all source points in the decedents of $B$ we can approximate its upwards equivalent surface from its children. We denote the children of $B$ as $C_l^B$ where $l=1,...,8$. As we have traversed the tree in post-order we know $\mathbf{f}^{C_l U}(\mathbf{q}^{C_lU}_m)$ for $l=1,\dots,8$ and $m=1,\dots,N_q$. Since $\mathbf{q}^{C_lU}$ lies within $\mathbf{q}^{BU}$ we have that the right-hand side of \cref{eq:upsum} can be approximated as 
+\begin{equation}
+\label{eq:M2M}
+    \sum_{l=1}^{8} \sum_{m=1}^{N_{q}} A_{m}^{C_{l} U} S^\epsilon\left(\mathbf{q}_{k}^{B D}, \mathbf{q}_{m}^{C_{l} U}\right) \mathbf{f}^{C_{l} U}\left(\mathbf{q}_{m}^{C_{l} U}\right), \quad k=1,\dots,N_q
+\end{equation}
+This method of approximating the parents equivalent potential from its children is significantly more sufficient as provided the number quadrature points smaller than the capacity of the node $s$ the number of kernel evaluations is significantly reduced, particularly close to the root node where the number of kernel evaluation remains at $N_q^2$ vs $N N_q$ if the equivalent surface was computed directly using the right hand side of \cref{eq:upsum}. We note that in both summations we have computed the velocities at the downward equivalent surface, this ensures the existence of the $\mathbf{f}^{BU}(\mathbf{q}^{BU})$. In order to obtain these values, we simply solve the linear system created by \cref{eq:upsum}. This gives us a set of equivalent potentials for each node in the tree which approximates the effect of all source points contained within that nodes region. 
+
+\subsubsection{Downwards Pass}
+The downward pass follows a similar structure to that of the upwards pass however we now traverse down the octree using a preorder traversal. We do not need to consider the root node on level 0 so we start our traversal on level 1. We will now be considering equation \cref{eq:downsum} and approximating the right-hand side before solving the linear system to obtain the downward equivalent potentials for all considered nodes. 
+
+For each non-root node $B$ we need to consider the effect of source points in the far-field. In order to consider these effects, we define the Multipole to Local translation (M2L) and the Local to Local translation (L2L) translation. The M2L translation computes the contribution to the downward equivalent potential to $B$ for a node $A$ in $\mathcal{F}(B)$. As points, $\mathbf{q}^{BU}$ are in the $\mathcal{F}(A)$ we can consider the contribution to the right-hand side as approximately 
+\begin{equation}
+\label{eq:M2L}
+\sum_{m=1}^{N_{q}} A_{m}^{A U} S^\epsilon\left(\mathbf{q}_{k}^{B U}, \mathbf{q}_{m}^{A U}\right) \mathbf{f}^{A U}\left(\mathbf{q}_{m}^{A U}\right), \quad k=1,\dots,N_q
+\end{equation}
+We use \cref{eq:M2L} to compute the effect of all nodes in the interaction list $I_V^B$. The effect of other nodes in $\mathcal{F}(B)$ are computed through the L2L transition where we pass information of distant source points from parent to child. As we are in preorder traversal we have already computed the downward equivalent potential of the parent of $B$. We will call the parent $P$ and it's downward equivalent potential $\mathbf{f}^{PD}$. As $B$ is by definition inside of $P$ we know that $\mathbf{q}^{BU}$ is in $\mathcal{N}(B)$ so we can use \cref{eq:L2Mnear} to calculate the contribution to the right-hand side of \cref{eq:downsum} as
+\begin{equation}
+\label{eq:L2L}
+\sum_{m=1}^{N_{q}} A_{m}^{P D} S^\epsilon\left(\mathbf{q}_{k}^{B U}, \mathbf{q}_{m}^{P D}\right) \mathbf{f_0}^{P D}\left(\mathbf{q}_{m}^{P D}\right), \quad k=1,\dots,N_q
+\end{equation}
+These two summations approximate the contributions of source points in $\mathcal{F}(B)$ however we need to consider the near field contributions on $\mathbf{f}^{B D}$. For any non leaf node we have that $I_U^B = I_W^B = \emptyset$ where $\emptyset$ is the empty set. This means we only need to consider $I_X^B$ in our calculation of the downward equivalent potential $\mathbf{f^{BD}}$. We will consider the effect of nodes in $I_U^B$ and $I_W^B$ when we compute the velocity at the target points in the next step. We could use the M2L transition \cref{eq:M2L} however as any node $A \in I_X^B$ is by definition a leaf node and in $\mathcal{N}(B)$ we will consider the effects of its source points directly through the summation
+\begin{equation}
+\label{eq:X}
+    \sum_{A_i \in I_X^B} \sum_{\mathbf{x_0}\in A_i} S^\epsilon\left(\mathbf{q}^{BU}_{k}, \mathbf{x_0}_{j}\right) \mathbf{f_0}_{j}, \quad k=1,\dots,N_q
+\end{equation}
+
+Having obtained approximations for the right-hand side of \cref{eq:downsum} we solve the linear system to find the values of $\mathbf{f}^{BD}$ at the quadrature points $\mathbf{q}^{BD}$. 
+
+Now we consider the leaf nodes of the system where we will now solve to find the velocity of the fluid at the target points. We can consider the leaf nodes in any order as the calculation for each leaf node are independent of each other even though they may lie on different levels of the Octree. In order to compute the velocity at the target points, we use need to consider all points in $\mathcal{N}(B)$ and $\mathcal{F}(B)$. In the computation of  $\mathbf{f^{BD}}$ we approximated the effect of points in $I_V^B$ and $I_X^B$ and source points outside of the interaction lists of node $B$. We can compute this effect though \cref{eq:L2Mnear}, we then need to consider the remaining source points in $I_U^B$ and $I_W^B$. We compute the effect of nodes in $I_W^B$ by writing the right-hand side of \cref{eq:L2Mfar} as 
+\begin{equation*}
+    \frac{1}{8 \pi \mu} \sum_{m=1}^{N_{q}} A_{m}^{AU} S^\epsilon\left(\mathbf{x}, \mathbf{q}_{m}^{A U}\right) \mathbf{f}^{A U}\left(\mathbf{q}_{m}^{A U}\right)
+\end{equation*}
+for each node $A$ in $I_W^B$. We can do this as for any node $A \in I_W^B$ as we know that $B\in\mathcal{F}(A)$ as $B\in I_X^A$. We compute the effects of sources in $I_U^B$ which we do through 
+\begin{equation*}
+    \mathbf{u}(\mathbf{x}) = \sum_{\mathbf{x_0}_i\in A} S^\epsilon(\mathbf{x},\mathbf{x_{0}}_i)\mathbf{f_{0}}_i
+\end{equation*}
+where $A \in I_U^B$. After summing these contributions together we have constructed an approximation for the velocities at all target points considering the effects of all source points.
+
 \subsection{Comparison of KIFMM method vs Direct solver}
