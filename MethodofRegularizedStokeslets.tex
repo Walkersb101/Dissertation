@@ -187,16 +187,19 @@ as $f_{0,j}$ is constant we can take it out of the derivative on the left-hand s
 \end{equation}
 Suppose we now let $S$ be the area between the solid body $D$ and a sphere with a radius such that all of $D$ is contained within. We will denote $\partial S$ to be the surface of $S$, note that this contains the surface of the sphere and the surface of the solid body $\partial D$. If we now integrate the above equation over the volume $S$ then we get that
 \begin{equation*}
-  \int_{S} \left[\frac{1}{8\pi\mu}\frac{\partial}{\partial x_k}(S^\epsilon_{ij}\sigma_{ik} - \mu u_i T^\epsilon_{ijk})\right] dV(\mathbf{x}) = \int_{S} u_j\phi_\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
+  \int_{S} \left[\frac{1}{8\pi\mu}\frac{\partial}{\partial x_k}(S^\epsilon_{ij}\left(\mathbf{x}, \mathbf{x}_{0}\right)\sigma_{ik}\left(\mathbf{x}, \mathbf{x}_{0}\right) - \mu u_i(\mathbf{x}) T^\epsilon_{ijk}\left(\mathbf{x}, \mathbf{x}_{0}\right))\right] dV(\mathbf{x}) = \int_{S} u_j(\mathbf{x})\phi_\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
 \end{equation*}
 Using the divergence theorem on the Left-hand side of the equation we get that
 \begin{equation*}
-  \frac{1}{8\pi\mu}\int_{\partial S} \left[S^\epsilon_{ij}\sigma_{ik} - \mu u_i T^\epsilon_{ijk}\right]n_k ds(\mathbf{x}) = \int_{S} u_j\phi_\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
+  \frac{1}{8\pi\mu}\int_{\partial S} \left[S^\epsilon_{ij}\left(\mathbf{x}, \mathbf{x}_{0}\right)\sigma_{ik}\left(\mathbf{x}, \mathbf{x}_{0}\right) - \mu u_i(\mathbf{x} T^\epsilon_{ijk}\left(\mathbf{x}, \mathbf{x}_{0}\right)\right]n_k ds(\mathbf{x}) = \int_{S} u_j\phi_\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
 \end{equation*}
 where $\mathbf{n}$ is the outwards unit normal vector of $\partial S$. If we consider the limit as the radius of the sphere tends to infinity, we find that the only contributions to the left-hand side come from $\partial D$. We will introduce the traction on the surface of the sphere as $f_i = -\sigma_{ik}n_k$ and obtain
 \begin{equation}
-  \label{eq:BIE3}
-    \frac{1}{8\pi\mu}\int_{\partial D} S^\epsilon_{ij}f_i ds(\mathbf{x}) - \frac{1}{8\pi}\int_{\partial D} u_i T^\epsilon_{ijk}n_k ds(\mathbf{x}) = \int_{S} u_j\phi_\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
+\begin{aligned}
+    \label{eq:BIE3}
+    &\frac{1}{8\pi\mu}\int_{\partial D} S^\epsilon_{ij}\left(\mathbf{x}, \mathbf{x}_{0}\right)f_i(\mathbf{x}) ds(\mathbf{x}) - \frac{1}{8\pi}\int_{\partial D} u_i(\mathbf{x}) T^\epsilon_{ijk}\left(\mathbf{x}, \mathbf{x}_{0}\right)n_k(\mathbf{x}) ds(\mathbf{x}) \\
+    &= \int_{S} u_j(\mathbf{x})\phi_\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
+\end{aligned}
 \end{equation}
 
 Considering the fluid inside of the solid body $D$ we realise that the velocity must satisfy the zero-deformation condition
@@ -205,25 +208,41 @@ Considering the fluid inside of the solid body $D$ we realise that the velocity 
 \end{equation*}
 This gives us that $\sigma_{ik} = -p\delta_{ik}$ inside of $D$ and as such we obtain that for each $j=1,2,3$
 \begin{equation*}
-  \int_{D} \frac{\partial}{\partial x_k}\left[S^\epsilon_{ij}\sigma_{ik}\right]dV(\mathbf{x}) = -p\int_{D} \frac{\partial}{\partial x_k}\left[S^\epsilon_{kj}\right]dV(\mathbf{x}) = 0
+  \int_{D} \frac{\partial}{\partial x_k}\left[S^\epsilon_{ij}\left(\mathbf{x}, \mathbf{x}_{0}\right)\sigma_{ik}\left(\mathbf{x}, \mathbf{x}_{0}\right)\right]dV(\mathbf{x}) = -p\int_{D} \frac{\partial}{\partial x_k}\left[S^\epsilon_{kj}\left(\mathbf{x}, \mathbf{x}_{0}\right)\right]dV(\mathbf{x}) = 0
 \end{equation*}
 from the incompressibility condition \cref{eq:regcondition2}. If we now integrate \cref{eq:reciprocalrelation} over $D$ instead of $S$ and use the above integral we have that given $p \neq 0$
 \begin{equation}
-  \label{eq:BIE4}
--\frac{1}{8\pi}\int_{D} \frac{\partial}{\partial x_k}\left(u_iT^\epsilon_{ijk} \right) dV(\mathbf{x}) = \frac{1}{8\pi}\int_{\partial D} u_iT^\epsilon_{ijk}n_k ds(\mathbf{x}) = \int_D u_j \phi^\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
+\begin{aligned}
+      \label{eq:BIE4}
+-\frac{1}{8\pi}\int_{D} \frac{\partial}{\partial x_k}\left(u_i(\mathbf{x})T^\epsilon_{ijk}\left(\mathbf{x}, \mathbf{x}_{0}\right) \right) dV(\mathbf{x}) &= \frac{1}{8\pi}\int_{\partial D} u_i(\mathbf{x})T^\epsilon_{ijk}\left(\mathbf{x}, \mathbf{x}_{0}\right)n_k(\mathbf{x}) ds(\mathbf{x})\\
+&= \int_D u_j(\mathbf{x}) \phi^\epsilon(\mathbf{x}-\mathbf{x_0}) dV(\mathbf{x})
+\end{aligned}
 \end{equation}
 We again have used the divergence theorem to convert the volume integral to a surface integral with $n_k$ being defined to point into $D$. Observing that the sum over \cref{eq:BIE3,eq:BIE4} will give us the integral over $\mathbb{R}^{3}$ and using the fact that the velocity is continuous on the boundary $\partial D$ we obtain the final boundary integral equation is
 \begin{equation}
-  \label{eq:BIE}
-    \int_{\mathbb{R}^{3}} u_{j}(\mathbf{x}) \phi^{\epsilon}\left(\mathbf{x}-\mathbf{x}_{0}\right) d V(\mathbf{x})=-\frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\mathbf{x}, \mathbf{x}_{0}\right) f_{i} d s(\mathbf{x})
+  \label{eq:BIE5}
+    \int_{\mathbb{R}^{3}} u_{j}(\mathbf{x}) \phi^{\epsilon}\left(\mathbf{x}-\mathbf{x}_{0}\right) d V(\mathbf{x})=-\frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\mathbf{x}, \mathbf{x}_{0}\right) f_{i}(\mathbf{x}) d s(\mathbf{x})
 \end{equation}
-As the traction $\mathbf{f}$ denotes the force exerted by the fluid on the body it must have the opposite sign to the Stokeslet strength $\mathbf{f_0}$ and as such $\mathbf{f_0} = -\mathbf{f}$.
-The analytical computation of \cref{eq:BIE} is possible for certain cases allowing for the computation of the fluid velocity given prescribed body forces on the fluid, however, they are often hard or impossible to do by hand. In this case we consider the numerical integration of such problems. By approximating the boundary integral equation with a quadrature rule $\mathbf{x_0}_n A_n$ we obtain a formula for the velocity of the fluid at a point $\mathbf{x_0}$. To do this we consider the integral on the right-hand side of \cref{eq:BIE} as the sum over N Stokeslets located along the surface of $D$. 
+As the traction $\mathbf{f}$ denotes the force exerted by the fluid on the body it must have the opposite sign to the Stokeslet strength $\mathbf{f_0}$ and as such $\mathbf{f_0} = -\mathbf{f}$. In order to use \cref{eq:BIE5} we need to have an explicit equation for $\mathbf{u}(\mathbf{x})$, as such we need to remove the integral and the cutoff function from the left hand side of \cref{eq:BIE5}, we do this though the approximation that $\int_{\mathbb{R}^{3}} u_{j}(\mathbf{x}) \phi^{\epsilon}\left(\mathbf{x}-\mathbf{x}_{0}\right) d V(\mathbf{x}) \approx u_j(\mathbf{x_0})$. By taking the approximation as exact we write that 
+\begin{equation}
+    u_j(\mathbf{x_0}) = \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\mathbf{x}, \mathbf{x}_{0}\right) f_{0,i}(\mathbf{x}) d s(\mathbf{x})
+\end{equation}
+By using the fact that $S_{i j}^{\epsilon}\left(\mathbf{x}, \mathbf{x}_{0}\right) = S_{j i}^{\epsilon}\left(\mathbf{x}_{0}, \mathbf{x}\right)$ we can write \cref{eq:BIE5} as 
+\begin{equation}
+  \label{eq:BIE}
+    u(\mathbf{x})_i=\frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\mathbf{x}, \mathbf{x}_{0}\right) f_{0,j}(\mathbf{x_0}) d s(\mathbf{x_0})
+\end{equation}
+The analysis of this error for our particular cutoff function can be see in \cite{Cortez2005} and is found to be of order $\mathcal{O}(\epsilon)$ close to the boundary and $\mathcal{O}(\epsilon^2)$ away from the boundary.
+
+
+The analytical computation of \cref{eq:BIE} is possible for certain cases allowing for the computation of the fluid velocity given prescribed body forces on the fluid, however, they are often hard or impossible to do by hand. In this case we consider the numerical integration of such problems. By approximating the boundary integral equation with a quadrature rule ${\mathbf{x}_0}_n A_n$ we obtain a formula for the velocity of the fluid at a point $\mathbf{x_0}$. To do this we consider the integral on the right-hand side of \cref{eq:BIE} as the sum over N Stokeslets located along the surface of $D$. 
 \begin{equation}
 \label{eq:Stokesletsum}
-    u_{j}\left(\mathbf{x}\right)=\frac{1}{8 \pi \mu} \sum_{n=1}^{N} \sum_{i=1}^{3} S_{i j}^{\epsilon}\left(\mathbf{x}, \mathbf{x_0}_{n}\right) {f_0}_{n, i} A_{n}
+    u_{i}\left(\mathbf{x}\right)=\frac{1}{8 \pi \mu} \sum_{n=1}^{N} \sum_{i=1}^{3} S_{i j}^{\epsilon}\left(\mathbf{x}, {\mathbf{x}_0}_{n}\right) {f_0}_{n, j} A_{n}
 \end{equation}
-where ${f_0}_{n, i}$ is the $i$th component of the force on the fluid at $\mathbf{x_0}_n$ and $A_n$ is the corresponding quadrature weight of the $n$th Stokeslet. It is often more common that we wish to compute the velocity at a set of collocation points $\{\mathbf{x_n}\}$. We note that as long as we keep the quadrature rule the same for all collocation points then we keep the set of ${f_0}_{n, i}$ remains the same and only $\mathbf{x}$ changes for each collocation point. The implies that the computation of this sum can for a single collocation point be viewed as the product of a dense $3 \times 3N$ matrix with a $3N \times 1$ column vector where N is the number of Stokelets. By extension of this idea the computation for a set of collocation points can be viewed as the product of a dense $3M \times 3N$ matrix with a $3N \times 1$ column vector where $M$ is the number of collocation points in which we wish to compute the velocity at.  
+where ${f_0}_{n, i}$ is the $i$th component of the force on the fluid at ${\mathbf{x}_0}_n$ and $A_n$ is the corresponding quadrature weight of the $n$th Stokeslet. 
+
+It is often more common that we wish to compute the velocity at a set of collocation points $\{\mathbf{x_n}\}$. We note that as long as we keep the quadrature rule the same for all collocation points then we keep the set of ${f_0}_{n, i}$ remains the same and only $\mathbf{x}$ changes for each collocation point. The implies that the computation of this sum can for a single collocation point be viewed as the product of a dense $3 \times 3N$ matrix with a $3N \times 1$ column vector where N is the number of Stokelets. By extension of this idea the computation for a set of collocation points can be viewed as the product of a dense $3M \times 3N$ matrix with a $3N \times 1$ column vector where $M$ is the number of collocation points in which we wish to compute the velocity at.  
 The computation of this matrix vector product can be written as 
 \begin{equation}
 \label{eq:matrixvectorproduct}
@@ -248,13 +267,13 @@ A =
 \begingroup
 \setlength\arraycolsep{1pt}
 \begin{bmatrix}
-S^{\epsilon}_{1,1}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{2,1}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{3,1}(\mathbf{x}_1,\mathbf{x_{0}}_1) & \dots & S^{\epsilon}_{1,1}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{2,1}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{3,1}(\mathbf{x}_N,\mathbf{x_{0}}_1)\\
-S^{\epsilon}_{1,2}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{2,2}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{3,2}(\mathbf{x}_1,\mathbf{x_{0}}_1) & \dots & S^{\epsilon}_{1,2}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{2,2}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{3,2}(\mathbf{x}_N,\mathbf{x_{0}}_1)\\
-S^{\epsilon}_{1,3}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{2,3}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{3,3}(\mathbf{x}_1,\mathbf{x_{0}}_1) & \dots & S^{\epsilon}_{1,3}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{2,3}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{3,3}(\mathbf{x}_N,\mathbf{x_{0}}_1)\\
+S^{\epsilon}_{1,1}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{1,2}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{1,3}(\mathbf{x}_1,\mathbf{x_{0}}_1) & \dots & S^{\epsilon}_{1,1}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{1,3}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{1,3}(\mathbf{x}_N,\mathbf{x_{0}}_1)\\
+S^{\epsilon}_{2,1}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{2,2}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{2,3}(\mathbf{x}_1,\mathbf{x_{0}}_1) & \dots & S^{\epsilon}_{2,1}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{2,2}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{2,3}(\mathbf{x}_N,\mathbf{x_{0}}_1)\\
+S^{\epsilon}_{3,1}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{3,2}(\mathbf{x}_1,\mathbf{x_{0}}_1) & S^{\epsilon}_{3,3}(\mathbf{x}_1,\mathbf{x_{0}}_1) & \dots & S^{\epsilon}_{3,1}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{3,2}(\mathbf{x}_N,\mathbf{x_{0}}_1) & S^{\epsilon}_{3,3}(\mathbf{x}_N,\mathbf{x_{0}}_1)\\
 \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
-S^{\epsilon}_{1,1}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{2,1}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{3,1}(\mathbf{x}_1,\mathbf{x_{0}}_M) & \dots & S^{\epsilon}_{1,1}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{2,1}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{3,1}(\mathbf{x}_N,\mathbf{x_{0}}_M)  \\
-S^{\epsilon}_{1,2}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{2,2}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{3,2}(\mathbf{x}_1,\mathbf{x_{0}}_M) & \dots & S^{\epsilon}_{1,2}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{2,2}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{3,2}(\mathbf{x}_N,\mathbf{x_{0}}_M) \\
-S^{\epsilon}_{1,3}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{2,3}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{3,3}(\mathbf{x}_1,\mathbf{x_{0}}_M) & \dots & S^{\epsilon}_{1,3}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{2,3}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{3,3}(\mathbf{x}_N,\mathbf{x_{0}}_M) \\
+S^{\epsilon}_{1,1}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{1,2}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{1,3}(\mathbf{x}_1,\mathbf{x_{0}}_M) & \dots & S^{\epsilon}_{1,1}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{1,2}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{1,3}(\mathbf{x}_N,\mathbf{x_{0}}_M)  \\
+S^{\epsilon}_{2,1}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{2,2}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{2,3}(\mathbf{x}_1,\mathbf{x_{0}}_M) & \dots & S^{\epsilon}_{2,1}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{2,2}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{2,3}(\mathbf{x}_N,\mathbf{x_{0}}_M) \\
+S^{\epsilon}_{3,1}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{3,2}(\mathbf{x}_1,\mathbf{x_{0}}_M) & S^{\epsilon}_{3,3}(\mathbf{x}_1,\mathbf{x_{0}}_M) & \dots & S^{\epsilon}_{3,1}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{3,2}(\mathbf{x}_N,\mathbf{x_{0}}_M) & S^{\epsilon}_{3,3}(\mathbf{x}_N,\mathbf{x_{0}}_M) \\
 \end{bmatrix}
 \endgroup
 \end{equation*}

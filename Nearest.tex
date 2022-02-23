@@ -1,4 +1,30 @@
 \section{Nearest}
-Using an idea based on 
+Looking at the values in which we obtain from the direct solution we find that the in most cases the kernel $S^\epsilon_{ij}(\mathbf{y},\mathbf{x}_0)$ changes much more rapidly than $\mathbf{f}_0(\mathbf{x}_0)$ over the surface of the sphere. In order to capture these changes with the least amount of quadrature points we would like to use a finer quadrature rule with more points to capture the rapid changes in the kernel and a coarser quadrature rule to capture the slower changes in $\mathbf{F}(\mathbf{x}_0)$ \cite{Smith2018AEquation, Gallagher2021}. In order achieve this goal we will consider two surface discretisation of $\partial D$ one coarse and one fine. We will denote these by $\{\mathbf{x}_1, \dots, \mathbf{x}_n\}$ and $\{\mathbf{X}_1, \dots, \mathbf{X}_Q\}$ where we assume that $N \ll Q$. The coarse discretisation will be our set of points in which we will discretise out force and our fine discretisation will serve as our set of quadrature points. In order to map our fine quadrature discretisation onto our set of coarse force point will then use nearest-neighbour interpolation defined by $\mathcal{N}:\{ 1, \dots, Q\} \to \{ 1, \dots, N\}$ where 
+\begin{equation}
+    \mathcal{N}(q) := \underset{n=1, \ldots, N}{\operatorname{argmin}}|\boldsymbol{x}_n-\boldsymbol{X}_q|
+\end{equation}
+This allows use to define \cref{eq:BIE} as 
+\begin{equation}
+\begin{aligned}
+\label{eq:BIENearest1}
+        u_i(\mathbf{y}) &= \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\mathbf{y}, \mathbf{X}_q\right) f_{0,j}(\mathbf{X}_q) d s(\mathbf{X}_q) \\
+        &= \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\mathbf{y}, \mathbf{X}_q\right) f_{0,j}(\mathcal{N}(q)) d s(\mathcal{N}(q)) \\
+        & = \frac{1}{8 \pi \mu} \sum_{q=1}^Q S_{i j}^{\epsilon}\left(\mathbf{y}, \mathbf{X}_q\right){f_{0,j}}_{\mathcal{N}(q)}A_{\mathcal{N}(q)}
+\end{aligned}
+\end{equation}
+where the final line is the descritisation over the corse set of quadrature In order to be able to use this interpolation in the direct solution we need to form $\mathcal{N}(q)$ into a matrix form. We will express the operator as a $Q \times N$ sparse matrix,
+\begin{equation*}
+    \nu [q, \hat{n}]= \begin{cases} 1/k & \text { if } \hat{n}=\underset{n=1, \ldots, N}{\operatorname{argmin}}|x_n-X_q| , \\ 0 & \text { otherwise }\end{cases}
+\end{equation*}
+where k is the number of results from $\operatorname{argmin}$ for each $q$ \cite{Gallagher2020}. This allows a fine point to be mapped to multiple coarse points if they are equidistant, with its contribution evenly distributed between them. This means we we write \cref{eq:BIENearest1} as 
+\begin{equation}
+    u_i(\mathbf{y}) = \frac{1}{8 \pi \mu} \sum_{q=1}^Q S_{i j}^{\epsilon}\left(\mathbf{y}, \mathbf{x}_q\right) \sum_{n=1}^{N} \nu[q,n] f_{0,j}(\mathbf{X}_n) A_n
+\end{equation}
+As before can can consider the velocity at a set of collocation points $\{y_m\}$ with $y=1,\dots,M$ and construct a system of matrix vector products. If we write $U$ and $F$ as before we can write A in a similar form however $\mathbf{x}_n$ now runs to $Q$ instead of $N$. In order for our Matrix vector system to work we need to reduce the size of A back to a $3M \times 3N$ matrix which we do though our nearest neighbour matrix. By taking the Kronecker product of $\nu$ with the $3 \times 3$ identity matrix ($N = \nu \otimes \mathbb{I}_{3\times3}$) we form a valid system
+\begin{equation}
+    U = A \cdot N \cdot F
+\end{equation}
+
+\section{Resistance Problems}
 
 \section{Nearest KIFMM Hybrid}
