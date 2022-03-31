@@ -1,30 +1,36 @@
-\section{Nearest}
-Looking at the values in which we obtain from the direct solution we find that the in most cases the kernel $S^\epsilon_{ij}(\mathbf{y},\mathbf{x}_0)$ changes much more rapidly than $\mathbf{f}_0(\mathbf{x}_0)$ over the surface of the sphere. In order to capture these changes with the least amount of quadrature points we would like to use a finer quadrature rule with more points to capture the rapid changes in the kernel and a coarser quadrature rule to capture the slower changes in $\mathbf{F}(\mathbf{x}_0)$ \cite{Smith2018AEquation, Gallagher2021}. In order achieve this goal we will consider two surface discretisation of $\partial D$ one coarse and one fine. We will denote these by $\{\mathbf{x}_1, \dots, \mathbf{x}_n\}$ and $\{\mathbf{X}_1, \dots, \mathbf{X}_Q\}$ where we assume that $N \ll Q$. The coarse discretisation will be our set of points in which we will discretise out force and our fine discretisation will serve as our set of quadrature points. In order to map our fine quadrature discretisation onto our set of coarse force point will then use nearest-neighbour interpolation defined by $\mathcal{N}:\{ 1, \dots, Q\} \to \{ 1, \dots, N\}$ where 
+\section{NEAREST}
+When we look at the over all error estimation for the method of regularised stokeslets we find the total error to be $\mathcal{O}(\epsilon) + \mathcal{O}(h) + \mathcal{O}(h^2\epsilon^{-1}) + \mathcal{O}(P\epsilon^{-1/P} h^{1-P})$. In order to reduce the overall error we must reduce $\epsilon$ such that the regularisation error decreases, however doing this necessitates the reduction of $h$ the average quadrature spacing to keep the discretisation error at a similar size. In order to still fully cover our boundary we must therefore increase the number of quadrature points used in the calculation, which will increase the computation needed to both perform the direct vector matrix product or the matrix inversion required for resistance problems. 
+
+Methods such as the Boundary Element Method (BEM) \cite{Smith2009AFlow} attempt to fix this problem by decoupling the quadrature and traction discretisation, allowing for the stokeslet kernel to be evaluate in the most appropriate means without affecting the overall number of degrees of freedom. This work has allowed for larger systems to be explored, such as model cilia-driven flows \cite{Sampaio2014Left-rightLaterality,Smith2012SymmetryEmbryo}. Computational experiments done show that BEM methods can take up to 3 orders of magnitude less processing time and memory \cite{Smith2009AFlow} when compared to the Nyström method.
+
+The NEAREST method proposed by Smith \cite{Smith2018AEquation} aims to decouple the quadrature and traction discretisation's while still preserving the simplicity of the low order quadrature rule used in \cref{eq:Nystrom}. When analysing the values for both the kernel \{$S^\epsilon_{ij}(\bm{y},\bm{x})$\} and force values $\{\bm{f}(\bm{x})\}$ obtained in the method of regularised Stokeslets we find that in most cases the kernel changes much more rapidly than over the surface of the sphere. In order to capture these changes with the least amount of degrees of freedom, we propose to use a finer quadrature rule with more points in order to capture the rapid changes in the kernel and a coarser discretisation to capture the slower changes in $\bm{f}(\bm{x})$. In order to achieve this goal we will consider two surface discretisations of $\partial D$, one coarse and one fine denoted by $\{\bm{x}_1, \dots, \bm{x}_n\}$ and $\{\bm{X}_1, \dots, \bm{X}_Q\}$ respectively and it is assumed that $N \leq Q$. The coarse discretisation will be our set of points in which we will discretise the force and our fine discretisation will serve as our set of quadrature points for the kernel. In order to map our fine quadrature discretisation onto our set of coarse force point will then use nearest-neighbour interpolation defined by $\mathcal{N}:\{ 1, \dots, Q\} \to \{ 1, \dots, N\}$ where 
 \begin{equation}
     \mathcal{N}(q) := \underset{n=1, \ldots, N}{\operatorname{argmin}}|\boldsymbol{x}_n-\boldsymbol{X}_q|
 \end{equation}
-This allows use to define \cref{eq:BIE} as 
+This allows us to define \cref{eq:BIE} as 
 \begin{equation}
 \begin{aligned}
 \label{eq:BIENearest1}
-        u_i(\mathbf{y}) &= \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\mathbf{y}, \mathbf{X}_q\right) f_{0,j}(\mathbf{X}_q) d s(\mathbf{X}_q) \\
-        &= \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\mathbf{y}, \mathbf{X}_q\right) f_{0,j}(\mathcal{N}(q)) d s(\mathcal{N}(q)) \\
-        & = \frac{1}{8 \pi \mu} \sum_{q=1}^Q S_{i j}^{\epsilon}\left(\mathbf{y}, \mathbf{X}_q\right){f_{0,j}}_{\mathcal{N}(q)}A_{\mathcal{N}(q)}
+        u_i(\bm{y}) &= \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\bm{y}, \bm{X}_q\right) f_{j}(\bm{X}_q) d s(\bm{X}_q) \\
+        &= \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\bm{y}, \bm{X}_q\right) f_{j}(\mathcal{N}(q)) d s(\mathcal{N}(q)) \\
+        & = \frac{1}{8 \pi \mu} \sum_{q=1}^Q S_{i j}^{\epsilon}\left(\bm{y}, \bm{X}_q\right){f_{j}}[\mathcal{N}(q)]A[\mathcal{N}(q)]
 \end{aligned}
 \end{equation}
-where the final line is the descritisation over the corse set of quadrature In order to be able to use this interpolation in the direct solution we need to form $\mathcal{N}(q)$ into a matrix form. We will express the operator as a $Q \times N$ sparse matrix,
-\begin{equation*}
-    \nu [q, \hat{n}]= \begin{cases} 1/k & \text { if } \hat{n}=\underset{n=1, \ldots, N}{\operatorname{argmin}}|x_n-X_q| , \\ 0 & \text { otherwise }\end{cases}
-\end{equation*}
-where k is the number of results from $\operatorname{argmin}$ for each $q$ \cite{Gallagher2020}. This allows a fine point to be mapped to multiple coarse points if they are equidistant, with its contribution evenly distributed between them. This means we we write \cref{eq:BIENearest1} as 
+where the final line is the discretisation of the integral with the fine quadrature points. In order to be able to use this interpolation we need to express the operator $\mathcal{N}(q)$ in its matrix form, a $Q \times N$ sparse matrix defined by
 \begin{equation}
-    u_i(\mathbf{y}) = \frac{1}{8 \pi \mu} \sum_{q=1}^Q S_{i j}^{\epsilon}\left(\mathbf{y}, \mathbf{x}_q\right) \sum_{n=1}^{N} \nu[q,n] f_{0,j}(\mathbf{X}_n) A_n
+\label{eq:NNMatrix}
+    \nu [q, \hat{n}]= \begin{cases} 1 & \text { if } \hat{n}=\underset{n=1, \ldots, N}{\operatorname{argmin}}|x_n-X_q| , \\ 0 & \text { otherwise. }\end{cases}
 \end{equation}
-As before can can consider the velocity at a set of collocation points $\{y_m\}$ with $y=1,\dots,M$ and construct a system of matrix vector products. If we write $U$ and $F$ as before we can write A in a similar form however $\mathbf{x}_n$ now runs to $Q$ instead of $N$. In order for our Matrix vector system to work we need to reduce the size of A back to a $3M \times 3N$ matrix which we do though our nearest neighbour matrix. By taking the Kronecker product of $\nu$ with the $3 \times 3$ identity matrix ($N = \nu \otimes \mathbb{I}_{3\times3}$) we form a valid system
+This provides a direct mapping for each point from our fine quadrature set to the coarse force set. When considering large quadrature sets we can find cases where a fine quadrature points is equidistant to two or more force points. Under the current form of $\nu [q, \hat{n}]$ the quadrature point is mapped to the first force point in the set. This means that the same set of force and quadrature points can have different results depending on how the both set are arranged. If we instead weight the quadrature point evenly between all equidistant force points we can eliminate this problem, This can be implemented by replacing the 1 with $1/k$ where $k$ is the number of points in $\{x_n\}$ which are equidistant to $\{X_q\}$. This allows a fine point to be mapped to multiple coarse points if they are equidistant, with its contribution evenly distributed between them. The sparse matrix form of $\mathcal{N}(q)$ allows us to express \cref{eq:BIENearest1} as 
 \begin{equation}
-    U = A \cdot N \cdot F
+    u_i(\bm{y}) = \frac{1}{8 \pi \mu} \sum_{n=1}^q  f_{j}(\bm{x}_n) A_n \sum_{q=1}^{Q}S_{i j}^{\epsilon}\left(\bm{y}, \bm{X}_q\right) \nu[q,n] 
 \end{equation}
+As we considered in the direct product \cref{eq:matrixvectorproduct} we can calculate the velocity at a set of collocation points $\{x_n\}$ with $n=1,\dots,N$ as a matrix-vector product. If we write $\underline{U}$ and $\underline{F}$ as before, the stokeslet matrix $A$ however now takes the form of a $3N \times 3Q$ matrix. The nearest neighbour matrix $\nu [q, \hat{n}]$ can be used by taking the Kronecker product of $\nu$ with the $3 \times 3$ identity matrix ($\Pi = \nu \otimes \mathbb{I}_{3\times3}$) to map each axis at every point. This allows use to form the system
+\begin{equation}
+    \underline{U} = A \cdot \Pi \cdot \underline{F}.
+\end{equation}
+The NEAREST method allows for both the forward matrix product to compute the velocity of the fluid as well as solving the resistance problem through $\underline{F} = (A \cdot \Pi)^{-1} \underline{U}$. The NEAREST method is not directly aimed at compeating directly with BEM methods in performance it does offer a easy mesh-free adaptation to the standard Nyström method which allows for the computation of larger scale systems than that of the standard Direct product.
 
-\section{Resistance Problems}
+By introducing the second discretisation we have now changed the error estimations for the method, we still keep the regularisation error of $\mathcal{O}(\epsilon)$ and traction discretisation error $\mathcal{O}(h_f)$. The quadrature error now depends on if the traction points are contained (within distance $O(\epsilon)$ or closer) in the quadrature set. We introduce the distances $h_q$ and $h_f$ to be the length scales associated with the quadrature and force discretisation respectively. In the contained case we obtain a quadrature error of $\mathcal{O}(\epsilon^{-1}h^2_q) + \mathcal{O}(P\epsilon^{-1/P}h^{1-1/P}_q)$ for all integer $P>3$ and for the disjoint case the error decouples from $\epsilon$ to be $\mathcal{O}(h^3_q\delta^{2}) + \mathcal{O}(Ph^{1-2/P}_q)$ where $\delta$ is the closest distance between quadrature and traction points \cite{Gallagher2019SharpEquation}.
 
-\section{Nearest KIFMM Hybrid}
+\subsection{Comparison of NEAREST to Nyström method}

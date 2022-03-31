@@ -1,4 +1,4 @@
-\documentclass[11pt,twoside,a4paper]{article}
+\documentclass[12pt,twoside,a4paper]{article}
 \usepackage[utf8]{inputenc}
 
 \usepackage[colorlinks=false]{hyperref}
@@ -6,6 +6,7 @@
 \usepackage[fleqn]{amsmath}
 \usepackage{mathtools}
 \usepackage{amsfonts}
+\usepackage{bm}
 \usepackage{multirow}
 \usepackage{stmaryrd}
 \usepackage{cleveref}
@@ -32,7 +33,7 @@
 
 \usepackage[toc,page]{appendix}
 
-\usepackage[backend=biber, style=numeric, sorting=none, uniquename=init, giveninits=true, url=false]{biblatex}
+\usepackage[backend=biber, style=numeric, sorting=none, uniquename=init, giveninits=true, url=false, natbib=true]{biblatex}
 \addbibresource{references.bib}
 \setcounter{biburlnumpenalty}{100}
 \setcounter{biburlucpenalty}{100}
@@ -67,14 +68,14 @@
 \newpage
 \thispagestyle{empty}
 
-%\section*{Acknowledgements}
-%ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\section*{Acknowledgements}
+ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-%\newpage
-%\thispagestyle{empty}
+\newpage
+\thispagestyle{empty}
 
-%\section*{Abstract}
-%ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\section*{Abstract}
+ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 \newpage
 {
@@ -82,21 +83,23 @@
   \tableofcontents
 }
 
-%\newpage
-%\thispagestyle{empty}
-\%listoffigures
-%\listoftables
+\newpage
+\thispagestyle{empty}
+\listoffigures
+\listoftables
 
 \newpage
 \input{Introduction}
 \input{MethodofRegularizedStokeslets}
-\input{KIFMM}
 \input{Nearest}
-\input{Preconditioning}
+\input{KIFMM}
+\input{Hybrid}
+\input{SwimmingProblems}
 \input{NumericalSimulations}
 \input{Discussion}
 \input{Appendix}
+
+
+
 \printbibliography[heading=bibintoc]
 \end{document}
-
-from
