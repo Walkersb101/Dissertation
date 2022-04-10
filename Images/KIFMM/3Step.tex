@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+    \node[anchor = south west,inner sep=0] (image) at (0,0) {\includegraphics[width=.6\textwidth]{Images/KIFMM/3 Step.pdf}};
+    \begin{scope}[x={(image.south east)},y={(image.north west)}]
+    \begin{scope}[x={(image.south east)},y={(image.north west)}]
+        \node at (0.25,0.9) {$A$};
+        \node at (0.75,0.9) {$B$};
+        
+        \node at (0.25,0.22) {$C_A$};
+        \node at (0.75,0.22) {$C_B$};
+    
+        \node at (0.5,0.78) {$\mathcal{O}(N^2)$};
+        \node at (0.5,0.34) {$\mathcal{O}(1)$};
+        \node at (0.35,0.5) {$\mathcal{O}(N)$};
+        \node at (0.65,0.5) {$\mathcal{O}(N)$};
+    \end{scope}
+    \end{scope}
+\end{tikzpicture}

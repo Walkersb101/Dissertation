@@ -1,0 +1,6 @@
+PWD C:/Users/Sam/Documents/Dissertation/Dissertation-Latex/Images
+INPUT c:/texlive/2021/texmf.cnf
+INPUT c:/texlive/2021/texmf-dist/web2c/texmf.cnf
+INPUT c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT Figure1.tex
+OUTPUT build/Figure1.log

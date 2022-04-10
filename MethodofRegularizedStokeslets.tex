@@ -1,6 +1,6 @@
-\section{Method of regularised stokeslets}
+\section{Method of regularised stokeslets} \label{sec:MRS}
 \subsection{Stokes flow}
-When we analyse many physical systems, particularly in microscopic biology, we find that the inertial forces within the fluid are small in comparison to that of the viscous terms. In these cases we can take the limit of the Navier-Stokes equation (\cref{eq:NavierStokes})where $R e=\rho u L/\mu \to 0 $ \cite{Trombley2019BasicFlows}. In this limit, we obtain the steady-state Stokes equations in two or three dimensions as 
+When we analyse many physical systems, particularly in microscopic biology, we find that the inertial forces within the fluid are small in comparison to that of the viscous terms. In these cases we can take the limit of the Navier-Stokes equation (\cref{eq:NavierStokes})where $Re=\rho u L/\mu \to 0 $ \cite{Trombley2019BasicFlows}. In this limit, we obtain the steady-state Stokes equations in two or three dimensions as 
 \begin{subequations}
 \label{eq:StokesFlow}
 \begin{align}
@@ -12,7 +12,7 @@ where $\bm{u}$ is the velocity of the fluid, $\bm{F}$ is the external body force
 
 Stokes flows occur when either where $\mu$ is large or at small length scales where $L$ (typical scale of the system) is very small such as when analysing the flows around cell, microorganism's or small capillaries \cite{Blake1972AOrganisms, Higdon1979APropulsion, Smith2009MathematicalFluids}. Stokes flow is not only useful in modelling flows in microbiology but in non-biological systems such are industrial applications with small scale flows and complex boundaries stokes flow with complex boundaries \cite{Liron1978StokesPipe, Liron1976StokesPlates}.
 
-When looking for solutions to the the Stokes equation \cref{eq:StokesFlow} there are many different techniques we can use both numerically and analytically we will be focusing on the use of the Green's function of Stokes flow called a \textit{stokeslet}\cite{Pozrikidis1992BoundaryFlow,Hancock1953TheLiquids} or \textit{Oseen tensor}\cite{Oseen1927NeuereHydrodynamik}. The stokeslet represents a fundamental solution for the velocity of the fluid given that an external force $\bm{F}$ acts on the fluid at a single point $\bm{F} = \bm{f_0}\delta(\bm{x})$ \cite{Hancock1953TheLiquids, Batchelor2000AnDynamics}.
+When looking for solutions to the Stokes equation \cref{eq:StokesFlow} there are many different techniques we can use both numerically and analytically we will be focusing on the use of the Green's function of Stokes flow called a stokeslet\cite{Pozrikidis1992BoundaryFlow,Hancock1953TheLiquids} or Oseen tensor\cite{Oseen1927NeuereHydrodynamik}. The stokeslet represents a fundamental solution for the velocity of the fluid given that an external force $\bm{F}$ acts on the fluid at a single point $\bm{F} = \bm{f_0}\delta(\bm{x})$ \cite{Hancock1953TheLiquids, Batchelor2000AnDynamics}.
 Through similar methods to those shown later for deriving the regularised stokeslet Equation, (\cref{eq:regstokeslet2}) we can derive the singular fundamental solutions to the Stokes equations as
 \begin{equation}
 \label{eq:singularsolutions}
@@ -189,7 +189,7 @@ as $f_{0,j}$ is constant we can take it out of the derivative on the left-hand s
 
 \begin{figure}[ht]
     \centering
-    \resizebox{.3\linewidth}{!}{\input{Images/Figure4}}
+    \resizebox{.3\linewidth}{!}{\input{Images/BoundaryIntergralDiagram}}
     \caption{Schematic diagram of the volume used to derive the boundary integral for Stokes flow}
     \label{fig:SystematicDiagram}
 \end{figure}
@@ -239,7 +239,7 @@ We again have used the divergence theorem to convert the volume integral to a su
 \end{equation}
 As the traction $\bm{g}$ denotes the traction exerted by the fluid on the body it must have the opposite sign to the stokeslet traction $\bm{f}$ and as such $\bm{f} = -\bm{g}$ where $\bm{f}$ denotes the force per unit area acting on the fluid. In order to use \cref{eq:BIE5} we need to have an explicit equation for $\bm{u}(\bm{x})$, as such we need to remove the integral and the cutoff function from the left hand side of \cref{eq:BIE5}, we do this though the approximation that $\int_{\mathbb{R}^{3}} u_{j}(\bm{x}) \phi^{\epsilon}\left(\bm{x}-\bm{y}\right) d V(\bm{x}) \approx u_j(\bm{y})$. By taking the approximation as exact we write that 
 \begin{equation}
-    u_j(\bm{x_0}) = \frac{1}{8 \pi \mu} \iint_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) f_{i}(\bm{x}) d s(\bm{x})
+    u_j(\bm{y}) = \frac{1}{8 \pi \mu} \iint_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) f_{i}(\bm{x}) d s(\bm{x})
 \end{equation}
 By using the fact that $S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) = S_{j i}^{\epsilon}\left(\bm{y}, \bm{x}\right)$ we can write \cref{eq:BIE5} as 
 \begin{equation}
@@ -257,7 +257,7 @@ where ${f}_{i}({\bm{y}}_n)$ is the $i$th component of the force on the fluid at 
 
 The discretisation of the integral in \cref{eq:BIE} introduced a discretisation error of $\mathcal{O}(h)$ where $h$ is the average spacing between quadrature points and a quadrature error which is also dependent on $\epsilon$. Analysis done by Cortez, Fauci and Medovikov \cite{Cortez2005} estimated the quadrature error introduced by this method to be $\mathcal{O}(h^2\epsilon^{-3})$ although more recently analysis by Gallagher, Choudhuri and Smith \cite{Gallagher2019SharpEquation} refined this estimate to $\mathcal{O}(h^2\epsilon^{-1}) + \mathcal{O}(P\epsilon^{-1/P} h^{1-P})$ for any integer $P>3$.
 
-\subsection{Resistance Problem}
+\subsection{Resistance Problem} \label{sec:resistance}
 As \cref{eq:Stokesletsum} can be used to calculate the velocity at any point in the fluid $\bm{x}$. By forming a set of collocation points $\{\bm{x}_m\}$ for $m=1,...,M$ we form a dense system of $3M$ equations which calculate the velocity at all points in $\{\bm{x}_m\}$. 
 A common problem in Stokes flow is the resistance problem, where the force distribution, and hence total force and moment, on a body is calculated from a prescribed rigid body motion. By prescribing velocities at each point $\{\bm{x}_m\}$ form a system of $3M$ equations with $3N$ unknowns $F_j(\bm{y}_n) := f_j(\bm{y}_n)A_n$. If $M \neq N$ we either under prescribe or over prescribe the system of equation, so we often choose to place both the collocation and quadrature points at the same set of positions, we will  refer to this as the Nyström discretisation \cite{Nystrom1930UberRandwertaufgaben}. For each of the rigid body motion modes, unit velocity translation along each axis and unit angular velocity rotation about each axis, are calculated we can form the grand resistance matrix $A$\cite{Pozrikidis1992BoundaryFlow}. By the linearity of Stokes equation $A$ relates the force $F$ and moment $M$ to the velocity $U$ and angular velocity $V$ for any rigid body motion. 
 \begin{equation*}
@@ -299,7 +299,7 @@ where $n=1,\dots,N$, $m=1,\dots,N$ and $j=1,2,3$. The computation of this matrix
 where $\underline{U}$ is a $3N \times 1$ column vector, $A$ is a $3N \times 3N$ matrix and $\underline{F}$ is a $3N \times 1$. In order to form an equation of this form we choose to write 
 \small
 \begin{equation*}
-    \underline{U} = [u_1(x_{1}), \; u_2(x_{1}), \; u_3(x_{1}), \; u_1(x_{2}), \; u_2(x_{2}), \; u_3(x_{2}), \; \dots \; u_1(x_{M}), \; u_2(x_{M}), \; u_3(x_{N})]^{T}
+    \underline{U} = [u_1({\bm{x}}_{1}), \; u_2({\bm{x}}_{1}), \; u_3({\bm{x}}_{1}), \; u_1({\bm{x}}_{2}), \; u_2({\bm{x}}_{2}), \; u_3({\bm{x}}_{2}), \; \dots \; u_1({\bm{x}}_{M}), \; u_2({\bm{x}}_{M}), \; u_3({\bm{x}}_{N})]^{T}u
 \end{equation*}
 \normalsize
 and 

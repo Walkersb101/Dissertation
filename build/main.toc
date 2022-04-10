@@ -1,53 +1,79 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{List of Figures}{5}{section*.4}%
+\contentsline {section}{List of Figures}{6}{section*.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{List of Tables}{5}{section*.5}%
+\contentsline {section}{List of Tables}{6}{section*.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1}Introduction}{6}{section.1}%
+\contentsline {section}{\numberline {1}Introduction}{7}{section.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}Method of Regularized Stokeslets}{6}{section.2}%
+\contentsline {section}{\numberline {2}Method of regularised stokeslets}{7}{section.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1}Stokes flow}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.1}Stokes flow}{7}{subsection.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2}Regularising the Stokeslet}{7}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.2}Regularising the stokeslet}{8}{subsection.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.2.1}Derivation of the Regularized Stokeslet}{8}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.1}Derivation of the regularised stokeslet}{9}{subsubsection.2.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.2.2}Specific Blob}{9}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2}Specific cutoff function}{12}{subsubsection.2.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.2.3}Boudnary intergral equations}{9}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.3}Boundary integral equations}{12}{subsubsection.2.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Nearest}{12}{section.3}%
+\contentsline {subsection}{\numberline {2.3}Resistance Problem}{17}{subsection.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Kernel-Independent Fast Multipole Method}{12}{section.4}%
+\contentsline {subsection}{\numberline {2.4}Matrix formulation}{18}{subsection.2.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1}Hierarchical decomposition of the computational domain}{12}{subsection.4.1}%
+\contentsline {section}{\numberline {3}NEAREST}{20}{section.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2}Equivalent surfaces/coronas}{12}{subsection.4.2}%
+\contentsline {subsection}{\numberline {3.1}Comparison of NEAREST to Nyström method}{23}{subsection.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3}Numerical approximation of the force densities}{12}{subsection.4.3}%
+\contentsline {section}{\numberline {4}Kernel-Independent Fast Multipole Method}{23}{section.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4}Evaluation}{12}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.1}Hierarchical decomposition of the computational domain}{24}{subsection.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.5}Comparison of KIFMM method vs Direct solver}{12}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.1.1}Interaction Lists}{24}{subsubsection.4.1.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Preconditioning}{12}{section.5}%
+\contentsline {subsection}{\numberline {4.2}Equivalent surfaces}{26}{subsection.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Numerical Simulations}{12}{section.6}%
+\contentsline {subsection}{\numberline {4.3}Evaluation}{28}{subsection.4.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.1}Cilia}{12}{subsection.6.1}%
+\contentsline {subsubsection}{\numberline {4.3.1}Upward Pass}{29}{subsubsection.4.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.2}Sperm}{12}{subsection.6.2}%
+\contentsline {subsubsection}{\numberline {4.3.2}Downwards Pass}{29}{subsubsection.4.3.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7}Results}{12}{section.7}%
+\contentsline {subsection}{\numberline {4.4}Optimisation}{31}{subsection.4.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {8}Discussion}{12}{section.8}%
+\contentsline {subsubsection}{\numberline {4.4.1}parallelisation}{32}{subsubsection.4.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A}Pseudocode}{12}{appendix.A}%
+\contentsline {subsection}{\numberline {4.5}Comparison of KIFMM with the Direct Method}{32}{subsection.4.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {A.1}Upwards pass}{12}{subsection.A.1}%
+\contentsline {section}{\numberline {5}NEAREST KIFMM Hybrid}{32}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {A.2}Downward pass}{12}{subsection.A.2}%
+\contentsline {subsection}{\numberline {5.1}Nearest Comparison}{34}{subsection.5.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{References}{12}{section*.6}%
+\contentsline {section}{\numberline {6}Mobility Problems}{34}{section.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.1}Numerical Implementation}{35}{subsection.6.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.2}Boundaries}{38}{subsection.6.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7}Multiple Swimmers}{40}{section.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {7.1}Initial Guess}{44}{subsection.7.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {7.2}Rescaling Mobility Matrix}{45}{subsection.7.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {7.3}Preconditioning}{45}{subsection.7.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {8}Numerical Simulations}{45}{section.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {8.1}Rods in Shear flow}{45}{subsection.8.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {9}Conclusion}{45}{section.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A}GMRES}{45}{appendix.A}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B}Tree traversal}{47}{appendix.B}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {C}Condition number}{49}{appendix.C}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{References}{51}{section*.16}%

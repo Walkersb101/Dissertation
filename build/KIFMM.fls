@@ -1,6 +1,22 @@
-PWD C:/Users/Sam/OneDrive - University of Birmingham/Uni/Disitation/Latex
+PWD C:/Users/Sam/Documents/Dissertation/Dissertation-Latex
 INPUT c:/texlive/2021/texmf.cnf
 INPUT c:/texlive/2021/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt
 INPUT KIFMM.tex
 OUTPUT build/KIFMM.log
+INPUT c:/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT ./Images/Figure2.tex
+INPUT ./Images/Figure2.tex
+INPUT ./Images/Figure2.tex
+INPUT Images/Figure2.tex
+INPUT ./Images/Figure2.tex
+INPUT ./Images/Figure2.tex
+INPUT Images/Figure2.tex
+INPUT ./Images/Figure1.tex
+INPUT ./Images/Figure1.tex
+INPUT ./Images/Figure1.tex
+INPUT Images/Figure1.tex
+INPUT ./Images/Figure1.tex
+INPUT ./Images/Figure1.tex
+INPUT Images/Figure1.tex

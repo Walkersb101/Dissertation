@@ -853,6 +853,14 @@
   </bcf:datafieldset>
   <!-- SOURCEMAP -->
   <bcf:sourcemap>
+    <bcf:maps datatype="bibtex" level="user">
+      <bcf:map>
+        <bcf:map_step map_field_source="doi" map_match="\{\\\_\}|\{\_\}|\\\_" map_replace="\_"/>
+      </bcf:map>
+      <bcf:map>
+        <bcf:map_step map_field_source="url" map_match="\{\\\_\}|\{\_\}|\\\_" map_replace="\_"/>
+      </bcf:map>
+    </bcf:maps>
     <bcf:maps datatype="bibtex" level="driver">
       <bcf:map>
         <bcf:map_step map_field_set="day" map_null="1"/>
@@ -2350,12 +2358,54 @@
     <bcf:citekey order="2">Smith2009MathematicalFluids</bcf:citekey>
     <bcf:citekey order="3">Liron1978StokesPipe</bcf:citekey>
     <bcf:citekey order="3">Liron1976StokesPlates</bcf:citekey>
-    <bcf:citekey order="4">Hancock1953TheLiquids</bcf:citekey>
-    <bcf:citekey order="4">Batchelor2000AnDynamics</bcf:citekey>
     <bcf:citekey order="4">Pozrikidis1992BoundaryFlow</bcf:citekey>
-    <bcf:citekey order="5">Cortez2005</bcf:citekey>
-    <bcf:citekey order="5">Olson2013ModelingFormulation</bcf:citekey>
-    <bcf:citekey order="5">Nguyen2014ReductionFlow</bcf:citekey>
+    <bcf:citekey order="4">Hancock1953TheLiquids</bcf:citekey>
+    <bcf:citekey order="5">Oseen1927NeuereHydrodynamik</bcf:citekey>
+    <bcf:citekey order="6">Hancock1953TheLiquids</bcf:citekey>
+    <bcf:citekey order="6">Batchelor2000AnDynamics</bcf:citekey>
+    <bcf:citekey order="7">Cortez2001</bcf:citekey>
+    <bcf:citekey order="7">Cortez2005</bcf:citekey>
+    <bcf:citekey order="8">Olson2013ModelingFormulation</bcf:citekey>
+    <bcf:citekey order="9">Olson2013ModelingFormulation</bcf:citekey>
+    <bcf:citekey order="9">Nguyen2014ReductionFlow</bcf:citekey>
+    <bcf:citekey order="9">Zhao2019</bcf:citekey>
+    <bcf:citekey order="10">Cortez2001</bcf:citekey>
+    <bcf:citekey order="10">Cortez2005</bcf:citekey>
+    <bcf:citekey order="11">Stakgold1968Boundary2</bcf:citekey>
+    <bcf:citekey order="11">Pozrikidis1992BoundaryFlow</bcf:citekey>
+    <bcf:citekey order="12">Cortez2005</bcf:citekey>
+    <bcf:citekey order="13">Cortez2005</bcf:citekey>
+    <bcf:citekey order="14">Gallagher2019SharpEquation</bcf:citekey>
+    <bcf:citekey order="15">Nystrom1930UberRandwertaufgaben</bcf:citekey>
+    <bcf:citekey order="16">Pozrikidis1992BoundaryFlow</bcf:citekey>
+    <bcf:citekey order="17">Saad1986GMRES:Systems</bcf:citekey>
+    <bcf:citekey order="17">Elman2005FiniteDynamics</bcf:citekey>
+    <bcf:citekey order="18">Smith2009AFlow</bcf:citekey>
+    <bcf:citekey order="19">Sampaio2014Left-rightLaterality</bcf:citekey>
+    <bcf:citekey order="19">Smith2012SymmetryEmbryo</bcf:citekey>
+    <bcf:citekey order="20">Smith2009AFlow</bcf:citekey>
+    <bcf:citekey order="21">Smith2018AEquation</bcf:citekey>
+    <bcf:citekey order="22">Gallagher2019SharpEquation</bcf:citekey>
+    <bcf:citekey order="23">Beatson</bcf:citekey>
+    <bcf:citekey order="23">Tornberg2008</bcf:citekey>
+    <bcf:citekey order="23">Wang2007AEquations</bcf:citekey>
+    <bcf:citekey order="23">Yokota</bcf:citekey>
+    <bcf:citekey order="24">Ying2004</bcf:citekey>
+    <bcf:citekey order="24">Ying2005</bcf:citekey>
+    <bcf:citekey order="24">Rostami2016Kernel-independentStokeslets</bcf:citekey>
+    <bcf:citekey order="24">Yan</bcf:citekey>
+    <bcf:citekey order="25">Ying2004</bcf:citekey>
+    <bcf:citekey order="26">Rostami2016Kernel-independentStokeslets</bcf:citekey>
+    <bcf:citekey order="27">Cortez2005</bcf:citekey>
+    <bcf:citekey order="28">Gallagher2019RapidAnalysis</bcf:citekey>
+    <bcf:citekey order="29">Liron1981ExistenceBoundaries</bcf:citekey>
+    <bcf:citekey order="30">Ainley2008TheStokeslets</bcf:citekey>
+    <bcf:citekey order="30">Cortez2015</bcf:citekey>
+    <bcf:citekey order="31">Ying2004</bcf:citekey>
+    <bcf:citekey order="32">Saad1986GMRES:Systems</bcf:citekey>
+    <bcf:citekey order="33">Ipsen1998TheMethods</bcf:citekey>
+    <bcf:citekey order="34">Arnoldi1951TheProblem</bcf:citekey>
+    <bcf:citekey order="34">Elman2005FiniteDynamics</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

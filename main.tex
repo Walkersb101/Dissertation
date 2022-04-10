@@ -3,7 +3,9 @@
 
 \usepackage[colorlinks=false]{hyperref}
 
-\usepackage[fleqn]{amsmath}
+%\usepackage[fleqn]{amsmath}
+\usepackage{import}
+\usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{amsfonts}
 \usepackage{bm}
@@ -18,6 +20,15 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{setspace}
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{dsfont}
+\usepackage{booktabs}
+\usepackage{rotating}
 
 \numberwithin{equation}{section}
 
@@ -27,7 +38,7 @@
 \usepackage[margin=1in]{geometry}
 \renewcommand{\arraystretch}{1.7}
 
-\linespread{1.25}
+\doublespacing
 
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 
@@ -42,7 +53,7 @@
 \DeclareSourcemap{
     \maps{
         % Replace '{\_}', '{_}' or '\_' with just '_' in doi field
-        \map{ 
+        \map{
             \step[
                 fieldsource=doi,
                 match=\regexp{\{\\\_\}|\{\_\}|\\\_},
@@ -50,7 +61,7 @@
             ]
         }
         % Replace '{\_}', '{_}' or '\_' with just '_' in url field
-        \map{ 
+        \map{
             \step[
                 fieldsource=url,
                 match=\regexp{\{\\\_\}|\{\_\}|\\\_},
@@ -63,18 +74,15 @@
 
 \begin{document}
 
-\include{titlePage}
-
-\newpage
-\thispagestyle{empty}
-
-\section*{Acknowledgements}
-ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\input{titlePage}
 
 \newpage
 \thispagestyle{empty}
 
 \section*{Abstract}
+ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\section*{Acknowledgements}
 ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 \newpage
@@ -87,6 +95,7 @@ ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidi
 \thispagestyle{empty}
 \listoffigures
 \listoftables
+\listofalgorithms
 
 \newpage
 \input{Introduction}
@@ -94,12 +103,11 @@ ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidi
 \input{Nearest}
 \input{KIFMM}
 \input{Hybrid}
-\input{SwimmingProblems}
+\input{MobilityProblems}
 \input{NumericalSimulations}
 \input{Discussion}
 \input{Appendix}
 
-
-
+\FloatBarrier
 \printbibliography[heading=bibintoc]
 \end{document}

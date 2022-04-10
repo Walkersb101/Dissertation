@@ -1,2 +1,38 @@
 \section{Numerical Simulations}
 \subsection{Rods in Shear flow}
+
+In the case of the Nyström discretisation we have that $B = -B^T$, however this is not the case for the NEAREST discretisation. We construct both $B$ and $B^T$ out side of the GMRES method as they remain the same, we could also concider doing this for the KIFMM method as our discretisation points remain fixed for all GMRES iterations and as such so do the stokeslet kernel matrices uses. This would speed up the method as the majority of the computation in the KIFMM method is in the generation of the stokeslet kernel, particularly for the multipole to multipole translation (\cref{eq:M2L}) and dence particle to particle interactions. This however would take a significant amount of memory as the stokeslet matrices needed for each M2L translation would need to be stored. A proposed optimisation is to use fast fourier transforms to instead compute the M2L translation. Concidering a M2L translation of the potential $\{\bm{f}^{AU}\}$ of a node $A$ onto the downwards surface $\{\bm{q}^{BD}\}$ of a node $B$. Both the upwards and downwards equivilent potentials are defined to be a cartesian grid with the same number of quadrature points, by padding the centre of each surface with gridpoints of $0$ dencity we can view the M2L translation as a 3D convolution \cite{Ying2004} which can be carried out efficently by FFT. We would only need to compute a single FFT and IFFT (inverse fast fourier transform) per node and element wide multiplication for each node in the $V$ or $W$ interaction lists. We have yet to implent this method, but look to explore this approch if further research requires it.
+
+In the hope to speed up the GMRES method without changing the underlying KIFMM method we will look at reducing the required number of GMRES iterations requried to converge to the required tolerance.
+
+\subsection{Initial Guess}\label{sec:Guess}
+
+An easierly implemented attempt at speeding at reduceing the number of GMRES iterations is to provide an intial guess to the GMRES solver such that initial relative residual error is already minimised and the number of iteration required to converge will be lower. As seen in \cref{appendix:ConNum} the condition number of the system decreases as we decrease $\epsilon$, this means that in most cases the required number of GMRES iteractions required for systems with smaller condition number to converge is often smaller that
+
+\subsection{Rescaling Mobility Matrix}
+
+\subsection{Preconditioning}
+A more optimal way in which we can solve kyolov subspace methods is to use a precondtioner such that the matrix system we are try into use has a smaller condition number with more clustered eigenvalues. If we call the mobility matrix defined in \cref{eq:mobilityStructure} $M$, the vector of unknowns $\bm{x}$ and the right hand side $\bm{b}$ then we can refer to the system as $Mx=b$. The Matrix $M$ is much more badly conditioned (see \cref{appendix:ConNum}) that the stokeslet matrix $A$ as as such requires a significant number of iteration to solve.
+
+\begin{table}[h]
+\begin{singlespace}
+\centering
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1}
+\small
+\begin{tabular}{p{2cm} p{1.5cm} p{1.5cm} p{1.5cm} p{0.1cm} p{1.5cm} p{1.5cm} p{1.5cm}}
+\multirow{2}{*}{\parbox{1.8cm}{number of swimmers}} & \multicolumn{3}{l}{No precondtioner} & & \multicolumn{3}{l}{Initial Guess} \\ \cline{2-4} \cline{6-8}
+  & \# of iters & \# of MVPs ($M$) & walltime (sec.) & & \# of iters & \# of MVPs ($M$) & walltime (sec.) \\ \hline
+  1 & 1 & 1 & 1 & & 1 & 1 & 1 \\
+  1 & 1 & 1 & 1 & & 1 & 1 & 1 \\ \hline
+  \multirow{2}{*}{\parbox{1.8cm}{number of swimmers}} & \multicolumn{3}{l}{Rescaling} & &\multicolumn{3}{l}{Least-squares commutator} \\ \cline{2-4} \cline{6-8}
+  & \# of iters & \# of MVPs ($M$) & walltime (sec.) & & \# of iters & \# of MVPs ($M$) & walltime (sec.) \\ \hline
+  1 & 1 & 1 & 1 & & 1 & 1 & 1 \\
+  1 & 1 & 1 & 1 & & 1 & 1 & 1 
+\end{tabular}
+\label{tab:Preconditioning}
+\caption{Comparison of preconditioners in the case of Rods in Shear Flow}
+\end{singlespace}
+\end{table}
+
+\subsection{Squirmers}

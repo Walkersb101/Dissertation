@@ -1,0 +1,10 @@
+# Fdb version 3
+["pdflatex"] 1648941615 "Figure1.tex" "build/Figure1.pdf" "Figure1" 1648941619
+  "Figure1.tex" 1648941613 2069 ed39f7ad66ff313a8a246ee602aee8b3 ""
+  "build/Figure1.aux" 1648941615 34 3985256e7290058c681f74d7a3565a19 ""
+  "c:/texlive/2021/texmf-dist/web2c/texmf.cnf" 1642546574 40042 fe981136cbb5f3715ab1b0e46e3d3892 ""
+  "c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1642549876 2796590 0170d8703b54667edc87ba61f7068519 ""
+  "c:/texlive/2021/texmf.cnf" 1642531841 713 e69b156964470283e0530f5060668171 ""
+  (generated)
+  "build/Figure1.log"
+  "build/Figure1.pdf"

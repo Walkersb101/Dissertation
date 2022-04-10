@@ -1,0 +1,264 @@
+\section{Mobility Problems}
+The resistance problem is another common use of regularised stokes let where we obtain the rigid body motion prescribed force and moment. We can describe the motion of a single rigid body in a laboratory frame by defining  $\bm{\xi}$ to be the body frame of rigid body, then we can describe its position through the rotation matrix $B = [\bm{B}_1,\bm{B}_2,\bm{B}_3]$ where $B_i$ are basis vectors for the body frame and its origin point $\bm{x}_0$ relative to the laboratory frame. A position and velocity in the laboratory frame can be described by
+\begin{equation*}
+\begin{aligned}
+    \bm{x} &= \bm{x}_0 + B\cdot\bm{\xi} \\
+    \dot{\bm{x}} &= \dot{\bm{x}}_0 + \dot{B}\cdot\bm{\xi} + B\cdot\dot{\bm{\xi}}
+\end{aligned}
+\end{equation*}
+We can redefine the velocity in terms of the rigid-body velocity $\bm{U}$ and angular velocity $\bm{\Omega}$ of the frame as
+\begin{equation*}
+    \dot{\bm{x}} = \bm{U} + \bm{\Omega}\times (\bm{x}-\bm{x}_0) + B\cdot\dot{\bm{\xi}}
+\end{equation*}
+The fluid flow can be described through the stokes flow equation defined in \cref{eq:BIE},
+\begin{equation*}
+    u_i(\bm{y}) = \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) f_{j}(\bm{y}) d s(\bm{y}) \quad \forall \bm{x}\in\partial D
+\end{equation*}
+The nonslip boundary condition means that the velocity of the fluid on the boundary of the rigid body $\partial D$ is the same as the velocity of the boundary $\dot{\bm{x}}$
+\begin{equation*}
+    \bm{x}_i = \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) f_{j}(\bm{y}) d s(\bm{y}) \quad \forall \bm{x}\in\partial D
+\end{equation*}
+By substituting the full equation for the velocity we can define the full Mobility problem as
+\begin{equation}
+\label{eq:MobilityProblem}
+\begin{gathered}
+    -U_{i}-\epsilon_{i j k} \Omega_{j}\left(x_{k}-x_{0 k}\right)+\frac{1}{8 \pi\mu} \iint_{\partial D} S_{i j}^{\epsilon}(\bm{x}, \bm{y}) f_{j}(\bm{y}) d S({\bm{y}})=B_{i j} \dot{\xi}_{j} \text { for all } \bm{x} \in \partial D, \\
+    \iint_{\partial D} f_{i}(\bm{y}) d S({\bm{y}})=0 \\
+    \iint_{\partial D} \epsilon_{i k j} y_{k} f_{j}(\bm{y}) d S({\bm{y}})=0,
+\end{gathered}
+\end{equation}
+where $\epsilon_{ijk}$ is the Levi-Civita symbol. We have taken the total force and Moment on the body to be $0$ for the moment as we assume all external forces are negligible. Numerical discretisation of the problem leads to $3N$ scalar degrees of freedom in the traction $\bm{f}$ and a further $6$ scalar degrees of freedom to describe the total velocity $\bm{U}$ and angular momentum $\bm{\Omega}$ totalling $3N+6$ scalar degrees of freedom.
+
+\subsection{Numerical Implementation}
+The discretisation of the mobility problem is based on the same discretisation of that derived in \cref{sec:MRS} or though the use of the NEAREST (\cref{sec:NEAREST}) method. First condering the Nyström discretisation of Cortez et al \cite{Cortez2005} we replace the integrals in \cref{eq:MobilityProblem} with a numerical quadrature rule to obtain the problem.
+\begin{equation*}
+\begin{gathered}
+    -U_{i}-\epsilon_{i j k} \Omega_{j}\left(x_k[{m}]-x_{0 k}\right)+\frac{1}{8 \pi\mu} \sum_{n=1}^N S_{i j}^{\epsilon}(\bm{x}_m, \bm{x}_n) f_{j}(\bm{x}_n) A_n =  B_{i j} \dot{\xi}_{j}[m] \\ \text { for all } m = 1,\dots,N\\
+    \sum_{n=1}^N f_{i}(\bm{x}_n) A_n=0 \\
+    \sum_{n=1}^N \epsilon_{i k j} x_{k}[n] f_{j}(\bm{x}_n) A_n=0,
+\end{gathered}
+\end{equation*}
+where $x_{i}[n]$ denotes the the position of the $n$th quadrature point in the $i$th axis and $A_n$ the qudarture weight at the point $\bm{x}_n$. We have again considered the Nyström discretisation for this problem to aid such that we have a well defined problem for which we can compute the solution to the linear system. Through the use of the a nearest neighbour matrix (\cref{eq:NNMatrix})
+\begin{equation*}
+    \nu [q, \hat{n}]= \begin{cases} 1/k & \text { if } \hat{n}=\underset{n=1, \ldots, N}{\operatorname{argmin}}|x_n-X_q| , \\ 0 & \text { otherwise. }\end{cases}
+\end{equation*}
+where $k$ is the number of points in $\{x_n\}$ which are equidistant to $\{X_q\}$ we can perform the same discretisation seen in \cref{sec:NEAREST} to obtain.
+\begin{equation*}
+\begin{gathered}
+    -U_{i}-\epsilon_{i j k} \Omega_{j}\left(x_k[{m}]-x_{0 k}\right)+\frac{1}{8 \pi\mu} \sum_{n=1}^N f_{j}(\bm{x}_n) A_n \sum_{q=1}^Q S_{i j}^{\epsilon}(\bm{x}_m, \bm{X}_q)\nu [q, n]  =  B_{i j} \dot{\xi}_{j}[m] \\ \text { for all } m = 1,\dots,N\\
+    \sum_{n=1}^N f_{i}(\bm{x}_n) A_n \sum_{q=1}^Q \delta_{i j}\nu [q, n]= 0 \\
+    \sum_{n=1}^N f_{j}(\bm{x}_n) A_n \sum_{q=1}^Q \epsilon_{i k j} X_{k}[q] \nu [q, n] = 0,
+\end{gathered}
+\end{equation*}
+Both discretisation correspond to $3N + 6$ equations in $3N + 6$ unknowns $F_j(\bm{x}_n)$, $U_j$ and $\Omega_j$ for $n=1,\dots,N$ and $j=1,2,3$. We can consider this equation in terms of a block matrix form as we did for the resistance problem (\cref{sec:resistance}) where we augment the force vector of unknowns with the velocity $\boldsymbol{U}$ and angular velocity $\boldsymbol{\Omega}$ which are both $3 \times 1$ column vectors. The right hand side of the equation is augmented with two $3 \times 1$ column vectors of zeros which denote the prescribed zero total force and moment on the rigid body. This gives us a final form of our block matrix system as
+\begin{equation}
+\label{eq:mobilityStructure}
+\arraycolsep=0.4pt\def\arraystretch{1}
+\left(
+\begin{array}{cc}
+\begin{array}{ccc}
+A_{11} & A_{12} & A_{13} \\
+A_{21} & A_{22} & A_{23} \\
+A_{31} & A_{32} & A_{33}
+\end{array} &
+\begin{array}{cc}
+B_{1}^{U} & B_{1}^{\Omega} \\
+B_{2}^{U} & B_{2}^{\Omega} \\
+B_{3}^{U} & B_{3}^{\Omega} \\
+\end{array} \\
+\begin{array}{ccc}
+B_{1}^{F} & B_{2}^{F} & B_{3}^{F} \\
+B_{1}^{M} & B_{2}^{M} & B_{3}^{M}
+\end{array} & \bm{0}_{6 \times 6}
+\end{array}
+\right)
+\left(\begin{array}{c}
+F_{1}({\bm{x}}_{1}) \\
+\vdots \\
+F_{1}({\bm{x}}_{N}) \\
+F_{2}({\bm{x}}_{1}) \\
+\vdots \\
+F_{2}({\bm{x}}_{N}) \\
+F_{3}({\bm{x}}_{1}) \\
+\vdots \\
+F_{3}({\bm{x}}_{N}) \\
+\boldsymbol{U} \\
+\boldsymbol{\Omega}
+\end{array}\right)=\left(\begin{array}{c}
+B_{1 j} \dot{\xi}_{j}({\bm{x}}_{1}) \\
+\vdots \\
+B_{1 j} \dot{\xi}_{j}({\bm{x}}_{N}) \\
+B_{2 j} \dot{\xi}_{j}({\bm{x}}_{1}) \\
+\vdots \\
+B_{2 j} \dot{\xi}_{j}({\bm{x}}_{N}) \\
+B_{3 j} \dot{\xi}_{j}({\bm{x}}_{1}) \\
+\vdots \\
+B_{3 j}\dot{\xi}_{j}({\bm{x}}_{N}) \\
+\mathbf{0}_{3 \times 1} \\
+\mathbf{0}_{3 \times 1}
+\end{array}\right),
+\end{equation}
+where the blocks for the Nyström discretisation are given as
+\begin{equation*}
+\begin{aligned}
+A_{ij}(m,n) &= \frac{1}{8\pi\mu} S_{ij}^\epsilon (\bm{x}_m,\bm{x}_{n}) \text { for } m,n = 1,\dots,N \\
+B_{i}^{U}(m,j) &= -\delta_{ij} \text { for } m = 1,\dots,N \\
+B_{i}^{\Omega}(m,j) &= -\epsilon_{ijk}(x_k[m]-x_{0k}) \text { for } m = 1,\dots,N \\
+B_{j}^{F}(i,n) &= \delta_{ij} \text { for } n = 1,\dots,N \\
+B_{j}^{M}(i,n) &= \epsilon_{ikj} x_k[n] \text { for } n = 1,\dots,N
+\end{aligned}
+\end{equation*}
+or for the NEAREST discretisation
+\begin{equation*}
+\begin{aligned}
+A_{ij}(m,n) &= \frac{1}{8\pi\mu} \sum_{q=1}^Q S_{ij}^\epsilon (\bm{x}_m,\bm{X}_{q})\nu[q,n] \text { for } m,n = 1,\dots,N \\
+B_{i}^{U}(m,j) &= -\delta_{ij} \text { for } m = 1,\dots,N \\
+B_{i}^{\Omega}(m,j) &= -\epsilon_{ijk}(x_k[m]-x_{0k}) \text { for } m = 1,\dots,N \\
+B_{j}^{F}(i,n) &= \delta_{ij} \sum_{q=1}^Q \nu[q,n] \text { for } n = 1,\dots,N \\
+B_{j}^{M}(i,n) &= \epsilon_{ikj} \sum_{q=1}^Q X_k[q] \nu[q,n] \text { for } n = 1,\dots,N
+\end{aligned}
+\end{equation*}
+
+\subsection{Boundaries}
+Often when working with stokes flow we wish to include boundaries in our numerical simulation. These might be simulating microswimmers sandwiched between a microscope slides and a coverslip \cite{Gallagher2019RapidAnalysis} or simulating blood cells in cylindrical arteries, any such boundary will have a noticeable effect on the stokeslets and therefore the rigid body motion \cite{Liron1981ExistenceBoundaries}. While solutions around large infinite planes can be simulated through the use of the Blakelet solution \cite{Ainley2008TheStokeslets,Cortez2015}, more complex geometry requires the use of a quadrature rule of over the boundary $B$. Taking the boundary of $B$ to be $\partial B$
+\begin{equation}
+\label{eq:MobilityProblemBnd}
+\begin{gathered}
+    -U_{i}-\epsilon_{i j k} \Omega_{j}\left(x_{k}-x_{0 k}\right)+\frac{1}{8 \pi\mu} \iint_{\partial D \cup \partial B} S_{i j}^{\epsilon}(\bm{x}, \bm{y}) f_{j}(\bm{y}) d S({\bm{y}})=B_{i j} \dot{\xi}_{j} \text { for all } \bm{x} \in \partial D, \\
+    \iint_{\partial D \cup \partial B} S_{i j}^{\epsilon}(\bm{x}, \bm{y}) f_{j}(\bm{y}) d S({\bm{y}}) = \dot{x}_i \text { for all } \bm{x} \in \partial B \\
+    \iint_{\partial D} f_{i}(\bm{y}) d S({\bm{y}})=0 \\
+    \iint_{\partial D} \epsilon_{i k j} y_{k} f_{j}(\bm{y}) d S({\bm{y}})=0,
+\end{gathered}
+\end{equation}
+This addition to the problem is numerically solved in the same way as for the single swimmer, by introducing a second discretisation (or third and fourth discretisation in the case of NEAREST) of the boundary $\partial B$. Now taking the original number of quadrature points to be $N_D$ and the set of new quadrature points $\{\bm{x}_n\}$ where $n=N_D+1,\dots,N_B$. Discretisation of the problem leads to the same block structure described in \cref{eq:mobilityStructure} however with different block components in order to compute the new boundary conditions. For the single quadrature rule discetisation we obtain the block structure
+\begin{equation*}
+\begin{aligned}
+A_{ij}(m,n) &= \frac{1}{8\pi\mu} S_{ij}^\epsilon (\bm{x}_m,\bm{x}_{n}) \text { for } m,n = 1,\dots,N_s,N_D+1,\dots,N_D+N_B \\
+B_{i}^{U}(m,j) &= \begin{cases} -\delta_{ij} \text { for } m = 1,\dots,N_D \\ 0 \text { for } m = N_D+1,\dots,N_D+N_B\end{cases} \\
+B_{i}^{\Omega}(m,j) &= \begin{cases} -\epsilon_{ijk}(x_k[m]-x_{0k}) \text { for } m = 1,\dots,N \\ 0 \text { for } m = N_D+1,\dots,N_D+N_B\end{cases} \\
+B_{j}^{F}(i,n) &= \begin{cases} \delta_{ij} \text { for } n = 1,\dots,N \\ 0 \text { for } n = N_D+1,\dots,N_D+N_B\end{cases} \\
+B_{j}^{M}(i,n) &= \begin{cases} \epsilon_{ikj} x_k[n] \text { for } n = 1,\dots,N \\ 0 \text { for } n = N_D+1,\dots,N_D+N_B\end{cases}
+\end{aligned}
+\end{equation*}
+and for the NEAREST discretisation where the coarse force discretisation is extended in the same way as the Nyström discretisation $\{\bm{x}_n\}$ where $n=1,\dots,N_D+N_B$ and a fine quadrature rule $\{\bm{X}_q\}$ where $q=1,\dots,Q=Q_D+Q_B$
+\begin{equation*}
+\begin{aligned}
+A_{ij}(m,n) &= \frac{1}{8\pi\mu} \sum_{q=1}^Q S_{ij}^\epsilon (\bm{x}_m,\bm{X}_{q})\nu[q,n] \text { for } m,n = 1,\dots,N_s,N_D+1,\dots,N_D+N_B  \\
+B_{i}^{U}(m,j) &= \begin{cases} -\delta_{ij} \text { for } m = 1,\dots,N \\ \text { for } m = N_D+1,\dots,N_D+N_B\end{cases}\\
+B_{i}^{\Omega}(m,j) &= \begin{cases} -\epsilon_{ijk}(x_k[m]-x_{0k}) \text { for } m = 1,\dots,N \\ \text { for } m = N_D+1,\dots,N_D+N_B\end{cases}\\
+B_{j}^{F}(i,n) &= \begin{cases} \delta_{ij} \sum_{q=1}^Q \nu[q,n] \text { for } n = 1,\dots,N \\ 0 \text { for } n = N_D+1,\dots,N_D+N_B\end{cases} \\
+B_{j}^{M}(i,n) &= \begin{cases} \epsilon_{ikj} \sum_{q=1}^Q X_k[q] \nu[q,n] \text { for } n = 1,\dots,N \\ 0 \text { for } n = N_D+1,\dots,N_D+N_B\end{cases}.
+\end{aligned}
+\end{equation*}
+This is now as system of $3N = 3N_D+3N_B + 6$ unknowns in $3N$ equations. The Vector of unknowns is again arranged as in \cref{eq:mobilityStructure} where $N=N_D+N_B$. Writing the right hand side as $(V_1,V_2,V_3)^T$ we can write that
+\begin{equation*}
+    V_i[n] = \begin{cases} B_{i j} \dot{\xi}_{j}({\bm{x}}_{n}) \text{ for } n=1,\dots,N_D \\ \dot{x}_i[n] \text{ for } n=N_D+1,\dots,N_D+N_B \end{cases}
+\end{equation*}
+
+\section{Multiple Swimmers}
+It is often the cases that systems will contain multiple rigid bodies of either the same type or different types. If we consider $N_{sw}$ swimmers then we can write for the case of the mobility problem with boundaries that
+\begin{equation}
+\label{eq:MobilityProblemMulti}
+\begin{gathered}
+    -U_{i}[n]-\epsilon_{i j k} \Omega_{j}[n]\left(x_{k}[n]-x_{0 k}[n]\right)+\frac{1}{8 \pi\mu} \iint_{\partial D \cup \partial B} S_{i j}^{\epsilon}(\bm{x}, \bm{y}) f_{j}(\bm{y}) d S({\bm{y}})=B_{i j}[n] \dot{\xi}_{j}[n] \\ \text { for all } \bm{x} \in \partial D[n], \\
+    \iint_{\partial D \cup \partial B} S_{i j}^{\epsilon}(\bm{x}, \bm{y}) f_{j}(\bm{y}) d S({\bm{y}}) = \dot{x}_i \text { for all } \bm{x} \in \partial B \\
+    \iint_{\partial D[n]} f_{i}(\bm{y}) d S({\bm{y}})=0 \\
+    \iint_{\partial D[n]} \epsilon_{i k j} y_{k} f_{j}(\bm{y}) d S({\bm{y}})=0,
+\end{gathered}
+\end{equation}
+for each $n=1,\dots,N_{sw}$ where $\partial D[n]$ is the boundary of the $n$th swimmer and $\partial D = \bigcup_{n=1}^{N_{sw}} \partial D[n]$. The numerical discretisation of \cref{eq:MobilityProblemMulti} is similar to that of  \cref{eq:MobilityProblem} or \cref{eq:MobilityProblemBnd} and retains the same block structure as \cref{eq:mobilityStructure} , however is significantly more notionally complex, partially when the number of points discretising each swimmer is different. For this reason we will only consider the more complex NEAREST discretisation where the Nyström can be obtained in the limiting case where the coarse force discritisation and fine quadrature rule are identical and $\nu = I_{N \times N}$.
+
+If we consider the $N_{sw}$ swimmers to have collocation points $x_i^{(1)}[\cdot],\dots,x_i^{(N_{sw})}[\cdot]$ where $x_i^{(1)}[\cdot]$ denotes all the $i$th components of the first swimmers collocation points and $x_i^{(B)}[\cdot]$ is the $i$th components of the boundaries collocation points. Using the same ordering convention used in the previous section we have that
+\begin{equation*}
+    \bm{x} = (\bm{x}_1,\bm{x}_2,\bm{x}_3)^T \text{ with } \bm{x}_1=(x_i^{(1)}[\cdot],\dots,x_i^{(N_{sw})}[\cdot],x_i^{(B)}[\cdot])
+\end{equation*}
+The translational and angualar velocities are given by $U_i^{(1)},\dots,U_i^{(N_{sw})}$ and $\Omega_i^{(1)},\dots,\Omega_i^{(N_{sw})}$ respectively and the the boundary collocation points by $x_i^{(b)}[\cdot]$. The ordering of discritisation remains the same as \cref{eq:mobilityStructure} where if we denote the vector of unknowns as $(\bm{F}_1, \bm{F}_2, \bm{F}_3, \bm{U}_1,\bm{U}_2,\bm{U}_3,\bm{\Omega}_1,\bm{\Omega}_2,\bm{\Omega}_3)^T$ where $\bm{F}_i = (F_i^{(1)}[\cdot],\dots,F_i^{(N_{sw})}[\cdot],F_i^{(b)}[\cdot])$, $\bm{U}_i = (U_i^{(1)},\dots,U_i^{(N_{sw})})^T$ and $\bm{\Omega}_i = (\Omega_i^{(1)},\dots,\Omega_i^{(N_{sw})})^T$. The same ordering convention is used for the right hand side velocities, total forces and moments. If the number of force points associated with a swimmer $s$ is $N_{D}(s)$ and the number of force points on the boundary is $N_B$ then the total number of points is $N_F=\sum_{s=1}^{N_{sw}} N_D(s) + N_B$. We will also define an index $\iota(s)=\sum_{\alpha=1}^{s-1}N_D(\alpha)$ for $1<s\leq N_{sw}$ to be the location of the $s$th swimmer in $\bm{x}_i$, as $\iota(s)$ is defined above for all of $1<s\leq N_{sw}$ we also define $\iota(1)=1$. The ordering of the fine quadrature points is arbitrary due to its mapping through $\nu$, we will denote this set as $\{\bm{X}_q\}$ for $q=1,\dots{Q}$ as we have before. The Stokeslet matrix remains the same and is constructed by
+\begin{equation*}
+    A_{ij}(\alpha,\beta) = \frac{1}{8\pi\mu} \sum_{q=1}^Q S_{ij}^\epsilon (\bm{x}_\alpha,\bm{X}_{q})\nu[q,\beta] \text { for } \alpha,\beta = 1,\dots,N_F
+\end{equation*}
+Defining $\bm{1}^{(n)}$ to be a column vector of ones with length $n$ and $\bm{0}^{(m\times n)}$ to be a $(m\times n)$ matrix of zeros. We can therefore define the $N_F \times N_{sw}$ matrices
+\begin{equation*}
+\arraycolsep=0.4pt\def\arraystretch{1}
+    \tilde{x}_i(\cdot,\cdot)=\left(\begin{array}{c}
+         \begin{array}{ccc}
+             x_i^{(1)}[\cdot]-x_{0i}^{(1)} & & \\
+              & \ddots & \\
+              & & x_i^{(N_{sw})}[\cdot]-x_{0i}^{(N_{sw})}
+         \end{array}\\
+         \bm{0}^{(N_B \times N_{sw})}
+    \end{array}\right).
+\end{equation*}
+Then
+\begin{equation*}
+\arraycolsep=0.4pt\def\arraystretch{1}
+    B^U = \mathds{1}_{3} \otimes \left(\begin{array}{c}
+         \begin{array}{ccc}
+             -\bm{1}^{(N_D(1))} & & \\
+              & \ddots & \\
+              & & -\bm{1}^{(N_D(N_{sw}))}
+         \end{array}\\
+         \bm{0}^{(N_B \times N_{sw})}
+    \end{array}\right), \;
+    B^\Omega =
+    \left(\begin{array}{ccc}
+             & -\tilde{x}_3(\cdot,\cdot) & \tilde{x}_2(\cdot,\cdot)\\
+            \tilde{x}_3(\cdot,\cdot) & & -\tilde{x}_1(\cdot,\cdot)\\
+            -\tilde{x}_2(\cdot,\cdot) & \tilde{x}_1(\cdot,\cdot) &
+          \end{array}\right)
+\end{equation*}
+with $\mathds{1}_{3}$ denoting the $3\times3$ identity matrix and $\otimes$ the Kronecker product.
+In order to construct the $N_{sw} \times N_F$ matrices we define two $1 \times N_D(s)$ row vectors
+\begin{equation*}
+\begin{aligned}
+    \lambda^{(s)}[\cdot] &= \sum_{q=1}^Q \nu[q,\gamma] \text{ for } \gamma = \iota(s),\cdots,\iota(s+1)-1 \text{ and } \\
+    \chi_j^{(s)}[\cdot] &= \sum_{q=1}^{Q} X_j(q)\nu[q,\gamma] \text{ for } \gamma = \iota(s),\cdots,\iota(s+1)-1
+\end{aligned}
+\end{equation*}
+these allow us to define
+\begin{equation*}
+\arraycolsep=0.4pt\def\arraystretch{1}
+    \tilde{\chi}_j(\cdot,\cdot)=\left(\begin{array}{cc}
+         \begin{array}{ccc}
+             \chi_j^{(1)}[\cdot] & & \\
+              & \ddots & \\
+              & & \chi_j^{(N_{sw})}[\cdot]
+         \end{array} & \bm{0}^{(N_{sw} \times N_B)}
+    \end{array}\right).
+\end{equation*}
+Then
+\begin{equation*}
+\arraycolsep=0.4pt\def\arraystretch{1}
+    B^F = \mathds{1}_{3} \otimes \left(\begin{array}{cc}
+         \begin{array}{ccc}
+             \lambda^{(1)}[\cdot] & & \\
+              & \ddots & \\
+              & & \lambda^{(N_{sw})}[\cdot]
+         \end{array} & \bm{0}^{(N_{sw} \times N_B)}
+    \end{array}\right), \;
+    B^M =
+    \left(\begin{array}{ccc}
+             & -\tilde{\chi}_3(\cdot,\cdot) & \tilde{\chi}_2(\cdot,\cdot)\\
+            \tilde{\chi}_3(\cdot,\cdot) & & -\tilde{\chi}_1(\cdot,\cdot)\\
+            -\tilde{\chi}_2(\cdot,\cdot) & \tilde{\chi}_1(\cdot,\cdot) &
+          \end{array}\right)
+\end{equation*}
+Finally defining the right hand side vector as $(\bm{V}_1,\bm{V}_1,\bm{V}_1,\bm{0}_{(6N_{sw} \times 1)})^T$ where
+\begin{equation*}
+    V_i^{(s)} = (B_{ij}^{(1)}\dot{\xi}_j^{(1)}[\cdot],\dots,B_{ij}^{(N_{sw})}\dot{\xi}_j^{(N_{sw})}[\cdot],\dot{x}_i[1],\dots,\dot{x}_i[N_B])
+\end{equation*}
+This allows us to form the full system of $3(N_F+2N_{sw})\times3(N_F+2N_{sw})$ system of linear equations e given in the same structure as \cref{eq:mobilityStructure}.
+
+We will be solving this system through the use of GMRES (see \cref{appendix:GMRES}) as we are unable to form the full matrix with the KIFMM method. We can instead compute the matrix in block, we will compute the stokeslet matrix $A$ with the KIFMM method first before constructing the $B_i^U$, $B_i^\Omega$, $B_i^F$ and $B_i^M$ matrix blocks. For notational ease we will group these into two matrices
+\begin{equation*}
+B = \left( \begin{array}{ccc}
+B_{1}^{F} & B_{2}^{F} & B_{3}^{F} \\
+B_{1}^{M} & B_{2}^{M} & B_{3}^{M}
+\end{array}\right) \text{ and }
+B^T = \left(\begin{array}{cc}
+B_{1}^{U} & B_{1}^{\Omega} \\
+B_{2}^{U} & B_{2}^{\Omega} \\
+B_{3}^{U} & B_{3}^{\Omega} \\
+\end{array}\right).
+\end{equation*}
+
+

@@ -1,10 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1643402200 "KIFMM.tex" "build/KIFMM.pdf" "KIFMM" 1643402202
-  "KIFMM.tex" 1643402199 309 7c951729104df32adba2b00af5c5e2a8 ""
-  "build/KIFMM.aux" 1643402200 34 3985256e7290058c681f74d7a3565a19 ""
-  "c:/texlive/2021/texmf-dist/web2c/texmf.cnf" 1642542974 40042 fe981136cbb5f3715ab1b0e46e3d3892 ""
-  "c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1642546276 2796590 0170d8703b54667edc87ba61f7068519 ""
-  "c:/texlive/2021/texmf.cnf" 1642528241 713 e69b156964470283e0530f5060668171 ""
+["pdflatex"] 0 "KIFMM.tex" "build/KIFMM.pdf" "KIFMM" 0
+  "KIFMM.tex" 0 -1 0 ""
+  "build/KIFMM.aux" 1648941865 34 3985256e7290058c681f74d7a3565a19 ""
   (generated)
   "build/KIFMM.log"
   "build/KIFMM.pdf"

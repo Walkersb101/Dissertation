@@ -1,11 +1,12 @@
-PWD C:/Users/Sam/OneDrive - University of Birmingham/Uni/Disitation/Latex
+PWD C:/Users/Sam/Documents/Dissertation/Dissertation-Latex
 INPUT c:/texlive/2021/texmf.cnf
 INPUT c:/texlive/2021/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT MethodofRegularizedStokeslets.tex
-OUTPUT build/MethodofRegularizedStokeslets.log
+INPUT MobilityProblems.tex
+OUTPUT build/MobilityProblems.log
 INPUT c:/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
-INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+OUTPUT build/MobilityProblems.pdf
+INPUT c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map
