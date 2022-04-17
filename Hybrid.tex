@@ -1,3 +1,5 @@
+\FloatBarrier
+[Dad got this far]
 \section{NEAREST KIFMM Hybrid}
 The advantage of the KIFMM method comes from its fast approximation of distant source points, while Nearest leverages the  differences in the rate of change of the single layer stokeslet kernel to approximate the kernel across the whole domain with less source points. If these methods were to be combined it would allow for even more efficient approximation of source points in the far field and an improvement to near field calculations. Given that the reduction in source points is enough to create a smaller Octree, particularly when a non adaptive tree is used, the KIFMM method should be able to compute the matrix problem in a shorter period of time. The adaption of the KIFMM method to use the nearest neighbour interpolation is a simple but fundamental change to the algorithm. When creating the Octree decomposition of the domain we form the tree based on target points and coarse source discretization as we would normally do, We then also generate the Nearest-Neighbour interpolation matrix $\nu$ defined in \cref{eq:NNMatrix} between the coarse source points and the fine quadrature rule.  
 
@@ -15,5 +17,3 @@ and
     \sum_{{\bm{y}}_n\in A}{\bm{f}}_n \sum_{q=1}^{Q^*} S^\epsilon(\bm{x},{\bm{X}}_q) \nu^*[q,n]
 \end{equation*}
 respectively. Where $\nu^*[q,n]$ again corresponds to a slice of $\nu[q,n]$ which contain respective map between source points and fine quadrature points in each summation.
-
-\subsection{Nearest Comparison}

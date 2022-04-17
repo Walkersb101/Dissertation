@@ -1,4 +1,15 @@
 \appendix
+\FloatBarrier
+\section{Hardware}\label{appendix:Hardware}
+All numerical simulations were done on one of two machines,
+\begin{itemize}
+    \item [(M1)] Lenovo NeXtScale server BEAR HPC (Birmingham Environment for Academic Research High Performance Computing) processing unit (CPU), using 2x Intel(R) Xeon(R) Platinum 8360Y CPU  (each with 36 cores @ 2.40GHz) and 64 GB DDR4 RAM.
+    \item [(M2)] Lenovo Thinkstation, with 2x Intel Xeon 4116 CPUs (each with 12 cores), 128 GB DDR4 RAM, and an NVIDIA Quadro RTX 5000 GPU (3072 parallel-processing cores, 16 GB GDDR6 RAM).
+\end{itemize}
+(M1) forms part of a HPC cluster but all computation will be limited to a single compute node per simulation. Most simulations here were limited to 20 computation threads on (M1) and 4 on (M2) unless otherwise stated.
+
+
+\FloatBarrier
 \section{GMRES}\label{appendix:GMRES}
 
 The Generalised Minimum Residual Method (GMRES) \cite{Saad1986GMRES:Systems} is a iterative method based on Krylov methods for solving the System $A\bm{x}=\bm{b}$ where $A$ is an arbitary non-symmetric matrix of order $n$ and $\bm{b}$ is a known vector of order $n$. Krylov methods generate a Krylov subspace through repeativly performing vector matrix multiplication involving $A$, this allows for the computation of large systems where operation of order $\mathcal{O}(n^3)$ are too large to compute the matrix inverse or where we are unable to form the matrix by can compute the matrix vector product as in the Kernel Independent Fast Multiple Method (KIFMM) (\cref{sec:KIFMM}) \cite{Ipsen1998TheMethods}.
@@ -45,6 +56,7 @@ where $\bm{e}_1 = [1,0,\dots,0]^T$. This process is repeated until $\beta_k$ is 
 
 GMRES will converge on the least square solution in at most $n$ iterations, although will often converge to small values of $\beta_k$ in less steps. The exact number of iteration is correlated closely with the  condition of the matrix $A$ where better conditioned matrices will converge quicker. In slow converging systems, where the number of iterations $k$ required to converge to the required tolerance $\tau$ is large can result in large computation and storage requirements as the new vector $\bm{v}_{k+1}$ needs to be orthogonalised against all previous vectors in the basis. This means that the computation and storage requirements for the GMRES algorithm grows like $\mathcal{O}(kn)$. An adaption to the algorithm denoted GMRES($m$) is used where after $m$ iterations the best guess $\bm{u}^{(m)}$ is constructed and used in place of $\bm{u}^{(0)}$ as the initial guess. This provides a upper bound on the computation and storage requirement of the algorithm although may slow down convergence as each approximation is built using a smaller Krylov subspace.
 
+\FloatBarrier
 \section{Tree traversal}\label{appendix:Tree}
 In this section we will give a brief overview of the two tree traversals needed to preform the fast multiple algorithm. We will concider a simple binary tree where each node had two children nodes. If we concider the binary tree in \cref{fig:BlankTree}, then we can consider both pre and post order traversal.
 \begin{figure}[ht]
@@ -79,14 +91,14 @@ Application of both traversal to an octree traversal where we traverse each subt
 
 \begin{figure}
      \centering
-     \begin{subfigure}[b]{0.45\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \resizebox{\linewidth}{!}{\input{Images/TreeTraversal/Postorder}}
          \caption{Diagram showing post-order tree traversal}
          \label{fig:Postorder}
      \end{subfigure}
           \hfill
-     \begin{subfigure}[b]{0.45\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \resizebox{\linewidth}{!}{\input{Images/TreeTraversal/Preorder}}
          \caption{Diagram showing pre-order tree traversal}
@@ -98,55 +110,59 @@ Application of both traversal to an octree traversal where we traverse each subt
 
 
 
-
+\FloatBarrier
 \section{Condition number}\label{appendix:ConNum}
 
+From upper left to lower right: Stokeslet matrix used in Resistance problems \cref{eq:StokeletMatrix}, Mobility Matrix used in Mobility Problems \cref{eq:mobilityStructure}, Preconditioned Mobility Matrix $MU^{-1}$ \cref{sec:Preconditioning}, Mobility Matrix with Nearest discretisation \cref{sec:multipleSwimmers}, Preconditioned Mobility Matrix with Nearest discretisation \cref{sec:multipleSwimmers,sec:Preconditioning}, Mobility Matrix with rescaled force \cref{sec:Rescale}, Preconditioned Mobility Matrix with rescaled force \cref{sec:Rescale,sec:Preconditioning}, Mobility Matrix with Nearest discretisation and rescaled force \cref{sec:multipleSwimmers,sec:Rescale}, Preconditioned Mobility Matrix with Nearest discretisation and rescaled force\cref{sec:multipleSwimmers,sec:Rescale,sec:Preconditioning}
 
- \begin{figure}
+ \begin{sidewaysfigure}[!ht]
      \centering
-     Condition number of various matrices seen in the paper with $\epsilon=1e-1$
-     \includegraphics[width=0.6\textwidth]{Images/Condition/Condition-1.pdf}
-     \caption{Caption}
-     \label{fig:Condition1}
- \end{figure}
- \begin{figure}
- \ContinuedFloat
-     \centering
-     Condition number of various matrices seen in the paper with $\epsilon=1e-2$
-     \includegraphics[width=0.6\textwidth]{Images/Condition/Condition-2.pdf}
-     \caption{Caption}
-     \label{fig:Condition2}
-\end{figure}
-\begin{figure}
+     \begin{subfigure}[b]{0.49\textwidth}
+         \includegraphics[height=0.49\textheight,keepaspectratio]{Images/Condition/Condition-1.pdf}
+         \caption{Figure showing the condition number for various matrices shown in the paper for the case of $\epsilon=1e-1$.}
+         \label{fig:Condition1}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.49\textheight}
+         \includegraphics[height=0.49\textheight,keepaspectratio]{Images/Condition/Condition-2.pdf}
+         \caption{Figure showing the condition number for various matrices shown in the paper for the case of $\epsilon=1e-2$.}
+         \label{fig:Condition2}
+     \end{subfigure}
+\end{sidewaysfigure}
+\begin{sidewaysfigure}[!htbp]
 \ContinuedFloat
      \centering
-     Condition number of various matrices seen in the paper with $\epsilon=1e-5$
-     \includegraphics[width=0.6\textwidth]{Images/Condition/Condition-5.pdf}
-     \caption{Caption}
-     \label{fig:Condition5}
-\end{figure}
+     \begin{subfigure}[b]{0.49\textheight}
+        \captionsetup{width=0.49\textwidth}
+        \includegraphics[height=0.49\textheight,keepaspectratio]{Images/Condition/Condition-5.pdf}
+        \caption{Figure showing the condition number for various matrices shown in the paper for the case of $\epsilon=1e-5$.}
+        \label{fig:Condition5}
+     \end{subfigure}
+    \caption{Condition number for various matrices shown in the paper}
+\end{sidewaysfigure}
 
- \begin{figure}
+
+ \begin{sidewaysfigure}[!htbp]
      \centering
-     Eigenvalue plots of various matrices seen in the paper with $\epsilon=1e-1$
-     \includegraphics[width=0.6\textwidth]{Images/Eigenplots/EigenPlots-1.pdf}
-     \caption{Caption}
-     \label{fig:Eigen1}
- \end{figure}
- \begin{figure}
- \ContinuedFloat
-     \centering
-     Eigenvalue plots of various matrices seen in the paper with $\epsilon=1e-2$
-     \includegraphics[width=0.6\textwidth]{Images/Eigenplots/EigenPlots-2.pdf}
-     \caption{Caption}
-     \label{fig:Eigen2}
-\end{figure}
-\begin{figure}
+     \begin{subfigure}[b]{0.49\textwidth}
+        \captionsetup{width=0.49\textwidth}
+        \includegraphics[height=0.49\textheight,keepaspectratio]{Images/Eigenplots/EigenPlots-1.pdf}
+        \caption{Caption}
+        \label{fig:Eigen1}
+    \end{subfigure}
+\end{sidewaysfigure}
+\begin{sidewaysfigure}[!ht]
 \ContinuedFloat
-     \centering
-     Eigenvalue plots of various matrices seen in the paper with $\epsilon=1e-5$
-     \includegraphics[width=0.6\textwidth]{Images/Eigenplots/EigenPlots-5.pdf}
-     \caption{Caption}
-     \label{fig:Eigen5}
-\end{figure}
-
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[height=0.49\textheight,keepaspectratio]{Images/Eigenplots/EigenPlots-2.pdf}
+        \caption{Caption}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[height=0.49\textheight,keepaspectratio]{Images/Eigenplots/EigenPlots-5.pdf}
+        \caption{Caption}
+        \label{fig:Eigen5}
+    \end{subfigure}
+    \caption{Magnitude of eigenvalues for various matrices shown in the paper}
+\end{sidewaysfigure}

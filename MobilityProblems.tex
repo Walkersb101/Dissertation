@@ -1,3 +1,4 @@
+\FloatBarrier
 \section{Mobility Problems}
 The resistance problem is another common use of regularised stokes let where we obtain the rigid body motion prescribed force and moment. We can describe the motion of a single rigid body in a laboratory frame by defining  $\bm{\xi}$ to be the body frame of rigid body, then we can describe its position through the rotation matrix $B = [\bm{B}_1,\bm{B}_2,\bm{B}_3]$ where $B_i$ are basis vectors for the body frame and its origin point $\bm{x}_0$ relative to the laboratory frame. A position and velocity in the laboratory frame can be described by
 \begin{equation*}
@@ -155,7 +156,7 @@ This is now as system of $3N = 3N_D+3N_B + 6$ unknowns in $3N$ equations. The Ve
     V_i[n] = \begin{cases} B_{i j} \dot{\xi}_{j}({\bm{x}}_{n}) \text{ for } n=1,\dots,N_D \\ \dot{x}_i[n] \text{ for } n=N_D+1,\dots,N_D+N_B \end{cases}
 \end{equation*}
 
-\section{Multiple Swimmers}
+\subsection{Multiple Swimmers} \label{sec:multipleSwimmers}
 It is often the cases that systems will contain multiple rigid bodies of either the same type or different types. If we consider $N_{sw}$ swimmers then we can write for the case of the mobility problem with boundaries that
 \begin{equation}
 \label{eq:MobilityProblemMulti}
@@ -247,18 +248,5 @@ Finally defining the right hand side vector as $(\bm{V}_1,\bm{V}_1,\bm{V}_1,\bm{
     V_i^{(s)} = (B_{ij}^{(1)}\dot{\xi}_j^{(1)}[\cdot],\dots,B_{ij}^{(N_{sw})}\dot{\xi}_j^{(N_{sw})}[\cdot],\dot{x}_i[1],\dots,\dot{x}_i[N_B])
 \end{equation*}
 This allows us to form the full system of $3(N_F+2N_{sw})\times3(N_F+2N_{sw})$ system of linear equations e given in the same structure as \cref{eq:mobilityStructure}.
-
-We will be solving this system through the use of GMRES (see \cref{appendix:GMRES}) as we are unable to form the full matrix with the KIFMM method. We can instead compute the matrix in block, we will compute the stokeslet matrix $A$ with the KIFMM method first before constructing the $B_i^U$, $B_i^\Omega$, $B_i^F$ and $B_i^M$ matrix blocks. For notational ease we will group these into two matrices
-\begin{equation*}
-B = \left( \begin{array}{ccc}
-B_{1}^{F} & B_{2}^{F} & B_{3}^{F} \\
-B_{1}^{M} & B_{2}^{M} & B_{3}^{M}
-\end{array}\right) \text{ and }
-B^T = \left(\begin{array}{cc}
-B_{1}^{U} & B_{1}^{\Omega} \\
-B_{2}^{U} & B_{2}^{\Omega} \\
-B_{3}^{U} & B_{3}^{\Omega} \\
-\end{array}\right).
-\end{equation*}
 
 
