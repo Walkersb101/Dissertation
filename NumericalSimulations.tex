@@ -1,9 +1,11 @@
 \FloatBarrier
-\section{Numerical Simulations}
-We will now consider the numerical application of the mobility problem for multiple swimmers and the use of the KIFFMM in solving the stokeslet element of the problem. 
+\section{Numerical Simulations} \label{sec:NumericalSims}
+In order to evaluate the use of KIFMM in solving problems in stokes flow, we will look at Mobility problems where we can calculate the motion of swimmers in a stokes fluid.
+\input{MobilityProblems}
+
 
 \subsection{Rods in Shear flow}
-In order to benchmark the use use of KIFMM in the case of mobility problems we propose to look at the problem of rods in a shear flow. We will consider prolate spheroid rods with minor axis of $0.15$ and a major axis of $1$ arranged in a triangular lattice with rod to rod spacing of $0.4$. In order to impose motion on the rods a shear flow is imposed on the fluid such that the rods want to locally rotate about the y axis. This is imposed through setting the fluid velocity of each force point on the swimming problem to be $\bm{u} = (\gamma\cdot x_3,0,0)$ where $\gamma$ denotes the magnitude of the shear flow and $x_3$ the z coordinate of the force points positions. We consider the two versions of the problem both with approximately the same number of quadrature points but with varying number of swimmers. The first problem involves 203 rods arranged in a triangular lattice of size $[5.2 \times 5.2]$ each discretised with 420 quadrature points for a total of 255780 SDOF. The second problem is 2016 rods discredited with 42 quadrature points for a total of 254,016 SDFOF.  For the KIFMM method we will use 500 particles in a node with 152 quadrature points as this provided a reasonably accurate approximation to the the vector product while still keeping computation times reasonable. A regularisation parameter of $\epsilon=1e-2$ was set to allow for regularisation error and a standard Nyström was implemented such that the performance of just the use of the KIFMM for Mobility problems considered. The use of NEAREST implementation can be considered later in the case of Squirmers. Due to the complexity of the fluid system with a large number of degrees of freedom and close boundaries we will also consider optimisation to the method which could help reduce the overall computation time of the problem in the hope of allowing for larger problem to be concidered in the future. 
+In order to benchmark the use of KIFMM in the case of swimming problems, we propose to look at the problem of rods in a shear flow. We will consider prolate spheroid rods with a minor axis of $0.15$ and a major axis of $1$ arranged in a triangular lattice with a rod to rod spacing of $0.4$. In order to impose motion on the rods, a shear flow is imposed on the fluid such that the rods want to locally rotate about the $x_2$ axis. This is imposed by setting the fluid velocity of each force point on the swimming problem to be $\bm{u} = (\gamma\cdot x_3,0,0)$ where $\gamma$ denotes the magnitude of the shear flow and $x_3$ the z coordinate of the force points positions. We consider the two versions of the problem, each having approximately the same number of quadrature points but with a varying number of swimmers. The first problem involves 203 rods arranged in a triangular lattice of size $[5.2 \times 5.2]$ each is discretised with 420 quadrature points for a total of 255780 scalar degrees of freedom (SDOF). The second problem is 2016 rods discretised with 42 quadrature points for a total of 254,016 SDOF.  For the KIFMM method, we will use 500 particles in a node with 152 quadrature points as this provides an acceptably accurate approximation to the vector product while still keeping computation times reasonable. A regularisation parameter of $\epsilon=10^{-2}$ was set to allow for regularisation error and a standard Nyström was implemented such that the performance of just the KIFMM method for swimming problems was being assessed. The use of NEAREST implementation can be considered later in the case of Squirmers. Due to the complexity of the fluid system with a large number of degrees of freedom and close boundaries we will also consider optimisation to the method which could help reduce the overall computation time of the problem in the hope of allowing for larger-scale problems to be considered in the future. 
 
 
 \begin{figure}[!ht]
@@ -15,7 +17,6 @@ In order to benchmark the use use of KIFMM in the case of mobility problems we p
             {{\small 203 prolate spheroids in 3d View}}    
             \label{fig:mean and std of net14}
         \end{subfigure}
-        \hfill
         \begin{subfigure}[b]{0.475\textwidth}  
             \centering 
             \includegraphics[width=\textwidth]{Images/Rods/LargeRods3d.pdf}
@@ -40,13 +41,17 @@ In order to benchmark the use use of KIFMM in the case of mobility problems we p
             \label{fig:mean and std of net44}
         \end{subfigure}
         \caption[Images of Rods in Shear flow]
-        {\small Figure showing the configuration of prolate spheroids used in the two problems considered. Both problems are arranged on the same lattice spacing of $0.4$ units between each rod. A shear flow of 2 runs vertically from top to bottom such that the fluid velocity at the top has magnitude 1 at the top of the rods travelling in the positive x direction (Left to right) and magnitude 1 at the bottom of the rods travailing in the negative x direction (Right to left). This causes the rods to want to rotate about there central axis. } 
+        {\small Figure showing the configuration of prolate spheroids used in the two problems considered. Both problems are arranged on the same lattice spacing of $0.4$ units between each rod. A shear flow of 2 runs vertically from top to bottom such that the fluid velocity at the top has magnitude 1 at the top of the rods travelling in the positive x-direction (Left to right) and magnitude 1 at the bottom of the rods travailing in the negative x-direction (Right to left). This causes the rods to want to rotate about their central axis. } 
         \label{fig:mean and std of nets}
     \end{figure}
 
 
-\subsection{Optimisations for the repeated evaluation of the KIFMM algorithm}
-We will be solving this system through the use of GMRES (see \cref{appendix:GMRES}) as we are unable to form the full matrix with the KIFMM method. We can instead compute the matrix in block, we will compute the stokeslet matrix $A$ with the KIFMM method first before constructing the $B_i^U$, $B_i^\Omega$, $B_i^F$ and $B_i^M$ matrix blocks. For notational ease we will group these into two matrices
+\subsection[Optimisations for the repeated evaluation of the KIFMM algorithm]{Optimisations for the repeated evaluation of the KIFMM algorithm%
+\subsectionmark{Optimisations}}
+\subsectionmark{Optimisations}
+
+
+We will be solving this system through the use of GMRES (see \cref{appendix:GMRES}) as we are unable to form the full matrix with the KIFMM method. We can instead compute the swimming problem in blocks, we will compute the stokeslet matrix $A$ with the KIFMM method first before constructing the $B_i^U$, $B_i^\Omega$, $B_i^F$ and $B_i^M$ matrix blocks. For notational ease, we will group these into two matrices
 \begin{equation*}
 \arraycolsep=0.4pt\def\arraystretch{1}
 B = \left( \begin{array}{ccc}
@@ -59,36 +64,36 @@ B_{2}^{U} & B_{2}^{\Omega} \\
 B_{3}^{U} & B_{3}^{\Omega} \\
 \end{array}\right).
 \end{equation*} 
-We construct both $B$ and $B^\prime$ outside of the GMRES method as they remain the same, we could also consider doing this for the KIFMM method as our discretisation points remain fixed for all GMRES iterations and as such so do the stokeslet kernel matrices uses. This would speed up the method as the majority of the computation in the KIFMM method is in the generation of the stokeslet kernel, particularly for the multipole to multipole translation (\cref{eq:M2L}) and dense particle to particle interactions. This however would take a significant amount of memory as the stokeslet matrices needed for each M2L translation would need to be stored. A proposed optimisation is to use fast Fourier transforms to instead compute the M2L translation. Considering a M2L translation of the potential $\{\bm{f}^{AU}\}$ of a node $A$ onto the downwards surface $\{\bm{q}^{BD}\}$ of a node $B$. Both the upwards and downwards equivalent potentials are defined to be a Cartesian grid with the same number of quadrature points, by padding the centre of each surface with gridpoints of $0$ density we can view the M2L translation as a 3D convolution \cite{Ying2004} that can be carried out efficiently by FFT. We would only need to compute a single FFT and IFFT (inverse fast Fourier transform) per node and element wide multiplication for each node in the $V$ or $W$ interaction lists. We have yet to implement this method, but look to explore this approach if further research requires it.
+We construct both $B$ and $B^\prime$ outside of the GMRES method as they remain the same, we could also consider doing this for the KIFMM method as our discretisation points remain fixed for all GMRES iterations and as such, so do the stokeslet kernel matrices used. This would speed up the method as the majority of the computation in the KIFMM method is in the generation of the stokeslet kernel, particularly for the multipole to multipole translation (\cref{eq:M2L}) and dense particle to particle interactions. This however would take a significant amount of memory, as the stokeslet matrices needed for each M2L translation would need to be stored. A proposed optimisation is to use fast Fourier transforms (FFT) to instead compute the M2L translation. Considering an M2L translation of the potential $\{\bm{f}^{AU}\}$ of a node $A$ onto the downwards surface $\{\bm{q}^{BD}\}$ of a node $B$. Both the upwards and downwards equivalent potentials are defined to be a Cartesian grid with the same number of quadrature points, by padding the centre of each surface with gridpoints of $0$ density we can view the M2L translation as a 3D convolution \cite{Ying2004} that can be carried out efficiently by FFT. We would only need to compute a single FFT and IFFT (inverse fast Fourier transform) per node and element wide multiplication for each node in the $V$ or $W$ interaction lists. We have yet to implement this method, but look to explore this approach if further research requires it.
 
-In the hope to speed up the GMRES method without changing the underlying KIFMM method we will look at reducing the required number of GMRES iterations required to converge to the required tolerance.
+In the hope to speed up the GMRES method without changing the underlying KIFMM method, we will look at reducing the required number of GMRES iterations required to converge to the required tolerance.
 
 \subsubsection{Initial Guess}\label{sec:Guess}
 
-An easily implemented attempt at reducing the total number of GMRES iterations is to provide an initial guess to the GMRES solver such that the initial relative residual error is already minimised and the number of iterations required to converge will be lower. As seen in \cref{appendix:ConNum} the condition number of the system decreases and the eigenvalues more clustered with decreasing $\epsilon$, this means that in most cases the required number of GMRES iterations required for systems for the system to converge will be smaller as seen in \cref{fig:InitalGuessEPS}.
+An easily implemented attempt at reducing the total number of GMRES iterations is to provide an initial guess to the GMRES solver such that the initial relative residual error is already minimised and the number of iterations required to converge will be lower. As seen in \cref{appendix:ConNum} the condition number of the system decreases and the eigenvalues are more clustered with decreasing $\epsilon$, this means that in most cases the required number of GMRES iterations required for the system to converge will be smaller as seen in \cref{fig:InitalGuessEPS}.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{Images/InitalGuessEPS.pdf}
     \caption{Convergence of the small rod problem with 3 different choices of epsilon. The $\epsilon = 1e-1$ problem did not converge in the given 1000 iterations.}
     \label{fig:InitalGuessEPS}
 \end{figure}
-Solving the problem for a smaller epsilon, however, does not give us an accurate initial guess for the actual problem with a larger epsilon as the particle interactions are of a smaller magnitude. However, we note that the stokeslet matrix $A$ is dominated by the diagonal elements whose magnitude is proportional to $1/\epsilon$. If we consider two versions of the problem one with a smaller value of epsilon $\epsilon_1$ and stokeslet matrix $A_1$ and a target epsilon $\epsilon_2$ with a stokeslet matrix $A_2$ for which we would like to solve the problem for. We first solve the initial problem with $\epsilon=\epsilon_1$, this should converge quickly in comparison to the second system and will return us a solution $\bm{F}_1$. The contribution to the first $3N_{F}$ terms are dominated by the diagonal elements of $\epsilon$ of order $1/\epsilon_1$ so by re-scaling the using a factor of $\epsilon_1/\epsilon_2$ we should have a better approximation to the solution. Very little has been published on the use of initial guesses with GMRES as often they provide little to no benefit to the overall computation. What is understood is the need for the residual from the initial guess $x_0$ need to be lower than the residual of the right-hand side $b$ ($\lVert b-Ax_0 \rVert \leq \lVert r_o \rVert$). In order to achieve this, we use a trick outlined by Heged{\"u}s \cite{Saad1986GMRES:Systems,Strakos2005OnComputations} which minimises the residual using the method of least squares to obtain a scaling factor of 
+Solving the problem for a smaller epsilon, however, does not give us an accurate initial guess for the actual problem with a larger epsilon, as the particle interactions are of a smaller magnitude. However, we note that the stokeslet matrix $A$ is dominated by the diagonal elements whose magnitude is proportional to $1/\epsilon$. If we consider two versions of the problem one with a smaller value of epsilon $\epsilon_1$ and stokeslet matrix $A_1$ and a target epsilon $\epsilon_2$ with a stokeslet matrix $A_2$ for which we would like to solve the problem. We first solve the initial problem with $\epsilon=\epsilon_1$, this should converge quickly in comparison to the second system and will return us a solution $\bm{F}_1$. The contribution to the first $3N_{F}$ terms are dominated by the diagonal elements of $\epsilon$ of order $1/\epsilon_1$ so by re-scaling the using a factor of $\epsilon_1/\epsilon_2$ we should have a better approximation to the solution. Very little has been published on the use of initial guesses with GMRES as often they provide little to no benefit to the overall computation. What is understood is the need for the residual from the initial guess $x_0$ to be lower than the residual of the right-hand side $b$ ($\lVert b-Ax_0 \rVert \leq \lVert r_o \rVert$). In order to achieve this, we use a trick outlined by Heged{\"u}s \cite{Saad1986GMRES:Systems,Strakos2005OnComputations} which minimises the residual using the method of least squares to obtain a scaling factor of 
 \begin{equation*}
     \left\|r_{0}\right\|=\left\|b-A_2 \bm{F}_1 \zeta_{\min }\right\|=\min _{\zeta}\left\|b-A_2 \bm{F}_1 \zeta\right\|, \quad \zeta_{\min }=\frac{b^{T} A_2 \bm{F}_1}{\left\|A_2 \bm{F}_1\right\|^{2}}
     \label{eq:Hegedus}
 \end{equation*}
 where $\bm{F}_1$ is our initial guess from $A_2$ and our initial guess for the GMRES algorithm is $x_0 = \zeta_{\min} \bm{F}_1$. This initial guess gave some improvement in both cases as seen in \cref{tab:Preconditioning}.
 
-\subsubsection{Rescaling Mobility Matrix} \label{sec:Rescale}
-In the hope of cheaply reducing the condition of the matrix and moretightly cluster the eigenvalues of the mobility matrix such that the GMRES algorithm converges in a smaller number of iterations \cite{CampbellGMRES}. We do this by rescaling the $B$ matrix in \cref{eq:mobilityStructure} such that its maximum value is one, This should reduce the of condition of the matrix and cluster the eigenvalues at the centre. We are able to do this due to the $0$ force and moment constrains we have imposed upon the system and as such we are able to rescale out $B$ matrix without affecting the constraints. 
-We do see a tighter clustering in the eigenvalues shown in \cref{appendix:ConNum} where the eigenvalues cluster closer to 1, however the overall condition of the system increases.
+\subsubsection{Rescaling Swimming Matrix} \label{sec:Rescale}
+In the hope of cheaply reducing the condition of the matrix and more tightly clustering the eigenvalues of the swimming matrix, such that the GMRES algorithm converges in a smaller number of iterations \cite{CampbellGMRES}. We do this by rescaling the $B$ matrix in \cref{eq:swimmingStructure} such that its maximum value is one. This should reduce the condition of the matrix and cluster the eigenvalues at the centre. We are able to do this due to the $0$ force and moment constraints that we have imposed upon the our problem and as such we are able to rescale our $B$ matrix without affecting the constraints. 
+We do see a tighter clustering in the eigenvalues shown in \cref{appendix:ConNum} where the eigenvalues cluster closer to 1, however, the overall condition of the system increases.
 
 
 \subsubsection{Preconditioning} \label{sec:Preconditioning}
-A more optimal way in which we can solve Kyolov subspace methods is to use a preconditioner such that the matrix system we are trying to solve has a smaller condition number with more clustered eigenvalues. If we call the mobility matrix defined in \cref{eq:mobilityStructure} $M$, the vector of unknowns $\bm{x}$ and the right hand side $\bm{b}$ then we can refer to the system as $Mx=b$. The Matrix $M$ is much more badly conditioned (see \cref{appendix:ConNum}) than the stokeslet matrix $A$ as such requires a significant number of iterations to solve. Often when using problems GMRES we need to use a preconditioner to improve the condition number of the system we are solving, This reduced the effect of small perturbations made by the GMRES method.
+A more optimal way in which we can solve Krylov subspace methods is to use a preconditioner such that the matrix system we are trying to solve has a smaller condition number with more clustered eigenvalues. This reduces the effect of small perturbations made by the GMRES method. If we call the swimming matrix defined in \cref{eq:swimmingStructure} $M$, the vector of unknowns $\bm{x}$ and the right hand side $\bm{b}$ then we can refer to the system as $Mx=b$. The matrix $M$ is significantly less well-conditioned (see \cref{appendix:ConNum}) than the stokeslet matrix $A$ and as such requires a significant number of iterations to solve.
 
 
-Our preconditioner is based on work by Rostami and Olson \cite{Rostami2019FastBiofluids} and is inspired by the so-called “least-squares commutator” preconditioner \cite{Elman2005FiniteDynamics}. As described above we group the augmenting matrices into two larger matrices denoted $B$ and $B^\prime$. This means our mobility matrix can be written as 
+Our preconditioner is based on work by Rostami and Olson \cite{Rostami2019FastBiofluids} and is inspired by the so-called “least-squares commutator” preconditioner \cite{Elman2005FiniteDynamics}. As described above we group the augmenting matrices into two larger matrices denoted $B$ and $B^\prime$. This means our swimming matrix can be written as 
 \begin{equation*}
 \begin{aligned}
 \def\arraystretch{0.8}
@@ -107,7 +112,8 @@ Our preconditioner is based on work by Rostami and Olson \cite{Rostami2019FastBi
     &= LU.
 \end{aligned}
 \end{equation*}
-This means $MU^{-1}$ has eigenvalues of 1 and as such GMRES should converge in one iterations \cite{Rostami2019FastBiofluids} if $U^{-1}$ is used as a right preconditioner to solve the system $MU^{-1}y = b$ where $x = U^{-1}y$. However due to the need to solve $BA^{-1}B^\prime$ this becomes infeasible particularly when we do not construct $A$ explicitly.  Instead, we will attempt to cheaply approximate $U^{-1}$, We will denote the preconditioner matrix 
+
+This means $MU^{-1}$ has eigenvalues of 1 and as such GMRES should converge in one iteration \cite{Rostami2019FastBiofluids} if $U^{-1}$ is used as a right [hand side?] preconditioner to solve the system $MU^{-1}y = b$ where $x = U^{-1}y$. However due to the need to solve $BA^{-1}B^\prime$ this becomes infeasible, particularly when we do not construct $A$ explicitly.  Instead, we will attempt to cheaply approximate $U^{-1}$. We will denote the preconditioner matrix 
 \begin{equation}
 \def\arraystretch{0.8}
     P_M = \left(\begin{array}{cc}
@@ -116,7 +122,7 @@ This means $MU^{-1}$ has eigenvalues of 1 and as such GMRES should converge in o
     \end{array}\right)
     \label{eq:Precon}
 \end{equation}
-where $P_A$ is a preconditioner for the matrix $A$ and $P_S$ is a preconditioner for $-BA^{-1}B^\prime$. Schurs complement \cite{Zhang2005TheApplications,Lu2002InversesMatrices} allows us to compute the inverse of a $2 \times 2$ block matrix as 
+where $P_A$ is a preconditioner for the matrix $A$ and $P_S$ is a preconditioner for $-BA^{-1}B^\prime$. The Schur complement \cite{Zhang2005TheApplications,Lu2002InversesMatrices} allows us to compute the inverse of a $2 \times 2$ block matrix as 
 \begin{equation*}
 \def\arraystretch{0.8}
     \left(\begin{array}{cc}
@@ -135,7 +141,7 @@ if $A$ is invertible. This gives that the inverse of our preconditioner matrix \
         O_{6N_{sw}\times3N_F} & P_S^{-1}
     \end{array}\right)
 \end{equation*}
-We, therefore, need to solve two systems of equations involving $P_A$ and one linear system involving $P_S$. As we stated above solving a linear system involving $P_S$ is too computationally challenging to form and solve so we must look for an approximation to this solution. Inspired by the method of least square we look for a solution $C$ which minimises the residual of $\lVert AB^T - B^\prime C \rVert \;\forall\; C \in \mathbb{R}^{6N_{sw}\times6N_{sw}}$. This solutions is found by taking the square of the residual to obtain $(AB^T - B^\prime C)^T(AB^T - B^\prime C) = (AB^T)^T(AB^T)-(AB^T)^TB^\prime C-C^T(B^\prime)^TA^T + C^T(B^\prime)^TB^\prime C$. Taking the derivative of this with respect to $C$ equal to $0$ will minimise the residual squared. This gives us that $-2(B^\prime)^TAB^T + 2(B^\prime)^TB^\prime C=0$ so $C = ((B^\prime)^TB^\prime)^{-1}(B^\prime)^TAB^T$. Computing the inverse of $C$ we get that $C^{-1} = ((B^\prime)^TAB^T)^{-1}((B^\prime)^TB^\prime)$. As we have minimised the residual we can say that $AB^T \approx B^\prime C \implies B^T C^{-1} = A^{-1}B^\prime$. Substituting both of these into our equation for our preconditioner $P_S$ gives us that, 
+We, therefore, need to solve two systems of equations involving $P_A$ and one linear system involving $P_S$. As we stated above solving a linear system involving $P_S$ is too computationally challenging to form and solve, so we must look for an approximation to this solution. Inspired by the method of least squares we look for a solution $C$ which minimises the residual of $\lVert AB^T - B^\prime C \rVert \;\forall\; C \in \mathbb{R}^{6N_{sw}\times6N_{sw}}$. This solutions is found by taking the square of the residual to obtain $(AB^T - B^\prime C)^T(AB^T - B^\prime C) = (AB^T)^T(AB^T)-(AB^T)^TB^\prime C-C^T(B^\prime)^TA^T + C^T(B^\prime)^TB^\prime C$. Taking the derivative of this with respect to $C$ equal to $0$ will minimise the residual squared. This yields $-2(B^\prime)^TAB^T + 2(B^\prime)^TB^\prime C=0$ so $C = ((B^\prime)^TB^\prime)^{-1}(B^\prime)^TAB^T$. Computing the inverse of $C$ we get that $C^{-1} = ((B^\prime)^TAB^T)^{-1}((B^\prime)^TB^\prime)$. As we have minimised the residual we can say that $AB^T \approx B^\prime C \implies B^T C^{-1} = A^{-1}B^\prime$. Substituting both of these into our equation for our preconditioner $P_S$ gives us that, 
 \begin{equation}
 \begin{aligned}
     P_S = - B A^{-1}B^\prime &= -B B^{T} C^{-1} \\
@@ -144,16 +150,19 @@ We, therefore, need to solve two systems of equations involving $P_A$ and one li
 \end{aligned}
 \label{eq:PreconS}
 \end{equation}
-This means the computation of $P_S^{-1}$ now only involves solving the linear systems $(B^\prime)^TB^\prime$ and $B B^{T}$ however these are cheap and easy to solve as both matrices are mainly sparse with dominant diagonal elements due to their construction. We still need to compute the solution to $P_A^{-1}$. We will consider solving this we a block diagonal form of the KIFMM where we only consider the interactions between nodes. This captures most of the dominant interactions between particles and provides a relatively accurate estimation of the solution to $A^{-1}$ being significantly quicker to run. It also reduces the system to a smaller set of smaller problems, one for each node. These are quicker and easier for GMRES to solve and as such the method can converge quicker for these systems. This principle could be extended to include all nodes in the $U$ interaction list, this provides better results for a single pass however due to the off-diagonal elements now included the problem is worse conditioned with longer interactions times so we will only consider the purely block-diagonal preconditioner. Block diagonal preconditions have been used to solve problems in systems using the Rotne-Prager-Yamakawa (RPY) tensor \cite{UsabiagaHYDRODYNAMICSAPPROACH}, Stokeslet\cite{Nazockdast2017AMechanics} and more general elliptical PDEs \cite{Ibeid2018FastEquations}. Following on from using the diagonal preconditioner for $P_A^{-1}$ we will also consider a cheaper approximation to full matrix multiplication of $A$ in the computation of $P_S^{-1}$. Following on from the results shown in \cref{fig:QuadPoints} we note an accurate cheaper computation can be achieved by using fewer quadrature points for the equivalent surfaces, in particular 60 quadrature points was chosen as it provided as descent balance between the accuracy of the method and provides a noticeable speed up compared to the full method with 152 quadrature points. 
+The computation of $P_S^{-1}$ now only involves solving the linear systems $(B^\prime)^TB^\prime$ and $B B^{T}$, however, these are cheap and easy to solve as both matrices are mainly sparse with dominant diagonal elements due to their construction. We still need to compute the solution to $P_A^{-1}$. We will consider solving this via a block diagonal form of the KIFMM where we only consider the interactions between nodes. 
+The block diagonal preconditioner captures most of the dominant interactions between particles and provides a relatively accurate estimation of the solution to $A^{-1}$ and is significantly quicker to run. It also reduces the system to a set of simpler problems, one for each node. These are quicker and easier for GMRES to solve and, as such, the method can converge quicker for these systems. This principle could be extended to include all nodes in the $U$ interaction list, this provides better results for a single pass however due to the off-diagonal elements now being included, the problem is less well-conditioned with longer interaction times so we will only consider the purely block-diagonal preconditioner. Block diagonal preconditions have been used to solve problems in systems using the Rotne-Prager-Yamakawa (RPY) tensor \cite{UsabiagaHYDRODYNAMICSAPPROACH}, Stokeslet\cite{Nazockdast2017AMechanics} and more general elliptical PDEs \cite{Ibeid2018FastEquations}. 
+
+Following on from using the diagonal preconditioner for $P_A^{-1}$ we will also consider a cheaper approximation to full matrix multiplication of $A$ in the computation of $P_S^{-1}$. Following on from the results shown in \cref{fig:QuadPoints} we note a  cheaper but less accurate computation can be achieved by using fewer quadrature points for the equivalent surfaces, in this way, 60 quadrature points were chosen as it provided a good balance between the accuracy of the method and provides a noticeable speed increase compared to the full method with 152 quadrature points. 
 
 \subsection{Data}
-The results of all 3 optimisations can be seen in \cref{tab:Preconditioning} along with data for the non preconditioned system. All method had a fixed stopping criterion of $\lVert Mx-b \rVert_2/\lVert b \rVert_2 \leq 1e-6$. The 2016 swimmer model proved challenging to solve with over 150 more GMRES iterations needed to solve the problem. Both method were aided by the use of an inital guess with the computation time of both being reduced by nearly 10\% as the inital iterations are replaced by quicker iterations using a smaller $\epsilon$ value. The attempt at rescaling the lower augmented matrix proved to increase the overall computation time where the tighter clustered eigenvalues did not allow the method to converge quicker as the maximum and minimum eigenvalues separated more leading to a worse conditioned system overall. When we precondition the system we see a dramatic decrease in computation time, particularly with the 2016 swimmer case where the computation time drops by 80\%. The 203 swimmer case does not see as much of a significant drop, possible due to the larger contribution the stokeslet matrix $A$ has. This being the hardest part to precondition will determine the overall effectiveness of our preconditioner. We would expect to see that for systems with more swimmers and the same number of quadrature points the number of GMRES to converge to stay approximately the same and as such larger system to be able to be tackled. Combinations of these methods may prove useful in reducing the calculation further such as inital guesses for preconditioned systems however due to the rapid decrease in the residual from the preconditioned system it is doubt full it will provide any noticeable gain and the need to use the Heged{\"u}s trick involves another full matrix product, It might prove more useful in solving the reduced system inside the the preconditioner where the number of iterations can be quite large and the system is more dominated by the diagonal elements. A better way to reduce the computation time would be to improved the GMRES method though recycling the Krylov subspaces in order to solve repetitive linear systems \cite{Parks2006RecyclingSystems,Rostami2019FastBiofluids}. When solving the precondition we need to solve $P_A^{-1}$ twice for each iteration. The equivalent matrix for each solve remains constant with only the right-hand side changing. Instead of forming the Krylov subspace from scratch we can use some vectors from an existing Krylov subspace and construct a new Krylov subspace based on them for the new right hand side. Reducing the overall number of iterations needed for subsequent solves. This would also help with calculating the grand resistance matrix \cref{eq:GrandResistance} where multiple solutions need to be found for different right hand sides.
 
-\begin{table}[htbp]
+\begin{table}
 \begin{singlespace}
 \centering
 \setlength{\tabcolsep}{6pt}
 \renewcommand{\arraystretch}{1.4}
+\caption{Comparison of preconditioners in the case of Rods in Shear Flow. All methods converged to a tolerance of $1e-6$}
 \small
 \begin{tabular}{p{2cm} p{1cm} p{2cm} p{1.5cm} p{0.1cm} p{1cm} p{2cm} p{1.5cm}}
 \multirow{2}{*}{\parbox{1.8cm}{number of swimmers}} & \multicolumn{3}{l}{No precondtioner} & & \multicolumn{3}{l}{Initial Guess} \\ \cline{2-4} \cline{6-8}
@@ -162,12 +171,149 @@ The results of all 3 optimisations can be seen in \cref{tab:Preconditioning} alo
   2016 & 409 & 409 & 23645 & & 358 & 12/346 & 20977\\ \hline
   \multirow{2}{*}{\parbox{1.8cm}{number of swimmers}} & \multicolumn{3}{l}{Rescaling} & &\multicolumn{3}{l}{Least-squares commutator} \\ \cline{2-4} \cline{6-8}
   & \# of iters & \# of MVPs ($M$) & walltime (sec.) & & \# of iters & \# of MVPs ($M/P_A^{-1}/A_S$) & walltime (sec.) \\ \hline
-  203 & 297 & 297 & 9357 & & 71 & 64/130/65 & 6834 \\
-  2016 & 523 & 523 & 34036 & & 47 & 47/96/48 & 4887 
+  203 & 297 & 297 & 9357 & & 71 & 62/124/63 & 3739 \\
+  2016 & 523 & 523 & 34036 & & 47 & 47/96/48 & 4165 
 \end{tabular}
 \label{tab:Preconditioning}
-\caption{Comparison of preconditioners in the case of Rods in Shear Flow. All methods converged to a tolerance of $1e-6$}
 \end{singlespace}
 \end{table}
 
+The results of all 3 optimisations can be seen in \cref{tab:Preconditioning} along with data for the non preconditioned system. All methods had a fixed stopping criterion of $\lVert Mx-b \rVert_2/\lVert b \rVert_2 \leq 10^{-6}$ as is the default in MATLAB's GMRES method. The 2016 swimmer model proved challenging to solve with over 150 more GMRES iterations needed to converge to the same tolerance when no preconditioner was used. Both methods were aided by the use of an initial guess with the computation time being reduced by nearly 10\% as the initial iterations are replaced by quicker iterations using a smaller $\epsilon$ value. The attempt at re-scaling the lower augmented matrix was proven to increase the overall computation time, where the tighter clustered eigenvalues did not allow the method to converge any quicker. More work could be done in order to find a correct scaling factor to keep the tightly clustered eigenvalues and reduce the overall condition of the matrix. 
+As expected, preconditioning of the system proved most effective in reducing the overall computation time, particularly with the 2016 swimmer case where the computation time drops by 80\%. The 203 swimmer case does not see such a significant drop with a decrease in computation time of 50\%, possibly due to the larger contribution that the stokeslet matrix $A$ has on the computation. We would expect to see that, for systems with more swimmers and the same number of quadrature points, the number of GMRES iterations needed to converge would stay approximately the same, and as such, larger systems could be tackled. Combinations of these methods may prove useful in reducing the calculation further, such as initial guesses for preconditioned systems, however, due to the rapid decrease in the residual from the preconditioned system it is doubtful that it will provide any noticeable gain and the need to use the Heged{\"u}s trick involves another full matrix product.
+
 \subsection{Squirmers}
+The slip velocity spherical squirmier is used widely in models of propulsion in stokes flow \cite{Smith2021TheSelf-Propulsion,Lauga2020TheModel,Pedley2016SquirmersSwimming}. The squirmer model allows for the representation of swimming motion generated by many beating cilia without the need to simulate each cilium individually. By scaling the coordinate system such that the radius of the spherical squirmer is 1, we denote an angle relative to the north pole as $\theta$ which lies between $0\leq\theta\leq\pi$. We also define $\bm{t}(\theta)$ to be the tangent to the sphere pointing towards the south pole. Then the velocity in the body frame of the the squirmier is $\bm{u}(\theta) = sin(\theta)\bm{t}(\theta)$ as seen in \cref{fig:Squiremer3D}. We also plot the streamlines around the squiremers in \cref{fig:Squiremer3DFlow}, where the force at each force discretisation point on the squirmier is solved through the resistance problem. In order to refine accuracy of the flow field the hybrid NEAREST method was used with 3756 sdof based on 1252 force quadrature points and 20058 fine quadrature points. The force field was then evaluated on a Cartesian grid in the domain $[-2\; 2] \times [-2\; 2] \times [-2\; 2]$ with a total of 125000 evaluation points. 
+
+\begin{figure}
+\begin{subfigure}[b]{0.475\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Squiremer3D.pdf}
+    \caption[]{\label{fig:Squiremer3D}}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.475\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/StreamLinesSingle.pdf}
+    \caption[]{\label{fig:Squiremer3DFlow}}
+\end{subfigure}
+\caption[Velocity and Streamlines flows around a single squirmer.]{(i) Graph showing the magnitude of the velocity on the surface of a single squirmer. (ii) The computed velocity profile with streamlines in the $(x_2,x_3)$ plane}
+\end{figure}
+
+The interactions of multiple squirmers is considered in \cref{fig:Squiremer3DFlowPair} where we first solve a swimming problem, each swimmer is discretised with 1252 force quadrature points and 20058 fine quadrature points, totalling 7524 sdof for each swimming problem. Noting that $\bm{b}^{(3)} = \bm{b}^{(1)} \times \bm{b}^{(2)}$ we only need to return the changes in the first two basis vectors, At each time step we return 
+\begin{equation*}
+    {\dot{\bm{x}}}_{0}=\bm{U}\left(\bm{x}_{0}, \bm{b}^{(1)}, \bm{b}^{(2)}, t\right), \quad \dot{\bm{b}}^{(j)}=\bm{\Omega}\left(\bm{x}_{0}, \bm{b}^{(1)}, \bm{b}^{(2)}, t\right) \times \bm{b}^{(j)}, \quad j=1,2
+\end{equation*}
+in the form
+\begin{equation*}
+\arraycolsep=0.4pt\def\arraystretch{1}
+\dot{Y} = \begin{bmatrix}
+    {\dot{\bm{x}}_{0 j}} \\
+    {\dot{\bm{b}}^{(1)}}_j \\
+    {\dot{\bm{b}}^{(2)}}_j
+\end{bmatrix} \quad \text{ for } j=1,..,N_{sw}
+\end{equation*}
+The problem is then formulated by a set of $9 \times N_{sw}$ differential equations which can be solved using Matlab's ode45 solver. The resistance problem is then solved for the needed time steps and the velocity evaluated on a Cartesian grid in the domain $[-3\; 3] \times [-3\; 3] \times [-3\; 3]$ with a total of 125000 evaluation points. Figure \ref{fig:Squiremer3DFlowPair} shows the flow field at select time steps during the simulation. A regularisation parameter of $10^{-2}$ was chosen such the condition of the Resistance problem was relatively low and a fine quadrature spacing of a quarter the force spacing was used as recommended by Smith and Gallagher \cite{Gallagher2020}.  
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{example-image-a}
+    \caption[Streamlines flows around a pair of squirmers.]{Streamlines flows around a pair of squirmers at various timesteps. The discretisation points of the squiremer are plotted in blue.}
+    \label{fig:Squiremer3DFlowPair}
+\end{figure}
+
+\subsubsection{Bottom heavy squirmers}
+For larger simulations the choice was made to study bottom heavy squiremers in a gravitational field. It has been seen that bottom heavy squiremers, where the centre of mass lies below the geometric centre of the sphere, form clusters which rise and fall when confined between two parallel plates \cite{Ruhle2020EmergentGravity}. Implantation of both gravity and bottom heaviness is easy due to the formulation of the swimming problem, we set $\bm{G}=[0,0,g]$ where $g$ is the strength of gravity in the z direction. The torque is therefore defined to be $\bm{T}_j =  m g r_0 ( -\bm{b}_j^{(3)} \times \bm{e}_z)$ for $j=1,...,N_{sw}$ where $m$ is the mass of the squirmer (taken to be 1), $r_0$ is the offset of the centre of mass from the geometric centre and $\bm{e_z}$ is a unit vector pointing in the positive z direction. We scatter 50 squiremers of radius $0.5$ in the region $[-1.6\; 1.6] \times [-1.6\; 1.6] \times [1\; 4.5]$. Each squirmer starts in a random direction and with a maximum velocity of two on the equator of the sphere. In order to constrain the squiremers we define two walls one at $z=0$ and the other at $z=10$ each with a size of $10 \times 10$. In order to keep the total scalar degrees of freedom reasonable 26 force points and 206 fine quadrature points are placed over the surface of the sphere with an effective spacing of 0.33 and 0.1 respectively. The boundaries are discretised with 3808 force points and 62382 fine quadrature points with effective spacing of 0.25 and 0.0625 respectively. 
+
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-1-All.pdf}
+    \caption[]{\label{fig:squirmerPosA}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-2-All.pdf}
+    \caption[]{\label{fig:squirmerPosB}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-3-All.pdf}
+    \caption[]{\label{fig:squirmerPosC}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-4-All.pdf}
+    \caption[]{\label{fig:squirmerPosD}}
+\end{subfigure}
+\vskip\baselineskip
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-5-All.pdf}
+    \caption[]{\label{fig:squirmerPosE}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-6-All.pdf}
+    \caption[]{\label{fig:squirmerPosF}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-7-All.pdf}
+    \caption[]{\label{fig:squirmerPosG}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-8-All.pdf}
+    \caption[]{\label{fig:squirmerPosH}}
+\end{subfigure}
+\label{fig:SquiremerGyroPo}
+\caption{4.239246790465330e-04,0.739684464538584,1.478945004398122,2.218205544257660,2.957466084117197,3.696726623976735,4.435987163836273,5.175247703695810}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-1.pdf}
+    \caption[]{\label{fig:squirmerA}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-2.pdf}
+    \caption[]{\label{fig:squirmerB}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-3.pdf}
+    \caption[]{\label{fig:squirmerC}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-4.pdf}
+    \caption[]{\label{fig:squirmerD}}
+\end{subfigure}
+\vskip\baselineskip
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-5.pdf}
+    \caption[]{\label{fig:squirmerE}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-6.pdf}
+    \caption[]{\label{fig:squirmerF}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-7.pdf}
+    \caption[]{\label{fig:squirmerG}}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Gyro-8.pdf}
+    \caption[]{\label{fig:squirmerH}}
+\end{subfigure}
+\label{fig:SquiremerGyro}
+\caption{4.239246790465330e-04,0.739684464538584,1.478945004398122,2.218205544257660,2.957466084117197,3.696726623976735,4.435987163836273,5.175247703695810}
+\end{figure}

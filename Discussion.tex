@@ -1,2 +1,19 @@
 \FloatBarrier
 \section{Conclusion}
+In this project we considered the use of the kernel independent fast multipole method for solving large scale stokes problems. We first coincided the method of regularised stokeslets and its advantages over traditional Boundary element methods. By using the method of regularised stokeslet the method of regularised stokes we found a complexity of $\mathcal{O}(N^2)$ for the evaluation of velocities or $\mathcal{O}(N^3)$ when solving resistance or swimming problems. In an attempt to speed up over all evaluation times of these problems and solve larger systems we considered the use of the KIFMM method in the evaluation of the both evaluating the matrix product and solving swimming problems with the use of GMRES. 
+
+When purely considering the use of KIFMM method for the evaluation of the matrix product we see a significant speed up when compared to the direct product implemented on the CPU. As \cref{fig:DirectProductCompTime} illustrates the the direct product follows as order $\mathcal{O}(N^2)$ relation which at scales over 
+
+\begin{itemize}
+    \item KIFMM is a good method to evaluate the vector matrix product
+    \item KIFMM hybrid is even better at evaluating large systems
+    \item Although it is an order $N^2$ vs $N^3$ algorithm each solution is still slow compared to GPU based methods - large overhead in MATLAB for parallelisation 
+    \item KIFMM would be better suited at solving particle tracking problems  \cite{Gallagher2020SimulationsMechanics}
+    \item In order for KIFMM to work at smaller systems we will need to significantly optimise our KIFMM method using:
+    \begin{itemize}
+        \item recycling the Krylov subspaces \cite{Rostami2019FastBiofluids,Parks2006RecyclingSystems}
+        \item FFT based computation and SVD storage for repeated computations \cite{Ying2004}
+        \item dual tree traversal to optimise node to node interactions \cite{Wilson2021ATraversal}
+        \item Better preconditioners, particularly in the case of the hybrid KIFMM method
+    \end{itemize}
+\end{itemize}
