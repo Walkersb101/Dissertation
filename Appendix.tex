@@ -1,6 +1,6 @@
 \appendix
 \FloatBarrier
-\section{Hardware}\label{appendix:Hardware}
+\section{Hardware and Software}\label{appendix:Hardware}
 All numerical simulations were done on one of two machines,
 \begin{itemize}
     \item [(M1)] Lenovo NeXtScale server BEAR HPC (Birmingham Environment for Academic Research High Performance Computing) processing unit (CPU), using 2x Intel(R) Xeon(R) Platinum 8360Y CPU  (each with 36 cores @ 2.40GHz) and 64 GB DDR4 RAM.
@@ -8,6 +8,7 @@ All numerical simulations were done on one of two machines,
 \end{itemize}
 (M1) forms part of a HPC cluster but all computation will be limited to a single compute node per simulation. Most simulations here were limited to 20 computation threads on (M1) and 4 on (M2) unless otherwise stated.
 
+For data accessibility all Matlab code to generate all data and figures found in this paper can be found at \url{https://github.com/Walkersb101/KIFMM}.
 
 \FloatBarrier
 \section{GMRES}\label{appendix:GMRES}
@@ -224,7 +225,7 @@ Finally, defining the right hand side vector as $(\bm{V}_1,\bm{V}_1,\bm{V}_1,\bm
 \end{equation*}
 This forms a linear system of $3(N_F+2N_{sw})$ equations in $3(N_F+2N_{sw})$ unknowns in the same structure as \cref{eq:swimmingStructure} as we had for the NEAREST discretisation.
 
-
+\newpage
 \FloatBarrier
 \section{Condition number}\label{appendix:ConNum}
 We investigate the condition number and eignevalue distribution of various matrices derived in the paper. We consider the change in the parameters, two which affect the total number of quadrature points and also the change in $\epsilon$. Spherical swimmers of radius $0.5$ with varying number of quadrature points are randomly scattered, but not allowed to intersect, in a domain of $5 \times 5 \times 5$. 
@@ -232,6 +233,7 @@ We investigate the condition number and eignevalue distribution of various matri
 As expected the larger $\epsilon$ systems are significantly worse conditioned even when preconditioned, We also note an increase in the condition of all matrices as the number of scalar degrees of freedom and swimmers increases, This is due to the spacing between particles becoming smaller and the variation in the magnitude of the interactions becoming larger. 
 
 \begin{figure}
+\caption[Condition of matrices considered in this paper.]{Condition of matrices considered in this paper with various changes in parameter.}
     \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\linewidth]{Images/Condition/Stokeslet Matrix-1.pdf}
         \caption{Nyström Stokeslet Matrix with $\epsilon=1e-1$}
@@ -390,6 +392,60 @@ As expected the larger $\epsilon$ systems are significantly worse conditioned ev
         \caption{Preconditioned NEAREST Swimming Matrix with $\epsilon=1e-5$ with joint coarse and fine quadrature sets}  
     \end{subfigure}
 \end{figure}
+
+\begin{figure}
+\caption[Eigenvalues of matrices considered in this paper.]{Eigenvalues of matrices considered in this paper for the case of 40 swimmers and 114 force quadrature points. }
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Condition/Eigen-Stokeslet Matrix.pdf}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix.pdf}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix Preconditioned.pdf}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix with rescaled total B Matrix.pdf}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Condition/Eigen-Stokeslet Matrix using Disjoint NEAREST.pdf}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix using Disjoint NEAREST.pdf}
+    \end{subfigure}
+\end{figure}
+
+\begin{figure}
+\ContinuedFloat
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix using Joint NEAREST Preconditioned.pdf}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Condition/Eigen-Stokeslet Matrix using Disjoint NEAREST.pdf}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix using Disjoint NEAREST.pdf}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix using Disjoint NEAREST Preconditioned.pdf}
+    \end{subfigure}
+\end{figure}
+
 
 
 \begin{comment}

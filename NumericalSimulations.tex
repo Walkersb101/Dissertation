@@ -85,7 +85,7 @@ Solving the problem for a smaller epsilon, however, does not give us an accurate
 where $\bm{F}_1$ is our initial guess from $A_2$ and our initial guess for the GMRES algorithm is $x_0 = \zeta_{\min} \bm{F}_1$. This initial guess gave some improvement in both cases as seen in \cref{tab:Preconditioning}.
 
 \subsubsection{Rescaling Swimming Matrix} \label{sec:Rescale}
-In the hope of cheaply reducing the condition of the matrix and more tightly clustering the eigenvalues of the swimming matrix, such that the GMRES algorithm converges in a smaller number of iterations \cite{CampbellGMRES}. We do this by rescaling the $B$ matrix in \cref{eq:swimmingStructure} such that its maximum value is one. This should reduce the condition of the matrix and cluster the eigenvalues at the centre. We are able to do this due to the $0$ force and moment constraints that we have imposed upon the our problem and as such we are able to rescale our $B$ matrix without affecting the constraints. 
+In the hope of cheaply reducing the condition of the matrix and more tightly clustering the eigenvalues of the swimming matrix, such that the GMRES algorithm converges in a smaller number of iterations \cite{CampbellGMRES}. We do this by rescaling the $B$ matrix in \cref{eq:swimmingStructure} such that its maximum value is one. This should reduce the condition of the matrix and cluster the eigenvalues at the centre. We are able to do this due to the $0$ force and moment constraints that we have imposed upon the problem and as such we are able to rescale our $B$ matrix without affecting the constraints. 
 We do see a tighter clustering in the eigenvalues shown in \cref{appendix:ConNum} where the eigenvalues cluster closer to 1, however, the overall condition of the system increases.
 
 
@@ -155,14 +155,18 @@ The block diagonal preconditioner captures most of the dominant interactions bet
 
 Following on from using the diagonal preconditioner for $P_A^{-1}$ we will also consider a cheaper approximation to full matrix multiplication of $A$ in the computation of $P_S^{-1}$. Following on from the results shown in \cref{fig:QuadPoints} we note a  cheaper but less accurate computation can be achieved by using fewer quadrature points for the equivalent surfaces, in this way, 60 quadrature points were chosen as it provided a good balance between the accuracy of the method and provides a noticeable speed increase compared to the full method with 152 quadrature points. 
 
-\subsection{Data}
+\subsection{Results}
+
+
+
+The results of all 3 optimisations can be seen in \cref{tab:Preconditioning} along with data for the non preconditioned system. All methods had a fixed stopping criterion of $\lVert Mx-b \rVert_2/\lVert b \rVert_2 \leq 10^{-6}$ as is the default in MATLAB's GMRES method. The 2016 swimmer model proved challenging to solve with over 150 more GMRES iterations needed to converge to the same tolerance when no preconditioner was used. Both methods were aided by the use of an initial guess with the computation time being reduced by nearly 10\% as the initial iterations are replaced by quicker iterations using a smaller $\epsilon$ value. The attempt at re-scaling the lower augmented matrix was proven to increase the overall computation time, where the tighter clustered eigenvalues did not allow the method to converge any quicker. More work could be done in order to find a correct scaling factor to keep the tightly clustered eigenvalues and reduce the overall condition of the matrix. 
 
 \begin{table}
 \begin{singlespace}
 \centering
 \setlength{\tabcolsep}{6pt}
 \renewcommand{\arraystretch}{1.4}
-\caption{Comparison of preconditioners in the case of Rods in Shear Flow. All methods converged to a tolerance of $1e-6$}
+\caption{Comparison of preconditioners in the case of Rods in Shear Flow. All methods converged to a relative residual error smaller than $10^{-6}$}
 \small
 \begin{tabular}{p{2cm} p{1cm} p{2cm} p{1.5cm} p{0.1cm} p{1cm} p{2cm} p{1.5cm}}
 \multirow{2}{*}{\parbox{1.8cm}{number of swimmers}} & \multicolumn{3}{l}{No precondtioner} & & \multicolumn{3}{l}{Initial Guess} \\ \cline{2-4} \cline{6-8}
@@ -178,28 +182,53 @@ Following on from using the diagonal preconditioner for $P_A^{-1}$ we will also 
 \end{singlespace}
 \end{table}
 
-The results of all 3 optimisations can be seen in \cref{tab:Preconditioning} along with data for the non preconditioned system. All methods had a fixed stopping criterion of $\lVert Mx-b \rVert_2/\lVert b \rVert_2 \leq 10^{-6}$ as is the default in MATLAB's GMRES method. The 2016 swimmer model proved challenging to solve with over 150 more GMRES iterations needed to converge to the same tolerance when no preconditioner was used. Both methods were aided by the use of an initial guess with the computation time being reduced by nearly 10\% as the initial iterations are replaced by quicker iterations using a smaller $\epsilon$ value. The attempt at re-scaling the lower augmented matrix was proven to increase the overall computation time, where the tighter clustered eigenvalues did not allow the method to converge any quicker. More work could be done in order to find a correct scaling factor to keep the tightly clustered eigenvalues and reduce the overall condition of the matrix. 
 As expected, preconditioning of the system proved most effective in reducing the overall computation time, particularly with the 2016 swimmer case where the computation time drops by 80\%. The 203 swimmer case does not see such a significant drop with a decrease in computation time of 50\%, possibly due to the larger contribution that the stokeslet matrix $A$ has on the computation. We would expect to see that, for systems with more swimmers and the same number of quadrature points, the number of GMRES iterations needed to converge would stay approximately the same, and as such, larger systems could be tackled. Combinations of these methods may prove useful in reducing the calculation further, such as initial guesses for preconditioned systems, however, due to the rapid decrease in the residual from the preconditioned system it is doubtful that it will provide any noticeable gain and the need to use the Heged{\"u}s trick involves another full matrix product.
 
-\subsection{Squirmers}
-The slip velocity spherical squirmier is used widely in models of propulsion in stokes flow \cite{Smith2021TheSelf-Propulsion,Lauga2020TheModel,Pedley2016SquirmersSwimming}. The squirmer model allows for the representation of swimming motion generated by many beating cilia without the need to simulate each cilium individually. By scaling the coordinate system such that the radius of the spherical squirmer is 1, we denote an angle relative to the north pole as $\theta$ which lies between $0\leq\theta\leq\pi$. We also define $\bm{t}(\theta)$ to be the tangent to the sphere pointing towards the south pole. Then the velocity in the body frame of the the squirmier is $\bm{u}(\theta) = sin(\theta)\bm{t}(\theta)$ as seen in \cref{fig:Squiremer3D}. We also plot the streamlines around the squiremers in \cref{fig:Squiremer3DFlow}, where the force at each force discretisation point on the squirmier is solved through the resistance problem. In order to refine accuracy of the flow field the hybrid NEAREST method was used with 3756 sdof based on 1252 force quadrature points and 20058 fine quadrature points. The force field was then evaluated on a Cartesian grid in the domain $[-2\; 2] \times [-2\; 2] \times [-2\; 2]$ with a total of 125000 evaluation points. 
+\begin{table}
+\begin{singlespace}
+\centering
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.4}
+\caption[The use of hybrid KIFMM NEAREST method to solve the 2016 rod case.]{The use of hybrid KIFMM NEAREST method to solve the 2016 rod case. Both preconditioned and not preconditioned methods converged to a relative residual error smaller than $10^{-6}$ of the Joint case. Neither system converged in the maximum 1000 iterations for the Disjoint case.}
+\small
+\begin{tabular}{p{2cm} p{0.75cm} p{2cm} p{1.0cm} p{0.1cm} p{0.75cm} p{2.5cm} p{1.5cm}}
+\multirow{2}{*}{\parbox{1.8cm}{NEAREST Spacing}} & \multicolumn{3}{l}{No precondtioner} & & \multicolumn{3}{l}{Least-squares commutator} \\ \cline{2-4} \cline{6-8}
+  & \# of iters & \# of MVPs ($M$) & walltime (sec.) & & \# of iters & \# of MVPs ($M/P_A^{-1}/A_S$) & walltime (sec.) \\ \hline
+  Joint & 201 & 201 & 2898 & &  47 & 47/96/48 & 1394\\
+  Disjoint & 1000 & 1000 & 10436 & & 1000 & 1000/2002/1001 & 19734
+\end{tabular}
+\label{tab:PreconditioningNear}
+\end{singlespace}
+\end{table}
+
+In order to evaluate the use of the hybrid KIFMM NEAREST method we solved the swimming problem for the case of 2016 in a shear flow. In order to compare between non NEAREST and NEAREST computations we discretise each spheroid with 42 fine quadrature points matching the discretisation in the non-nearest case and introduce a coarse discretisation with spacing 2 times larger such that the surface is discretised by 12 force quadrature points.  This gives a total of 72576 SDOF for each system with 84672 and 108864 fine quadrature points for the joint and disjoint cases respectively. Although results will differ slightly based on \cref{fig:NEARESTCOMPFMM,fig:NEARESTCOMP} and data collected by Smith \cite{Smith2018AEquation} show that the overall difference will be small. Figure \ref{tab:PreconditioningNear} shows that we see a large increase in performance for the joint case with a 2.7$\times$ speed up in the computation for the preconditioned system. The overall increase in speed found obtained by using a preconditioner is only 2$\times$ compared to the 5$\times$ speed up found in the non NEAREST computations. Results for the Disjoint case are less promising with neither simulation converging in 1000 iterations. The convergence rate of both systems appears to stagnate early with the pre-conditioned system failing to converge to a residual error of $4\times 10^{-2}$. This is due to the choice of the block-diagonal preconditioner which does not represent the system as closely as it does for other discretisation. 
 
 \begin{figure}
-\begin{subfigure}[b]{0.475\textwidth}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/Rods/NearestPrecon.pdf}
+    \caption{Convergence rate of NEAREST discretisation when used to solve the rods in a shear flow problem.}
+    \label{fig:NearestConverge}
+\end{figure}
+
+\subsection{Squirmers}
+The slip velocity spherical squirmier is used widely in models of propulsion in stokes flow \cite{Smith2021TheSelf-Propulsion,Lauga2020TheModel,Pedley2016SquirmersSwimming}. The squirmer model allows for the representation of swimming motion generated by many beating cilia without the need to simulate each cilium individually. By scaling the coordinate system such that the radius of the spherical squirmer is 1, we denote an angle relative to the north pole as $\theta$ which lies between $0\leq\theta\leq\pi$. We also define $\bm{t}(\theta)$ to be the tangent to the sphere pointing towards the south pole. Then the velocity in the body frame of the the squirmier is $\bm{u}(\theta) = sin(\theta)\bm{t}(\theta)$ as seen in \cref{fig:Squiremer3D}. We also plot the streamlines around the squirmers in \cref{fig:Squiremer3DFlow}, where the force at each force discretisation point on the squirmier is solved through the resistance problem. In order to refine the accuracy of the flow field, the hybrid NEAREST method was used with 3756 SDOF based on 1252 force quadrature points and 20058 fine quadrature points. The force field was then evaluated on a Cartesian grid in the domain $[-2\; 2] \times [-2\; 2] \times [-2\; 2]$ with a total of 125000 evaluation points. 
+
+\begin{figure}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Squiremer3D.pdf}
     \caption[]{\label{fig:Squiremer3D}}
 \end{subfigure}
 \hfill
-\begin{subfigure}[b]{0.475\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/StreamLinesSingle.pdf}
     \caption[]{\label{fig:Squiremer3DFlow}}
 \end{subfigure}
-\caption[Velocity and Streamlines flows around a single squirmer.]{(i) Graph showing the magnitude of the velocity on the surface of a single squirmer. (ii) The computed velocity profile with streamlines in the $(x_2,x_3)$ plane}
+\caption[Velocity and Streamlines flow around a single squirmer.]{(i) Graph showing the magnitude of the velocity on the surface of a single squirmer. (ii) The computed velocity profile with streamlines in the $(x_2,x_3)$ plane}
 \end{figure}
 
-The interactions of multiple squirmers is considered in \cref{fig:Squiremer3DFlowPair} where we first solve a swimming problem, each swimmer is discretised with 1252 force quadrature points and 20058 fine quadrature points, totalling 7524 sdof for each swimming problem. Noting that $\bm{b}^{(3)} = \bm{b}^{(1)} \times \bm{b}^{(2)}$ we only need to return the changes in the first two basis vectors, At each time step we return 
+The interactions of multiple squirmers are considered in \cref{fig:Squiremer3DFlowPair} where we first solve a swimming problem, each swimmer is discretised with 1252 force quadrature points and 20058 fine quadrature points, totalling 7524 SDOF for each swimming problem. Noting that $\bm{b}^{(3)} = \bm{b}^{(1)} \times \bm{b}^{(2)}$ we only need to return the changes in the first two basis vectors, At each time step we return 
 \begin{equation*}
     {\dot{\bm{x}}}_{0}=\bm{U}\left(\bm{x}_{0}, \bm{b}^{(1)}, \bm{b}^{(2)}, t\right), \quad \dot{\bm{b}}^{(j)}=\bm{\Omega}\left(\bm{x}_{0}, \bm{b}^{(1)}, \bm{b}^{(2)}, t\right) \times \bm{b}^{(j)}, \quad j=1,2
 \end{equation*}
@@ -212,108 +241,147 @@ in the form
     {\dot{\bm{b}}^{(2)}}_j
 \end{bmatrix} \quad \text{ for } j=1,..,N_{sw}
 \end{equation*}
-The problem is then formulated by a set of $9 \times N_{sw}$ differential equations which can be solved using Matlab's ode45 solver. The resistance problem is then solved for the needed time steps and the velocity evaluated on a Cartesian grid in the domain $[-3\; 3] \times [-3\; 3] \times [-3\; 3]$ with a total of 125000 evaluation points. Figure \ref{fig:Squiremer3DFlowPair} shows the flow field at select time steps during the simulation. A regularisation parameter of $10^{-2}$ was chosen such the condition of the Resistance problem was relatively low and a fine quadrature spacing of a quarter the force spacing was used as recommended by Smith and Gallagher \cite{Gallagher2020}.  
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.45\textwidth]{example-image-a}
-    \caption[Streamlines flows around a pair of squirmers.]{Streamlines flows around a pair of squirmers at various timesteps. The discretisation points of the squiremer are plotted in blue.}
-    \label{fig:Squiremer3DFlowPair}
-\end{figure}
-
-\subsubsection{Bottom heavy squirmers}
-For larger simulations the choice was made to study bottom heavy squiremers in a gravitational field. It has been seen that bottom heavy squiremers, where the centre of mass lies below the geometric centre of the sphere, form clusters which rise and fall when confined between two parallel plates \cite{Ruhle2020EmergentGravity}. Implantation of both gravity and bottom heaviness is easy due to the formulation of the swimming problem, we set $\bm{G}=[0,0,g]$ where $g$ is the strength of gravity in the z direction. The torque is therefore defined to be $\bm{T}_j =  m g r_0 ( -\bm{b}_j^{(3)} \times \bm{e}_z)$ for $j=1,...,N_{sw}$ where $m$ is the mass of the squirmer (taken to be 1), $r_0$ is the offset of the centre of mass from the geometric centre and $\bm{e_z}$ is a unit vector pointing in the positive z direction. We scatter 50 squiremers of radius $0.5$ in the region $[-1.6\; 1.6] \times [-1.6\; 1.6] \times [1\; 4.5]$. Each squirmer starts in a random direction and with a maximum velocity of two on the equator of the sphere. In order to constrain the squiremers we define two walls one at $z=0$ and the other at $z=10$ each with a size of $10 \times 10$. In order to keep the total scalar degrees of freedom reasonable 26 force points and 206 fine quadrature points are placed over the surface of the sphere with an effective spacing of 0.33 and 0.1 respectively. The boundaries are discretised with 3808 force points and 62382 fine quadrature points with effective spacing of 0.25 and 0.0625 respectively. 
+The problem is then formulated by a set of $9 \times N_{sw}$ differential equations which can be solved using Matlab's ode45 solver. The resistance problem is then solved for the needed time steps and the velocity is evaluated on a cartesian grid in the domain $[-3\; 3] \times [-3\; 3] \times [-3\; 3]$ with a total of 125000 evaluation points. Figure \ref{fig:Squiremer3DFlowPair} shows the flow field at select time steps during the simulation. A regularisation parameter of $10^{-2}$ was chosen such the condition of the Resistance problem was relatively low and a fine quadrature spacing of a quarter of the force spacing was used as recommended by Smith and Gallagher \cite{Gallagher2020}.  
 
 \begin{figure}
 \centering
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Pair-1.pdf}
+    \caption[]{\label{fig:PairA}}
+\end{subfigure}
+\begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Pair-2.pdf}
+    \caption[]{\label{fig:PairB}}
+\end{subfigure}
+\begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Pair-3.pdf}
+    \caption[]{\label{fig:PairC}}
+\end{subfigure}
+\begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Pair-4.pdf}
+    \caption[]{\label{fig:PairD}}
+\end{subfigure}
+\vskip\baselineskip
+\begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Pair-5.pdf}
+    \caption[]{\label{fig:PairE}}
+\end{subfigure}
+\begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Pair-6.pdf}
+    \caption[]{\label{fig:PairF}}
+\end{subfigure}
+\begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Pair-7.pdf}
+    \caption[]{\label{fig:PairG}}
+\end{subfigure}
+\begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Images/squirmers/Pair-8.pdf}
+    \caption[]{\label{fig:PairH}}
+\end{subfigure}
+\caption[Streamlines flows around a pair of squirmers.]{\label{fig:Squiremer3DFlowPair}Streamlines flows around a pair of squirmers at various time steps. The coarse discretisation points of the squiremer are plotted in red. (i-viii) are taken at slices in the simulation at times t = 0, 0.14, 0.29, 0.49, 0.57, 0.71, 0.86 and 1 respectively.}
+\end{figure}
+
+\subsubsection{Bottom heavy squirmers}
+For larger simulations, the choice was made to study bottom-heavy squirmers in a gravitational field \cite{Ruhle2020EmergentGravity,BrumleyStabilitySquirmers,Pedley2016SphericalMicro-organisms}. It has been seen that bottom-heavy squirmers, where the centre of mass lies below the geometric centre of the sphere, form clusters which rise and fall when confined between two parallel plates \cite{Ruhle2020EmergentGravity}. Implantation of both gravity and bottom heaviness is easy due to the formulation of the swimming problem, we set $\bm{G}=[0,0,g]$ where $g$ is the strength of gravity in the  direction. The torque is therefore defined to be $\bm{T}_j =  m g r_0 ( -\bm{b}_j^{(3)} \times \bm{e}_z)$ for $j=1,...,N_{sw}$ where $m$ is the mass of the squirmer (taken to be 1), $r_0$ is the offset of the centre of mass from the geometric centre and $\bm{e_z}$ is a unit vector pointing in the positive z-direction. We scatter 50 squirmers of radius $0.5$ in the region $[-1.6\; 1.6] \times [-1.6\; 1.6] \times [1\; 4.5]$. Each squirmer starts in a random direction and with a maximum velocity of two on the equator of the sphere. In order to constrain the squirmers we define two walls one at $z=0$ and the other at $z=10$ each with a size of $10 \times 10$. In order to keep the total scalar degrees of freedom reasonable 26 force points and 206 fine quadrature points are placed over the surface of the sphere with an effective spacing of 0.33 and 0.1 respectively. The boundaries are discretised with 3808 force points and 62382 fine quadrature points with effective spacing of 0.25 and 0.0625 respectively. 
+
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-1-All.pdf}
     \caption[]{\label{fig:squirmerPosA}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-2-All.pdf}
     \caption[]{\label{fig:squirmerPosB}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-3-All.pdf}
     \caption[]{\label{fig:squirmerPosC}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-4-All.pdf}
     \caption[]{\label{fig:squirmerPosD}}
 \end{subfigure}
 \vskip\baselineskip
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-5-All.pdf}
     \caption[]{\label{fig:squirmerPosE}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-6-All.pdf}
     \caption[]{\label{fig:squirmerPosF}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-7-All.pdf}
     \caption[]{\label{fig:squirmerPosG}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-8-All.pdf}
     \caption[]{\label{fig:squirmerPosH}}
 \end{subfigure}
 \label{fig:SquiremerGyroPo}
-\caption{4.239246790465330e-04,0.739684464538584,1.478945004398122,2.218205544257660,2.957466084117197,3.696726623976735,4.435987163836273,5.175247703695810}
+\caption[Position at 8 time steps of 50 squiremers randomly distributed at t=0.]{Position at 8 time steps of 50 squirmers randomly distributed at t=0. Two plates define the top and bottom of the simulations at $x_3 = 0$ and  $x_3 = 10$. (i-viii) show squirmer positions at t = 0, 0.74, 1.48, 2.212, 2.96, 3.70, 4.44 and 5.18 respectively.}
 \end{figure}
 
 \begin{figure}
 \centering
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-1.pdf}
     \caption[]{\label{fig:squirmerA}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-2.pdf}
     \caption[]{\label{fig:squirmerB}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-3.pdf}
     \caption[]{\label{fig:squirmerC}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-4.pdf}
     \caption[]{\label{fig:squirmerD}}
 \end{subfigure}
 \vskip\baselineskip
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-5.pdf}
     \caption[]{\label{fig:squirmerE}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-6.pdf}
     \caption[]{\label{fig:squirmerF}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-7.pdf}
     \caption[]{\label{fig:squirmerG}}
 \end{subfigure}
-\begin{subfigure}[b]{0.24\textwidth}
+\begin{subfigure}[b]{0.22\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-8.pdf}
     \caption[]{\label{fig:squirmerH}}
 \end{subfigure}
 \label{fig:SquiremerGyro}
-\caption{4.239246790465330e-04,0.739684464538584,1.478945004398122,2.218205544257660,2.957466084117197,3.696726623976735,4.435987163836273,5.175247703695810}
+\caption[Position and velocity profile at 8 time steps of 50 squiremers randomly distributed at t=0.]{Position and velocity profile slice at $x_1=0$ are shown at 8 time steps of 50 squirmers randomly distributed at t=0. Two plates define the top and bottom of the simulations at $x_3 = 0$ and  $x_3 = 10$. (i-viii) show squirmer positions at t = 0, 0.74, 1.48, 2.212, 2.96, 3.70, 4.44 and 5.18 respectively.}
 \end{figure}

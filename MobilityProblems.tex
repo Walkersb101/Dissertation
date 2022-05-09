@@ -116,7 +116,9 @@ Often when working with stokes flow the problemm includes the interaction of bou
     \iint_{\partial D} \epsilon_{i k j} (y_{k}-x_{0 k}) f_{j}(\bm{y}) d S({\bm{y}})=T_i,
 \end{gathered}
 \end{equation}
-This addition to the problem is numerically solved in the same way as for the single swimmer, we extend the two quadrature sets to now include the points on the boundary. Now taking the original number of quadrature points to be $N_D$ and the number of quadrature points on the boundary as $N_B$ then the set of force points can be written as  $\{\bm{x}_n\}$ where $n=1,\dots,N=N_B+N_D$. The same is done for the fine quadrature points on the boundary $\{\bm{X}_q\}$ where $q=Q_D+1,\dots,Q=Q_D+Q_B$ and $Q_D$ is the number of fine quadrature points on the swimmer. The block format for the problem remains the same however now with extended augmented block which include the boundary points. The new blocks are written as,
+This addition to the problem is numerically solved in the same way as for the single swimmer, we extend the two quadrature sets to now include the points on the boundary. Now taking the original number of quadrature points to be $N_D$ and the number of quadrature points on the boundary as $N_B$ then the set of force points can be written as  $\{\bm{x}_n\}$ where $n=1,\dots,N=N_B+N_D$. The same is done for the fine quadrature points on the boundary $\{\bm{X}_q\}$ where $q=Q_D+1,\dots,Q=Q_D+Q_B$ and $Q_D$ is the number of fine quadrature points on the swimmer. The block format for the problem remains the same however now with extended augmented block which include the boundary points. 
+
+The new blocks are written as,
 \begin{equation*}
 \begin{aligned}
 A_{ij}(m,n) &= \frac{1}{8\pi\mu} \sum_{q=1}^Q S_{ij}^\epsilon (\bm{x}_m,\bm{X}_{q})\nu[q,n] \text { for } m,n = 1,\dots,N_s,N_D+1,\dots,N_D+N_B  \\

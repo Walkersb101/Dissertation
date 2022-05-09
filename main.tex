@@ -42,6 +42,12 @@
 \fancyhead[RE,LO]{\leftmark}
 \fancyfoot[C]{\thepage}
 
+\fancypagestyle{contents}{% define a custom header OPTION 1 to be applied to specific pages
+    \fancyhf{}
+    \fancyhead[RE,LO]{\leftmark}
+    \fancyfoot[R]{*\thepage*}  % prints *1*
+}
+
 
 \numberwithin{equation}{section}
 
@@ -94,19 +100,20 @@
 
 
 \section*{Abstract}
-ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+With the aim to form a fast mesh-free method for solving stokes flow in biological fluid dynamics we consider the method to accelerate the method of regularised stokeslets. The simplicity of the method of regularised stokeslets comes with a large computational whereas traditional methods require the creation of large dense matrices which quickly become computationally challenging to work with. We consider the use of the kernel independent fast multipole method (KIFMM) to compute the interactions between regularised stokeslet points. In this case, we show that the KIFMM method can be used to quickly evaluate the matrix-vector product  efficiently when compared to the direct product method. We then consider the case where the problem requires finding the solution to a linear system involving the stokeslet matrix. For the case of augmented problems such as the force-free swimming problem, we derive an appropriated preconditioner to aid convergence when using the Generalized minimal residual method (GMRES). Our main contribution is the adaptation of the (KIFMM) to use nearest neighbour interpolation to reduce the overall number of degrees of freedom in our system to aid overall computation times. This method shows promise dramatically reducing computation times for certain systems however more work is needed to form an optimal method for problems. 
 
 \newpage
 \section*{Acknowledgements}
-ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+I would like to thank the following people for helping me through this project and allowing me to write something I am incredibly proud of. Thank you to my supervisor Professor Dave Smith whose expertise and insight guided me throughout the project. To my parents and Nick Wicks who have proofread so many drafts of this paper. And finally to the University of Birmingham's BlueBEAR HPC service for the generous amounts of computing power which allowed for the computations in this project to be possible. 
+
 
 \begin{singlespace}
+\pagestyle{contents}
 \newpage
 {
   \hypersetup{hidelinks}
   \tableofcontents
 }
-
 
 \newpage
 \listoffigures
@@ -114,6 +121,8 @@ ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidi
 \listoftables
 \listofalgorithms
 \end{singlespace}
+
+\pagestyle{fancy}
 
 \newpage
 \input{Introduction}
@@ -124,6 +133,7 @@ ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidi
 \input{Hybrid}
 \input{NumericalSimulations}
 \input{Discussion}
+\newpage
 \input{Appendix}
 
 \FloatBarrier
