@@ -1,6 +1,6 @@
 \FloatBarrier
 \subsection{Swimming Problems} \label{sec:swimming}
-The Swimming problem in stokes flow allows for the modelling of swimmers where instead of the body being driven by imposed forces, it translates and rotates as a result of changing its shape. We will review the problem quickly before before deriving discretisation for the NEAREST method based on the notation of Gallagher and Smith \cite{Gallagher2018MeshfreeCells}.
+The Swimming problem in Stokes flow allows for the modelling of swimmers where, instead of the body being driven by imposed forces, it translates and rotates as a result of changing its shape. We will review the problem quickly before deriving discretisation for the NEAREST method based on the notation of Gallagher and Smith \cite{Gallagher2018MeshfreeCells}.
 
 We can describe the motion of a single rigid body in a laboratory frame by defining $\bm{\xi}$ to be the body frame of the rigid body, then we can describe its position through the rotation matrix $B = [\bm{B}_1,\bm{B}_2,\bm{B}_3]$ where $\bm{B}_i$ are basis vectors for the body frame and its origin point $\bm{x}_0$ relative to the laboratory frame. A position and velocity in the laboratory frame can be described by
 \begin{equation*}
@@ -13,7 +13,7 @@ We can redefine the velocity in terms of the rigid-body velocity $\bm{U}$ and an
 \begin{equation*}
     \dot{\bm{x}} = \bm{U} + \bm{\Omega}\times (\bm{x}-\bm{x}_0) + B\cdot\dot{\bm{\xi}}
 \end{equation*}
-The fluid flow can be described through the stokes flow equation defined in \cref{eq:BIE},
+The fluid flow can be described through the Stokes flow equation defined in \cref{eq:BIE},
 \begin{equation*}
     u_i(\bm{y}) = \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) f_{j}(\bm{y}) d s(\bm{y}) \quad \forall \bm{x}\in\partial D
 \end{equation*}
@@ -33,7 +33,7 @@ By substituting the full equation for the velocity we can define the full swimmi
 where $\epsilon_{ijk}$ is the Levi-Civita symbol. We have taken the total force and moment on the body to be $\bm{G}$ and $T$ respectively. Numerical discretisation of the problem leads to $3N$ scalar degrees of freedom in the traction $\bm{f}$ and a further $6$ scalar degrees of freedom to describe the total velocity $\bm{U}$ and angular momentum $\bm{\Omega}$ totalling $3N+6$ scalar degrees of freedom.
 
 \subsubsection{Numerical Implementation}
-The discretisation of the swimming problem is based on the same discretisation as that derived in \cref{sec:MRS} or though the use of the NEAREST (\cref{sec:NEAREST}) method. The discretisation of the problem using the NEAREST method will be described here and the Nyström method described in \cref{appedix:NystromSwim}. Discretizing \cref{eq:swimmingProblem} through the use of the nearest neighbour matrix (\cref{eq:NNMatrix})
+The discretisation of the swimming problem is based on the same discretisation as that derived in \cref{sec:MRS} or through the use of the NEAREST (\cref{sec:NEAREST}) method. The discretisation of the problem using the NEAREST method will be described here and the Nyström method described in \cref{appedix:NystromSwim}. Discretising \cref{eq:swimmingProblem} through the use of the nearest neighbour matrix (eq.~\ref{eq:NNMatrix})
 \begin{equation*}
     \nu [q, \hat{n}]= \begin{cases} 1/k & \text { if } \hat{n}=\underset{n=1, \ldots, N}{\operatorname{argmin}}|x_n-X_q| , \\ 0 & \text { otherwise. }\end{cases}
 \end{equation*}
@@ -106,7 +106,7 @@ B_{j}^{M}(i,n) &= \epsilon_{ikj} \sum_{q=1}^Q (X_k[q]-x_{0 k}) \nu[q,n] \text { 
 \end{equation*}
 
 \subsubsection{Boundaries} \label{sec:boundries}
-Often when working with stokes flow the problemm includes the interaction of boundaries with the swimmers. These might be simulating microswimmers sandwiched between microscope slides and a coverslip \cite{Gallagher2019RapidAnalysis} or simulating blood cells in cylindrical arteries. Any such boundary will have a noticeable effect on the stokeslets and therefore the rigid body motion \cite{Liron1981ExistenceBoundaries}. While solutions around large infinite planes can be simulated through the use of the Blakelet solution \cite{Ainley2008TheStokeslets,Cortez2015}, more complex geometry requires the use of a quadrature rule over the boundary $B$. Taking the boundary of $B$ to be $\partial B$
+Often when working with Stokes flow the problem includes the interaction of boundaries with the swimmers. These might be simulating microswimmers sandwiched between microscope slides and a coverslip \cite{Gallagher2019RapidAnalysis} or simulating blood cells in cylindrical arteries. Any such boundary will have a noticeable effect on the stokeslets and therefore the rigid body motion \cite{Liron1981ExistenceBoundaries}. While solutions around large infinite planes can be simulated through the use of the Blakelet solution \cite{Ainley2008TheStokeslets,Cortez2015}, more complex geometry requires the use of a quadrature rule over the boundary $B$. Taking the boundary of $B$ to be $\partial B$
 \begin{equation}
 \label{eq:swimmingProblemBnd}
 \begin{gathered}
@@ -116,7 +116,7 @@ Often when working with stokes flow the problemm includes the interaction of bou
     \iint_{\partial D} \epsilon_{i k j} (y_{k}-x_{0 k}) f_{j}(\bm{y}) d S({\bm{y}})=T_i,
 \end{gathered}
 \end{equation}
-This addition to the problem is numerically solved in the same way as for the single swimmer, we extend the two quadrature sets to now include the points on the boundary. Now taking the original number of quadrature points to be $N_D$ and the number of quadrature points on the boundary as $N_B$ then the set of force points can be written as  $\{\bm{x}_n\}$ where $n=1,\dots,N=N_B+N_D$. The same is done for the fine quadrature points on the boundary $\{\bm{X}_q\}$ where $q=Q_D+1,\dots,Q=Q_D+Q_B$ and $Q_D$ is the number of fine quadrature points on the swimmer. The block format for the problem remains the same however now with extended augmented block which include the boundary points. 
+This addition to the problem is numerically solved in the same way as for the single swimmer, we extend the two quadrature sets to now include the points on the boundary. Now taking the original number of quadrature points to be $N_D$ and the number of quadrature points on the boundary as $N_B$ then the set of force points can be written as  $\{\bm{x}_n\}$ where $n=1,\dots,N=N_B+N_D$. The same is done for the fine quadrature points on the boundary $\{\bm{X}_q\}$ where $q=Q_D+1,\dots,Q=Q_D+Q_B$ and $Q_D$ is the number of fine quadrature points on the swimmer. The block format for the problem remains the same however, with the extended augmented blocks which includes the boundary points. 
 
 The new blocks are written as,
 \begin{equation*}
@@ -128,13 +128,13 @@ B_{j}^{F}(i,n) &= \begin{cases} \delta_{ij} \sum_{q=1}^Q \nu[q,n] \text { for } 
 B_{j}^{M}(i,n) &= \begin{cases} \epsilon_{ikj} \sum_{q=1}^Q (X_k[q]-x_{0 k}) \nu[q,n] \text { for } n = 1,\dots,N \\ 0 \text { for } n = N_D+1,\dots,N_D+N_B\end{cases}.
 \end{aligned}
 \end{equation*}
-This is now expressed as a system of $3N + 6 = 3N_D+3N_B + 6$ unknowns in $3N+6$ equations. The Vector of unknowns is again arranged as in \cref{eq:swimmingStructure} where $N=N_D+N_B$. Writing the right hand side as $(V_1,V_2,V_3)^T$,
+This is now expressed as a system of $3N + 6 = 3N_D+3N_B + 6$ unknowns in $3N+6$ equations. The Vector of unknowns is again arranged as in \cref{eq:swimmingStructure} where $N=N_D+N_B$. Writing the right-hand side as $(V_1,V_2,V_3)^T$,
 \begin{equation*}
     V_i[n] = \begin{cases} B_{i j} \dot{\xi}_{j}({\bm{x}}_{n}) \text{ for } n=1,\dots,N_D \\ \dot{x}_i[n] \text{ for } n=N_D+1,\dots,N_D+N_B. \end{cases}
 \end{equation*}
 
 \subsubsection{Multiple Swimmers} \label{sec:multipleSwimmers}
-It is often the cases that systems will contain multiple rigid bodies of either the same type or different types. Considering $N_{sw}$ swimmers then for the case of the swimming problem with boundaries the problem becomes
+It is often the case that systems will contain multiple rigid bodies of either the same type or different types. Considering $N_{sw}$ swimmers then for the case of the swimming problem with boundaries, the problem becomes
 \begin{equation}
 \label{eq:swimmingProblemMulti}
 \begin{gathered}
@@ -151,7 +151,7 @@ Considering $N_{sw}$ swimmers which each have collocation points $x_i^{(1)}[\cdo
     \bm{x} = (\bm{x}_1,\bm{x}_2,\bm{x}_3)^T \text{ with } \bm{x}_1=(x_i^{(1)}[\cdot],\dots,x_i^{(N_{sw})}[\cdot],x_i^{(B)}[\cdot]).
 \end{equation*}
 
-The translational and angular velocities are given by $U_i^{(1)},\dots,U_i^{(N_{sw})}$ and $\Omega_i^{(1)},\dots,\Omega_i^{(N_{sw})}$ respectively and the boundary collocation points by $x_i^{(b)}[\cdot]$. The ordering of discritisation remains the same as \cref{eq:swimmingStructure} where denoting the vector of unknowns as \newline $(\bm{F}_1, \bm{F}_2, \bm{F}_3, \bm{U}_1,\bm{U}_2,\bm{U}_3,\bm{\Omega}_1,\bm{\Omega}_2,\bm{\Omega}_3)^T$ where $\bm{F}_i = (F_i^{(1)}[\cdot],\dots,F_i^{(N_{sw})}[\cdot],F_i^{(b)}[\cdot])$,\newline $\bm{U}_i = (U_i^{(1)},\dots,U_i^{(N_{sw})})^T$ and $\bm{\Omega}_i = (\Omega_i^{(1)},\dots,\Omega_i^{(N_{sw})})^T$. The same ordering convention is used for the right hand side velocities, total forces and moments. If the number of force points associated with a swimmer $s$ is $N_{D}(s)$ and the number of force points on the boundary is $N_B$ then the total number of points is $N_F=\sum_{s=1}^{N_{sw}} N_D(s) + N_B$. Define the index $\iota(s)=\sum_{\alpha=1}^{s-1}N_D(\alpha)$ for $1<s\leq N_{sw}$ to be the location of the $s$th swimmer in $\bm{x}_i$, as $\iota(s)$ is defined above for all of $1<s\leq N_{sw}$ $\iota(1)$ is taken to equal $1$. The Stokeslet matrix remains the same and is constructed by
+The translational and angular velocities are given by $U_i^{(1)},\dots,U_i^{(N_{sw})}$ and $\Omega_i^{(1)},\dots,\Omega_i^{(N_{sw})}$ respectively and the boundary collocation points by $x_i^{(b)}[\cdot]$. The ordering of discritisation remains the same as \cref{eq:swimmingStructure} where we denote the vector of unknowns as \newline $(\bm{F}_1, \bm{F}_2, \bm{F}_3, \bm{U}_1,\bm{U}_2,\bm{U}_3,\bm{\Omega}_1,\bm{\Omega}_2,\bm{\Omega}_3)^T$ where $\bm{F}_i = (F_i^{(1)}[\cdot],\dots,F_i^{(N_{sw})}[\cdot],F_i^{(b)}[\cdot])$,\newline $\bm{U}_i = (U_i^{(1)},\dots,U_i^{(N_{sw})})^T$ and $\bm{\Omega}_i = (\Omega_i^{(1)},\dots,\Omega_i^{(N_{sw})})^T$. The same ordering convention is used for the right-hand side velocities, total forces and moments. If the number of force points associated with a swimmer $s$ is $N_{D}(s)$ and the number of force points on the boundary is $N_B$ then the total number of points is $N_F=\sum_{s=1}^{N_{sw}} N_D(s) + N_B$. Define the index $\iota(s)=\sum_{\alpha=1}^{s-1}N_D(\alpha)$ for $1<s\leq N_{sw}$ to be the location of the $s$th swimmer in $\bm{x}_i$, as $\iota(s)$ is defined above for all of $1<s\leq N_{sw}$ $\iota(1)$ is taken to equal $1$. The Stokeslet matrix remains the same and is constructed by
 \begin{equation*}
     A_{ij}(\alpha,\beta) = \frac{1}{8\pi\mu} \sum_{q=1}^Q S_{ij}^\epsilon (\bm{x}_\alpha,\bm{X}_{q})\nu[q,\beta] \text { for } \alpha,\beta = 1,\dots,N_F
 \end{equation*}
@@ -221,7 +221,7 @@ Then
             -\tilde{\chi}_2(\cdot,\cdot) & \tilde{\chi}_1(\cdot,\cdot) &
           \end{array}\right)
 \end{equation*}
-Finally, defining the right hand side vector as $(\bm{V}_1,\bm{V}_2,\bm{V}_3,\bm{G}_1,\bm{G}_2,\bm{G}_3,\bm{T}_1,\bm{T}_2,\bm{T}_3)^T$ where
+Finally, defining the right-hand side vector as $(\bm{V}_1,\bm{V}_2,\bm{V}_3,\bm{G}_1,\bm{G}_2,\bm{G}_3,\bm{T}_1,\bm{T}_2,\bm{T}_3)^T$ where
 \begin{equation*}
 \begin{aligned}
         \bm{V}_i^{(s)} &= (B_{ij}^{(1)}\dot{\xi}_j^{(1)}[\cdot],\dots,B_{ij}^{(N_{sw})}\dot{\xi}_j^{(N_{sw})}[\cdot],\dot{x}_i[1],\dots,\dot{x}_i[N_B]) \\

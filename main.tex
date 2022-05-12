@@ -14,7 +14,7 @@
 \usepackage{cleveref}
 \usepackage{float}
 \usepackage{booktabs}
-\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[nottoc,numbib,notlof,notlot]{tocbibind}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.9}
@@ -45,7 +45,7 @@
 \fancypagestyle{contents}{% define a custom header OPTION 1 to be applied to specific pages
     \fancyhf{}
     \fancyhead[RE,LO]{\leftmark}
-    \fancyfoot[R]{*\thepage*}  % prints *1*
+    \fancyfoot[C]{\thepage}
 }
 
 
@@ -63,7 +63,7 @@
 
 \usepackage[toc,page]{appendix}
 
-\usepackage[backend=biber, style=numeric-comp, sorting=none, uniquename=init, giveninits=true, url=false, natbib=true]{biblatex}
+\usepackage[backend=biber, style=numeric-comp, sorting=none, uniquename=init, giveninits=true, natbib=true, doi=false,url=false,isbn=false]{biblatex}
 \addbibresource{references.bib}
 \setcounter{biburlnumpenalty}{100}
 \setcounter{biburlucpenalty}{100}
@@ -90,17 +90,36 @@
     }
 }
 
+\newbibmacro{string+doiurlisbn}[1]{%
+  \iffieldundef{doi}{%
+    \iffieldundef{url}{%
+      #1%
+    }{%
+      \href{\thefield{url}}{#1}%
+    }%
+  }{%
+    \href{http://dx.doi.org/\thefield{doi}}{#1}%
+  }%
+}
+
+\DeclareFieldFormat{title}{\usebibmacro{string+doiurlisbn}{\mkbibemph{#1}}}
+\DeclareFieldFormat[article,incollection]{title}%
+    {\usebibmacro{string+doiurlisbn}{\mkbibquote{#1}}}
+
 
 \begin{document}
 
 \input{titlePage}
 
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\rightmark}
+\fancyhead[RE,LO]{\leftmark}
+\fancyfoot[C]{\thepage}
+
 \newpage
-
-
-
 \section*{Abstract}
-With the aim to form a fast mesh-free method for solving stokes flow in biological fluid dynamics we consider the method to accelerate the method of regularised stokeslets. The simplicity of the method of regularised stokeslets comes with a large computational whereas traditional methods require the creation of large dense matrices which quickly become computationally challenging to work with. We consider the use of the kernel independent fast multipole method (KIFMM) to compute the interactions between regularised stokeslet points. In this case, we show that the KIFMM method can be used to quickly evaluate the matrix-vector product  efficiently when compared to the direct product method. We then consider the case where the problem requires finding the solution to a linear system involving the stokeslet matrix. For the case of augmented problems such as the force-free swimming problem, we derive an appropriated preconditioner to aid convergence when using the Generalized minimal residual method (GMRES). Our main contribution is the adaptation of the (KIFMM) to use nearest neighbour interpolation to reduce the overall number of degrees of freedom in our system to aid overall computation times. This method shows promise dramatically reducing computation times for certain systems however more work is needed to form an optimal method for problems. 
+With the aim to form a fast mesh-free method for solving Stokes flow in biological fluid dynamics, we consider options to accelerate the method of regularised stokeslets. Although simple to implement, the method of regularised stokeslets comes with a large computational cost as traditional methods require the creation of large dense matrices which quickly become computationally challenging to work with. We consider the use of the Kernel Independent Fast Multipole method (KIFMM) to compute the interactions between regularised stokeslet points. In this case, we show that the KIFMM method can be used to quickly and efficiently evaluate the matrix-vector product when compared to the direct product method. We then consider cases which require the solving of linear systems involving the stokeslet matrix. For the case of augmented problems such as the force-free swimming problem, we derive an appropriate preconditioner to aid convergence when using the Generalized Minimal RESidual method (GMRES). Our main contribution is the adaptation of the KIFMM method to use nearest neighbour interpolation in order to reduce the overall number of degrees of freedom in our system and aid overall computation times. This method shows promise, dramatically reducing computation times for certain systems, however more work is needed to form an optimal method for problems. 
 
 \newpage
 \section*{Acknowledgements}
@@ -138,6 +157,7 @@ I would like to thank the following people for helping me through this project a
 
 \FloatBarrier
 
+\pagestyle{contents}
 \begin{singlespace}
 \printbibliography[heading=bibintoc]
 \end{singlespace}

@@ -11,9 +11,10 @@ All numerical simulations were done on one of two machines,
 For data accessibility all Matlab code to generate all data and figures found in this paper can be found at \url{https://github.com/Walkersb101/KIFMM}.
 
 \FloatBarrier
-\section{GMRES}\label{appendix:GMRES}
+\section{Generalised Minimum RESidual method}\label{appendix:GMRES}
+\sectionmark{GMRES}
 
-The Generalised Minimum Residual Method (GMRES) \cite{Saad1986GMRES:Systems} is a iterative method based on Krylov methods for solving the System $A\bm{x}=\bm{b}$ where $A$ is an arbitary non-symmetric matrix of order $n$ and $\bm{b}$ is a known vector of order $n$. Krylov methods generate a Krylov subspace through repetitively performing vector matrix multiplication involving $A$. This allows for the computation of large systems where operations of order $\mathcal{O}(N^3)$ are too large to compute the matrix inverse, or where we are unable to form the matrix but can compute the matrix vector product as in the Kernel Independent Fast Multiple Method (KIFMM) (\cref{sec:KIFMM}) \cite{Ipsen1998TheMethods}.
+The Generalised Minimum RESidual method (GMRES) \cite{Saad1986GMRES:Systems} is a iterative method based on Krylov methods for solving the System $A\bm{x}=\bm{b}$ where $A$ is an arbitary non-symmetric matrix of order $n$ and $\bm{b}$ is a known vector of order $n$. Krylov methods generate a Krylov subspace through repetitively performing vector matrix multiplication involving $A$. This allows for the computation of large systems where operations of order $\mathcal{O}(N^3)$ are too large to compute the matrix inverse, or where we are unable to form the matrix but can compute the matrix vector product as in the Kernel Independent Fast Multiple Method (KIFMM) (\cref{sec:KIFMM}) \cite{Ipsen1998TheMethods}.
 
 The GMRES method finds find the solution $\bm{y}_k$ at each iteration $k \geq 1$ from the subspace
 \begin{equation*}
@@ -30,7 +31,7 @@ By collecting the basis vectors in a matrix $V_k = [\bm{v}^{(1)},\bm{v}^{(2)},\d
 \begin{equation*}
     AV_j = V_{j+1} H_j
 \end{equation*}
- where $H_j$ is an upper Hessenberg matrix of size $j + 1\times j$ formed by $\hat{H}_k = [h_{ij}]_{1 \leq i \leq k+1, 1 \leq j \leq k}$. As our solution to the least square problem is in $\mathcal{K}_k(A,r^{(0)})$ then we can write it as $V_k\bm{y}^{(k)}$ for some vector $\bm{y}^{(k)}$. This means we can rewrite the least problem in terms of $H_k$ as
+ where $H_j$ is an upper Hessenberg matrix of size $j + 1\times j$ formed by $\hat{H}_k = [h_{ij}]_{1 \leq i \leq k+1, 1 \leq j \leq k}$. As our solution to the least square problem is in $\mathcal{K}_k(A,r^{(0)})$ then we can write it as $V_k\bm{y}^{(k)}$ for some vector $\bm{y}^{(k)}$. This means we can rewrite the least square problem in terms of $H_k$ as
  \begin{equation*}
  \begin{aligned}
           \beta_k &= \min\limits_{\bm{y}^{(k)}} \lVert  \beta_0 \bm{v}_0 - AV_k\bm{y}^{(k)} \rVert \\
@@ -58,10 +59,10 @@ where $\bm{e}_1 = [1,0,\dots,0]^T$. This process is repeated until $\beta_k$ is 
 \end{algorithmic}
 \end{algorithm}
 
-GMRES will converge on the least square solution in at most $n$ iterations, although it will often converge to small values of $\beta_k$ in f steps. The exact number of iterations is correlated closely with the  condition of the matrix $A$ where better conditioned matrices will converge quicker. In slow converging systems, where the number of iterations $k$ that are required to converge to the required tolerance $\tau$ is large and can result in large computation and storage requirements as the new vector $\bm{v}_{k+1}$ needs to be orthogonalised against all previous vectors in the basis. This means that the computation and storage requirements for the GMRES algorithm grows at the rate $\mathcal{O}(kn)$. An adaption to the algorithm denoted GMRES($m$) is used where after $m$ iterations the best guess $\bm{u}^{(m)}$ is constructed and used in place of $\bm{u}^{(0)}$ as the initial guess. This provides a upper bound on the computation and storage requirement of the algorithm although may slow down convergence as each approximation is built using a smaller Krylov subspace.
+GMRES will converge on the least square solution in at most $n$ iterations, although it will often converge to small values of $\beta_k$ in f steps. The exact number of iterations is correlated closely with the  condition of the matrix $A$ where better conditioned matrices will converge faster. In slow converging systems, where the number of iterations $k$ that are required to converge to the required tolerance $\tau$ is large and can result in large computation and storage requirements as the new vector $\bm{v}_{k+1}$ needs to be orthogonalised against all previous vectors in the basis. This means that the computation and storage requirements for the GMRES algorithm grow at a rate of $\mathcal{O}(kn)$. An adaption to the algorithm denoted GMRES($m$) is used where after $m$ iterations the best guess $\bm{u}^{(m)}$ is constructed and used in place of $\bm{u}^{(0)}$ as the initial guess. This provides a upper bound on the computation and storage requirement of the algorithm although may slow down convergence as each approximation is built using a smaller Krylov subspace.
 
 \FloatBarrier
-\section{Tree traversal}\label{appendix:Tree}
+\section{Tree Traversal}\label{appendix:Tree}
 In this section we will give a brief overview of the two tree traversals needed to perform the fast multiple algorithm. We will consider a simple binary tree where each node had two children nodes. If we consider the binary tree in \cref{fig:BlankTree}, then we can consider both pre and post order traversals.
 \begin{figure}[ht]
     \centering
@@ -69,9 +70,14 @@ In this section we will give a brief overview of the two tree traversals needed 
     \caption{A simple tree structure}
     \label{fig:BlankTree}
 \end{figure}
-The post order traversal is used in cases where we need to look at all the children of a node before looking at the node itself. This is useful for example in the upwards pass of the fast multipole method, where we need to compute the upwards equivalent surface of all nodes before computing the upwards equivalent surface of the node itself with the multipole to multipole translation (\cref{eq:M2M}). For the case of the binary tree in \cref{fig:BlankTree}, we traverse the nodes in the order $4, 5, 2, 3, 1$ with the path taken displayed in \cref{fig:Postorder}. Recursively, we can define this for a binary tree as
+The post order traversal is used in cases where we need to look at all the children of a node before looking at the node itself. This is useful for example in the upwards pass of the fast multipole method, where we need to compute the upwards equivalent surface of all nodes before computing the upwards equivalent surface of the node itself with the multipole to multipole translation (eq.~\ref{eq:M2M}). For the case of the binary tree in \cref{fig:BlankTree}, we traverse the nodes in the order $4, 5, 2, 3, 1$ with the path taken displayed in \cref{fig:Postorder}.
+
+Another way in which we can traverse tree structures in the pre order traversal where we work our way down from the root of the tree. We use this in fast multipole methods so we can use local to local translation (eq.~\ref{eq:L2L}). The pre order traversal differs from post order traversal as, in this case, we visit the current node first before recursively traversing each subtree. For example the tree in \cref{fig:BlankTree} can be traversed using pre order traversal in the order $1, 2, 4, 5, 3$ as illustrated in \cref{fig:Preorder}.
+
+For application of both traversals to an octree, where we traverse each subtree individually, the order in which each subtree is traversed does not matter and only comes down to convention, however we do need to make sure that every subtree is traversed for each node.
+
 \begin{algorithm}
-\caption{Binary post-order Traversal}
+\caption{Binary Post Order Traversal}
 \begin{algorithmic}[1]
 \State Recursively traverse the current node's left subtree
 \State Recursively traverse the current node's right subtree
@@ -79,10 +85,8 @@ The post order traversal is used in cases where we need to look at all the child
 \end{algorithmic}
 \end{algorithm}
 
-
-Another way in which we can traverse tree structures in the pre-order traversal where we work our way down from the root of the tree. We use this in fast multipole methods so we can use local to local translation (\cref{eq:L2L}). The pre-order traversal differs from post-order traversal as, in this, case we visit the current node first before recursively traversing each subtree. For example the tree in \cref{fig:BlankTree} can be traversed using pre-order traversal in the order $1, 2, 4, 5, 3$ as illustrated in \cref{fig:Preorder}. The algorithm describing pre-order traversal is
 \begin{algorithm}
-\caption{Binary pre-order Traversal}
+\caption{Binary pre order Traversal}
 \begin{algorithmic}[1]
 \State Visit the current node
 \State Recursively traverse the current node's left subtree
@@ -90,22 +94,19 @@ Another way in which we can traverse tree structures in the pre-order traversal 
 \end{algorithmic}
 \end{algorithm}
 
-For application of both traversals to an octree, where we traverse each subtree individually, the order in which each subtree is traversed does not matter and only comes down to convention, however we do need to make sure that every subtree is traversed for each node.
-
-
 \begin{figure}
      \centering
      \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \resizebox{\linewidth}{!}{\input{Images/TreeTraversal/Postorder}}
-         \caption{Diagram showing post-order tree traversal}
+         \caption{Diagram showing post order tree traversal}
          \label{fig:Postorder}
      \end{subfigure}
           \hfill
      \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \resizebox{\linewidth}{!}{\input{Images/TreeTraversal/Preorder}}
-         \caption{Diagram showing pre-order tree traversal}
+         \caption{Diagram showing pre order tree traversal}
          \label{fig:Preorder}
      \end{subfigure}
         \caption{Diagrams showing Pre and Post order traversal of the tree defined in \cref{fig:BlankTree}}
@@ -114,11 +115,11 @@ For application of both traversals to an octree, where we traverse each subtree 
 
 
 \FloatBarrier
-\section{Nyström Swimming problem} \label{appedix:NystromSwim}
+\section{Nyström Swimming Problem} \label{appedix:NystromSwim}
 The Nyström discretisation of \cref{eq:swimmingProblem,eq:swimmingProblemBnd,eq:swimmingProblemMulti} can be seen below. 
 
 \subsection{Single swimmer}
-For a single swimmer with no boundaries (\cref{eq:swimmingProblem}) the problem takes the form as 
+For a single swimmer with no boundaries (eq.~\ref{eq:swimmingProblem}) the problem takes the form as 
 \begin{equation*}
 \begin{gathered}
     -U_{i}-\epsilon_{i j k} \Omega_{j}\left(x_k[{m}]-x_{0 k}\right)+\frac{1}{8 \pi\mu} \sum_{n=1}^N S_{i j}^{\epsilon}(\bm{x}_m, \bm{x}_n) f_{j}(\bm{x}_n) A_n =  B_{i j} \dot{\xi}_{j}[m] \\ \text { for all } m = 1,\dots,N\\
@@ -151,7 +152,7 @@ B_{j}^{M}(i,n) &= \begin{cases} \epsilon_{ikj} (x_k[n]-x_{0 k}) \text { for } n 
 
 \subsection{Multiple Swimmers}
 As in the NEAREST case we will consider $N_{sw}$ swimmers which each have collocation points $x_i^{(1)}[\cdot],\dots,x_i^{(N_{sw})}[\cdot]$ where $x_i^{(1)}[\cdot]$ denotes all the $i$th components of the first swimmers collocation points and $x_i^{(B)}[\cdot]$ is the $i$th components of the boundaries collocation points. It is assumed that the same ordering convention is used as in the NEAREST method for all vectors.
-Defining the index $\iota(s)=\sum_{\alpha=1}^{s-1}N_D(\alpha)$ for $1<s\leq N_{sw}$ to be the location of the $s$th swimmer in $\bm{x}_i$, and $\iota(1)=1$. The Stokeslet matrix is constructed as normal by
+Defining the index $\iota(s)=\sum_{\alpha=1}^{s-1}N_D(\alpha)$ for $1<s\leq N_{sw}$ to be the location of the $s$th swimmer in $\bm{x}_i$, and $\iota(1)=1$. The stokeslet matrix is constructed as normal by
 \begin{equation*}
     A_{ij}(\alpha,\beta) = \frac{1}{8\pi\mu} S_{ij}^\epsilon (\bm{x}_\alpha,\bm{x}_{\beta}) \text { for } \alpha,\beta = 1,\dots,N_F
 \end{equation*}
@@ -219,7 +220,7 @@ Then
             -\tilde{\chi}_2(\cdot,\cdot) & \tilde{\chi}_1(\cdot,\cdot) &
           \end{array}\right)
 \end{equation*}
-Finally, defining the right hand side vector as $(\bm{V}_1,\bm{V}_1,\bm{V}_1,\bm{0}_{(6N_{sw} \times 1)})^T$ where
+Finally, defining the right-hand side vector as $(\bm{V}_1,\bm{V}_1,\bm{V}_1,\bm{0}_{(6N_{sw} \times 1)})^T$ where
 \begin{equation*}
     V_i^{(s)} = (B_{ij}^{(1)}\dot{\xi}_j^{(1)}[\cdot],\dots,B_{ij}^{(N_{sw})}\dot{\xi}_j^{(N_{sw})}[\cdot],\dot{x}_i[1],\dots,\dot{x}_i[N_B])
 \end{equation*}
@@ -227,10 +228,12 @@ This forms a linear system of $3(N_F+2N_{sw})$ equations in $3(N_F+2N_{sw})$ unk
 
 \newpage
 \FloatBarrier
-\section{Condition number}\label{appendix:ConNum}
+\section{Condition Number}\label{appendix:ConNum}
 We investigate the condition number and eignevalue distribution of various matrices derived in the paper. We consider the change in the parameters, two which affect the total number of quadrature points and also the change in $\epsilon$. Spherical swimmers of radius $0.5$ with varying number of quadrature points are randomly scattered, but not allowed to intersect, in a domain of $5 \times 5 \times 5$. 
 
-As expected the larger $\epsilon$ systems are significantly worse conditioned even when preconditioned, We also note an increase in the condition of all matrices as the number of scalar degrees of freedom and swimmers increases, This is due to the spacing between particles becoming smaller and the variation in the magnitude of the interactions becoming larger. 
+As expected the larger $\epsilon$ systems are significantly worse conditioned even when preconditioned, we also note an increase in the condition of all matrices as the number of scalar degrees of freedom and swimmers increases, this is due to the spacing between particles becoming smaller and the variation in the magnitude of the interactions becoming larger. 
+
+We also consider the eigenvalues of the 40 swimmers and 114 force quadrature points case to illustrate the effect of eigenvalues on the convergence of the GMRES algorithm. The eigenvalues found use the perfect LU decomposition so the eigenvalues of problem considered in the paper only approximate these solutions and as such do not converge after one iteration as would be expected. 
 
 \begin{figure}
 \caption[Condition of matrices considered in this paper.]{Condition of matrices considered in this paper with various changes in parameter.}
@@ -394,7 +397,7 @@ As expected the larger $\epsilon$ systems are significantly worse conditioned ev
 \end{figure}
 
 \begin{figure}
-\caption[Eigenvalues of matrices considered in this paper.]{Eigenvalues of matrices considered in this paper for the case of 40 swimmers and 114 force quadrature points. }
+\caption[Eigenvalues of matrices considered in this paper.]{Eigenvalues of matrices considered in this paper for the case of 40 swimmers and 114 force quadrature points.}
     \begin{subfigure}{0.45\textwidth}
         \centering
         \includegraphics[width=\linewidth]{Images/Condition/Eigen-Stokeslet Matrix.pdf}
