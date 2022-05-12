@@ -128,27 +128,23 @@ For a single swimmer with no boundaries (eq.~\ref{eq:swimmingProblem}) the probl
 \end{gathered}
 \end{equation*}
 where $x_{i}[n]$ denotes the the position of the $n$th quadrature point in the $i$th axis and $A_n$ the quadrature weight at the point $\bm{x}_n$. Taking the same block matrix form described in \cref{eq:swimmingStructure} the blocks can be written as
-\begin{equation*}
-\begin{aligned}
+\begin{align*}
 A_{ij}(m,n) &= \frac{1}{8\pi\mu} S_{ij}^\epsilon (\bm{x}_m,\bm{x}_{n}) \text { for } m,n = 1,\dots,N \\
 B_{i}^{U}(m,j) &= -\delta_{ij} \text { for } m = 1,\dots,N \\
 B_{i}^{\Omega}(m,j) &= -\epsilon_{ijk}(x_k[m]-x_{0k}) \text { for } m = 1,\dots,N \\
 B_{j}^{F}(i,n) &= \delta_{ij} \text { for } n = 1,\dots,N \\
 B_{j}^{M}(i,n) &= \epsilon_{ikj} (x_k[n]x_{0 k}) \text { for } n = 1,\dots,N
-\end{aligned}
-\end{equation*}
+\end{align*}
 
 \subsection{Boundaries}
 Recalling the same notation described in \cref{sec:boundries} the block matrix components of \cref{eq:swimmingStructure} can be written in the case of the Nyström discretisation as,
-\begin{equation*}
-\begin{aligned}
+\begin{align*}
 A_{ij}(m,n) &= \frac{1}{8\pi\mu} S_{ij}^\epsilon (\bm{x}_m,\bm{x}_{n}) \text { for } m,n = 1,\dots,N_s,N_D+1,\dots,N_D+N_B \\
 B_{i}^{U}(m,j) &= \begin{cases} -\delta_{ij} \text { for } m = 1,\dots,N_D \\ 0 \text { for } m = N_D+1,\dots,N_D+N_B\end{cases} \\
 B_{i}^{\Omega}(m,j) &= \begin{cases} -\epsilon_{ijk}(x_k[m]-x_{0k}) \text { for } m = 1,\dots,N \\ 0 \text { for } m = N_D+1,\dots,N_D+N_B\end{cases} \\
 B_{j}^{F}(i,n) &= \begin{cases} \delta_{ij} \text { for } n = 1,\dots,N \\ 0 \text { for } n = N_D+1,\dots,N_D+N_B\end{cases} \\
 B_{j}^{M}(i,n) &= \begin{cases} \epsilon_{ikj} (x_k[n]-x_{0 k}) \text { for } n = 1,\dots,N \\ 0 \text { for } n = N_D+1,\dots,N_D+N_B\end{cases}
-\end{aligned}
-\end{equation*}
+\end{align*}
 
 \subsection{Multiple Swimmers}
 As in the NEAREST case we will consider $N_{sw}$ swimmers which each have collocation points $x_i^{(1)}[\cdot],\dots,x_i^{(N_{sw})}[\cdot]$ where $x_i^{(1)}[\cdot]$ denotes all the $i$th components of the first swimmers collocation points and $x_i^{(B)}[\cdot]$ is the $i$th components of the boundaries collocation points. It is assumed that the same ordering convention is used as in the NEAREST method for all vectors.
@@ -158,7 +154,7 @@ Defining the index $\iota(s)=\sum_{\alpha=1}^{s-1}N_D(\alpha)$ for $1<s\leq N_{s
 \end{equation*}
 Defining $\bm{1}^{(n)}$ to be a column vector of ones with length $n$, $\bm{1}^{(n)T}$ to be the transpose of $\bm{1}^{(n)}$ a row vector of ones with length $n$ and $\bm{0}^{(m\times n)}$ to be a $(m\times n)$ matrix of zeros. By defining
 \begin{equation*}
-\arraycolsep=0.4pt\def\arraystretch{1}
+\arraycolsep=0.4pt\def\arraystretch{0.8}
     \tilde{x}_i(\cdot,\cdot)=\left(\begin{array}{c}
          \begin{array}{ccc}
              x_i^{(1)}[\cdot]-x_{0i}^{(1)} & & \\
@@ -170,7 +166,7 @@ Defining $\bm{1}^{(n)}$ to be a column vector of ones with length $n$, $\bm{1}^{
 \end{equation*}
 The translational and rotational components of the matrix can be defined to be
 \begin{equation*}
-\arraycolsep=0.4pt\def\arraystretch{1}
+\arraycolsep=0.4pt\def\arraystretch{0.8}
     B^U = \mathds{1}_{3} \otimes \left(\begin{array}{c}
          \begin{array}{ccc}
              -\bm{1}^{(N_D(1))} & & \\
@@ -194,7 +190,7 @@ To construct the $N_{sw} \times N_F$ matrices we define the row vector of size $
 \end{equation*}
 these allow us to define
 \begin{equation*}
-\arraycolsep=0.4pt\def\arraystretch{1}
+\arraycolsep=0.4pt\def\arraystretch{0.8}
     \tilde{\chi}_j(\cdot,\cdot)=\left(\begin{array}{cc}
          \begin{array}{ccc}
              \chi_j^{(1)}[\cdot] & & \\
@@ -205,7 +201,7 @@ these allow us to define
 \end{equation*}
 Then
 \begin{equation*}
-\arraycolsep=0.4pt\def\arraystretch{1}
+\arraycolsep=0.4pt\def\arraystretch{0.8}
     B^F = \mathds{1}_{3} \otimes \left(\begin{array}{cc}
          \begin{array}{ccc}
              \bm{1}^{(1)T}[\cdot] & & \\
@@ -226,7 +222,6 @@ Finally, defining the right-hand side vector as $(\bm{V}_1,\bm{V}_1,\bm{V}_1,\bm
 \end{equation*}
 This forms a linear system of $3(N_F+2N_{sw})$ equations in $3(N_F+2N_{sw})$ unknowns in the same structure as \cref{eq:swimmingStructure} as we had for the NEAREST discretisation.
 
-\newpage
 \FloatBarrier
 \section{Condition Number}\label{appendix:ConNum}
 We investigate the condition number and eignevalue distribution of various matrices derived in the paper. We consider the change in the parameters, two which affect the total number of quadrature points and also the change in $\epsilon$. Spherical swimmers of radius $0.5$ with varying number of quadrature points are randomly scattered, but not allowed to intersect, in a domain of $5 \times 5 \times 5$. 
@@ -235,7 +230,8 @@ As expected the larger $\epsilon$ systems are significantly worse conditioned ev
 
 We also consider the eigenvalues of the 40 swimmers and 114 force quadrature points case to illustrate the effect of eigenvalues on the convergence of the GMRES algorithm. The eigenvalues found use the perfect LU decomposition so the eigenvalues of problem considered in the paper only approximate these solutions and as such do not converge after one iteration as would be expected. 
 
-\begin{figure}
+
+\begin{figure}[hb]
 \caption[Condition of matrices considered in this paper.]{Condition of matrices considered in this paper with various changes in parameter.}
     \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\linewidth]{Images/Condition/Stokeslet Matrix-1.pdf}
@@ -250,7 +246,6 @@ We also consider the eigenvalues of the 40 swimmers and 114 force quadrature poi
         \caption{Nyström Stokeslet Matrix with $\epsilon=1e-5$}
     \end{subfigure}
 \end{figure}
-
 \begin{figure}
 \ContinuedFloat
     \begin{subfigure}{0.3\textwidth}

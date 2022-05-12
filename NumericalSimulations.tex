@@ -7,7 +7,7 @@ In order to evaluate the use of KIFMM in solving problems in Stokes flow, we wil
 In order to benchmark the use of KIFMM in the case of swimming problems, we propose to look at the problem of rods in a shear flow. We will consider prolate spheroid rods with a minor axis of $0.15$ and a major axis of $1$ arranged in a triangular lattice with a rod to rod spacing of $0.4$. In order to impose motion on the rods, a shear flow is imposed on the fluid such that the rods want to locally rotate about the $x_2$ axis. This is imposed by setting the fluid velocity of each force point on the swimming problem to be $\bm{u} = (\gamma\cdot x_3,0,0)$ where $\gamma$ denotes the magnitude of the shear flow and $x_3$ the z coordinate of the force points positions. We consider the two versions of the problem, each having approximately the same number of quadrature points but with a varying number of swimmers. The first problem involves 203 rods arranged in a triangular lattice of size $[5.2 \times 5.2]$, each is discretised with 420 quadrature points for a total of 255780 scalar degrees of freedom (SDOF). The second problem is 2016 rods discretised with 42 quadrature points for a total of 254,016 SDOF.  For the KIFMM method, we will use 500 particles in a node with 152 quadrature points as this provides an acceptably accurate approximation to the vector product while still keeping computation times reasonable. A regularisation parameter of $\epsilon=10^{-2}$ was set to allow for regularisation error and a standard Nyström was implemented such that the performance of just the KIFMM method for swimming problems was being assessed. The use of NEAREST implementation can be considered later in the case of Squirmers. Due to the complexity of the fluid system with a large number of degrees of freedom and close boundaries we will also consider optimisation to the method which could help reduce the overall computation time of the problem in the hope of allowing for larger-scale problems to be considered in the future. 
 
 
-\begin{figure}[!ht]
+\begin{figure}
         \centering
         \begin{subfigure}[b]{0.475\textwidth}
             \centering
@@ -73,7 +73,7 @@ In the hope to speed up the GMRES method without changing the underlying KIFMM m
 An easily implemented attempt at reducing the total number of GMRES iterations is to provide an initial guess to the GMRES solver such that the initial relative residual error is already minimised and the number of iterations required to converge will be lower. As seen in \cref{appendix:ConNum} the condition number of the system decreases and the eigenvalues are more clustered with decreasing $\epsilon$, this means that in most cases the required number of GMRES iterations required for the system to converge will be smaller as seen in \cref{fig:InitalGuessEPS}.
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.5\textwidth]{Images/InitalGuessEPS.pdf}
+    \includegraphics[width=0.4\textwidth]{Images/InitalGuessEPS.pdf}
     \caption{Convergence of the small rod problem with 3 different choices of epsilon. The $\epsilon = 1e-1$ problem did not converge in the given 1000 iterations.}
     \label{fig:InitalGuessEPS}
 \end{figure}
@@ -204,7 +204,7 @@ In order to evaluate the use of the hybrid KIFMM NEAREST method we solved the sw
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{Images/Rods/NearestPrecon.pdf}
+    \includegraphics[width=0.4\textwidth]{Images/Rods/NearestPrecon.pdf}
     \caption{Convergence rate of NEAREST discretisation when used to solve the rods in a shear flow problem.}
     \label{fig:NearestConverge}
 \end{figure}
@@ -244,43 +244,43 @@ The problem is then formulated by a set of $9 \times N_{sw}$ differential equati
 
 \begin{figure}
 \centering
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Pair-1.pdf}
     \caption[]{\label{fig:PairA}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Pair-2.pdf}
     \caption[]{\label{fig:PairB}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Pair-3.pdf}
     \caption[]{\label{fig:PairC}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Pair-4.pdf}
     \caption[]{\label{fig:PairD}}
 \end{subfigure}
 \vskip\baselineskip
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Pair-5.pdf}
     \caption[]{\label{fig:PairE}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Pair-6.pdf}
     \caption[]{\label{fig:PairF}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Pair-7.pdf}
     \caption[]{\label{fig:PairG}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Pair-8.pdf}
     \caption[]{\label{fig:PairH}}
@@ -293,43 +293,43 @@ For larger simulations, the choice was made to study bottom-heavy squirmers in a
 
 \begin{figure}
 \centering
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-1-All.pdf}
     \caption[]{\label{fig:squirmerPosA}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-2-All.pdf}
     \caption[]{\label{fig:squirmerPosB}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-3-All.pdf}
     \caption[]{\label{fig:squirmerPosC}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-4-All.pdf}
     \caption[]{\label{fig:squirmerPosD}}
 \end{subfigure}
 \vskip\baselineskip
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-5-All.pdf}
     \caption[]{\label{fig:squirmerPosE}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-6-All.pdf}
     \caption[]{\label{fig:squirmerPosF}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-7-All.pdf}
     \caption[]{\label{fig:squirmerPosG}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-8-All.pdf}
     \caption[]{\label{fig:squirmerPosH}}
@@ -340,43 +340,43 @@ For larger simulations, the choice was made to study bottom-heavy squirmers in a
 
 \begin{figure}
 \centering
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-1.pdf}
     \caption[]{\label{fig:squirmerA}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-2.pdf}
     \caption[]{\label{fig:squirmerB}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-3.pdf}
     \caption[]{\label{fig:squirmerC}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-4.pdf}
     \caption[]{\label{fig:squirmerD}}
 \end{subfigure}
 \vskip\baselineskip
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-5.pdf}
     \caption[]{\label{fig:squirmerE}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-6.pdf}
     \caption[]{\label{fig:squirmerF}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-7.pdf}
     \caption[]{\label{fig:squirmerG}}
 \end{subfigure}
-\begin{subfigure}[b]{0.22\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Images/squirmers/Gyro-8.pdf}
     \caption[]{\label{fig:squirmerH}}

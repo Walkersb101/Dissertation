@@ -47,6 +47,7 @@ where $k$ is the number of points in $\{\bm{x}_n\}$ which are equidistant to $\{
 \end{equation*}
 This corresponds to $3N + 6$ equations in $3N + 6$ unknowns $F_j(\bm{x}_n)$, $U_j$ and $\Omega_j$ for $n=1,\dots,N$ and $j=1,2,3$.
 This problem can be formulated in terms of a block matrix as was done for the resistance problem (\cref{sec:resistance}) where the stokeslet matrix is augmented with two matrices $B$ and $B'$ which correspond to the force and torque summation and rigid body motion respectively. This requires the force vector of unknowns to be augmented with the velocity $\boldsymbol{U}$ and angular velocity $\boldsymbol{\Omega}$ which are both $3 \times 1$ column vectors. The right hand side of the equation is augmented with two $3 \times 1$ column vectors of zeros which denote the prescribed zero total force and moment on the rigid body. This gives a final form of the block matrix system as
+
 \begin{equation}
 \label{eq:swimmingStructure}
 \arraycolsep=0.4pt\def\arraystretch{1}
@@ -119,15 +120,13 @@ Often when working with Stokes flow the problem includes the interaction of boun
 This addition to the problem is numerically solved in the same way as for the single swimmer, we extend the two quadrature sets to now include the points on the boundary. Now taking the original number of quadrature points to be $N_D$ and the number of quadrature points on the boundary as $N_B$ then the set of force points can be written as  $\{\bm{x}_n\}$ where $n=1,\dots,N=N_B+N_D$. The same is done for the fine quadrature points on the boundary $\{\bm{X}_q\}$ where $q=Q_D+1,\dots,Q=Q_D+Q_B$ and $Q_D$ is the number of fine quadrature points on the swimmer. The block format for the problem remains the same however, with the extended augmented blocks which includes the boundary points. 
 
 The new blocks are written as,
-\begin{equation*}
-\begin{aligned}
+\begin{align*}
 A_{ij}(m,n) &= \frac{1}{8\pi\mu} \sum_{q=1}^Q S_{ij}^\epsilon (\bm{x}_m,\bm{X}_{q})\nu[q,n] \text { for } m,n = 1,\dots,N_s,N_D+1,\dots,N_D+N_B  \\
 B_{i}^{U}(m,j) &= \begin{cases} -\delta_{ij} \text { for } m = 1,\dots,N \\ \text { for } m = N_D+1,\dots,N_D+N_B\end{cases}\\
 B_{i}^{\Omega}(m,j) &= \begin{cases} -\epsilon_{ijk}(x_k[m]-x_{0k}) \text { for } m = 1,\dots,N \\ \text { for } m = N_D+1,\dots,N_D+N_B\end{cases}\\
 B_{j}^{F}(i,n) &= \begin{cases} \delta_{ij} \sum_{q=1}^Q \nu[q,n] \text { for } n = 1,\dots,N \\ 0 \text { for } n = N_D+1,\dots,N_D+N_B\end{cases} \\
 B_{j}^{M}(i,n) &= \begin{cases} \epsilon_{ikj} \sum_{q=1}^Q (X_k[q]-x_{0 k}) \nu[q,n] \text { for } n = 1,\dots,N \\ 0 \text { for } n = N_D+1,\dots,N_D+N_B\end{cases}.
-\end{aligned}
-\end{equation*}
+\end{align*}
 This is now expressed as a system of $3N + 6 = 3N_D+3N_B + 6$ unknowns in $3N+6$ equations. The Vector of unknowns is again arranged as in \cref{eq:swimmingStructure} where $N=N_D+N_B$. Writing the right-hand side as $(V_1,V_2,V_3)^T$,
 \begin{equation*}
     V_i[n] = \begin{cases} B_{i j} \dot{\xi}_{j}({\bm{x}}_{n}) \text{ for } n=1,\dots,N_D \\ \dot{x}_i[n] \text{ for } n=N_D+1,\dots,N_D+N_B. \end{cases}
@@ -157,7 +156,7 @@ The translational and angular velocities are given by $U_i^{(1)},\dots,U_i^{(N_{
 \end{equation*}
 Defining $\bm{1}^{(n)}$ to be a column vector of ones with length $n$ and $\bm{0}^{(m\times n)}$ to be a $(m\times n)$ matrix of zeros. The $N_F \times N_{sw}$ matrices are therefore defined as
 \begin{equation*}
-\arraycolsep=0.4pt\def\arraystretch{1}
+\arraycolsep=0.4pt\def\arraystretch{0.8}
     \tilde{x}_i(\cdot,\cdot)=\left(\begin{array}{c}
          \begin{array}{ccc}
              x_i^{(1)}[\cdot]-x_{0i}^{(1)} & & \\
@@ -168,8 +167,9 @@ Defining $\bm{1}^{(n)}$ to be a column vector of ones with length $n$ and $\bm{0
     \end{array}\right).
 \end{equation*}
 Then
+
 \begin{equation*}
-\arraycolsep=0.4pt\def\arraystretch{1}
+\arraycolsep=0.4pt\def\arraystretch{0.8}
     B^U = \mathds{1}_{3} \otimes \left(\begin{array}{c}
          \begin{array}{ccc}
              -\bm{1}^{(N_D(1))} & & \\
@@ -186,7 +186,8 @@ Then
           \end{array}\right)
 \end{equation*}
 with $\mathds{1}_{3}$ denoting the $3\times3$ identity matrix and $\otimes$ the Kronecker product.
-To construct the $N_{sw} \times N_F$ matrices we define two $1 \times N_D(s)$ row vectors
+
+\noindent To construct the $N_{sw} \times N_F$ matrices we define two $1 \times N_D(s)$ row vectors
 \begin{equation*}
 \begin{aligned}
     \lambda^{(s)}[\cdot] &= \sum_{q=1}^Q \nu[q,\gamma] \text{ for } \gamma = \iota(s),\cdots,\iota(s+1)-1 \text{ and } \\
