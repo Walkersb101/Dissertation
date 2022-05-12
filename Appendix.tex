@@ -96,14 +96,14 @@ For application of both traversals to an octree, where we traverse each subtree 
 
 \begin{figure}
      \centering
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.4\textwidth}
          \centering
          \resizebox{\linewidth}{!}{\input{Images/TreeTraversal/Postorder}}
          \caption{Diagram showing post order tree traversal}
          \label{fig:Postorder}
      \end{subfigure}
           \hfill
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.4\textwidth}
          \centering
          \resizebox{\linewidth}{!}{\input{Images/TreeTraversal/Preorder}}
          \caption{Diagram showing pre order tree traversal}
@@ -154,7 +154,7 @@ Defining the index $\iota(s)=\sum_{\alpha=1}^{s-1}N_D(\alpha)$ for $1<s\leq N_{s
 \end{equation*}
 Defining $\bm{1}^{(n)}$ to be a column vector of ones with length $n$, $\bm{1}^{(n)T}$ to be the transpose of $\bm{1}^{(n)}$ a row vector of ones with length $n$ and $\bm{0}^{(m\times n)}$ to be a $(m\times n)$ matrix of zeros. By defining
 \begin{equation*}
-\arraycolsep=0.4pt\def\arraystretch{0.8}
+\arraycolsep=0.4pt\def\arraystretch{0.75}
     \tilde{x}_i(\cdot,\cdot)=\left(\begin{array}{c}
          \begin{array}{ccc}
              x_i^{(1)}[\cdot]-x_{0i}^{(1)} & & \\
@@ -166,7 +166,7 @@ Defining $\bm{1}^{(n)}$ to be a column vector of ones with length $n$, $\bm{1}^{
 \end{equation*}
 The translational and rotational components of the matrix can be defined to be
 \begin{equation*}
-\arraycolsep=0.4pt\def\arraystretch{0.8}
+\arraycolsep=0.4pt\def\arraystretch{0.75}
     B^U = \mathds{1}_{3} \otimes \left(\begin{array}{c}
          \begin{array}{ccc}
              -\bm{1}^{(N_D(1))} & & \\
@@ -190,7 +190,7 @@ To construct the $N_{sw} \times N_F$ matrices we define the row vector of size $
 \end{equation*}
 these allow us to define
 \begin{equation*}
-\arraycolsep=0.4pt\def\arraystretch{0.8}
+\arraycolsep=0.4pt\def\arraystretch{0.75}
     \tilde{\chi}_j(\cdot,\cdot)=\left(\begin{array}{cc}
          \begin{array}{ccc}
              \chi_j^{(1)}[\cdot] & & \\
@@ -201,7 +201,7 @@ these allow us to define
 \end{equation*}
 Then
 \begin{equation*}
-\arraycolsep=0.4pt\def\arraystretch{0.8}
+\arraycolsep=0.4pt\def\arraystretch{0.75}
     B^F = \mathds{1}_{3} \otimes \left(\begin{array}{cc}
          \begin{array}{ccc}
              \bm{1}^{(1)T}[\cdot] & & \\
@@ -402,6 +402,9 @@ We also consider the eigenvalues of the 40 swimmers and 114 force quadrature poi
         \centering
         \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix.pdf}
     \end{subfigure}
+\end{figure}
+\begin{figure}
+\ContinuedFloat
     \begin{subfigure}{0.45\textwidth}
         \centering
         \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix Preconditioned.pdf}
@@ -411,6 +414,9 @@ We also consider the eigenvalues of the 40 swimmers and 114 force quadrature poi
         \centering
         \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix with rescaled total B Matrix.pdf}
     \end{subfigure}
+\end{figure}
+\begin{figure}
+\ContinuedFloat
     \begin{subfigure}{0.45\textwidth}
         \centering
         \includegraphics[width=\linewidth]{Images/Condition/Eigen-Stokeslet Matrix using Disjoint NEAREST.pdf}
@@ -433,6 +439,9 @@ We also consider the eigenvalues of the 40 swimmers and 114 force quadrature poi
         \centering
         \includegraphics[width=\linewidth]{Images/Condition/Eigen-Stokeslet Matrix using Disjoint NEAREST.pdf}
     \end{subfigure}
+\end{figure}
+\begin{figure}
+\ContinuedFloat
     \begin{subfigure}{0.45\textwidth}
         \centering
         \includegraphics[width=\linewidth]{Images/Condition/Eigen-Mobility Matrix using Disjoint NEAREST.pdf}
