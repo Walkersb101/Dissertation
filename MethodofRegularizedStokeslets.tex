@@ -2,28 +2,29 @@
 \section{Method of Regularised Stokeslets} \label{sec:MRS}
 \sectionmark{MRS}
 
-When analysing many physical systems, particularly in microscopic biology, it is found that the inertial forces within the fluid are small in comparison to that of the viscous terms. These scenarios occur either where $\mu$ is large or at small length scales where $L$ (the typical scale of the system) is small, such as the flows around cells, microorganisms, or small capillaries\cite{Blake1972AOrganisms, Higdon1979APropulsion, Smith2009MathematicalFluids}.
+When analysing many physical systems, particularly in microscopic biology, it is found that the inertial forces within the fluid are small in comparison to that of the viscous terms. These scenarios occur either where $\mu$ is large or at small length scales where $L$ (the typical scale of the system) is small, such as the flows around cells, microorganisms, or small capillaries \cite{Blake1972AOrganisms, Higdon1979APropulsion, Smith2009MathematicalFluids}.
 In these cases, we can take the limit of the Navier-Stokes equation 
 \begin{equation}
 \label{eq:NavierStokes}
 \begin{aligned}
-    \rho \left(\dfrac{\partial \mathbf{u}}{\partial t}+(\mathbf{u} \cdot \nabla) \mathbf{u}\right) &= \mathbf{F}-\nabla p+\mu  \Delta \mathbf{u}\\
-    \nabla\cdot\mathbf{u} = 0
+    \rho \left(\dfrac{\partial \bm{u}}{\partial t}+(\bm{u} \cdot \nabla) \bm{u}\right) &= \bm{F}-\nabla p+\mu  \Delta \bm{u}\\
+    \nabla\cdot\bm{u} = 0
 \end{aligned}
 \end{equation}
-where $\rho$ is the fluid density, $\mathbf{u}$ is the velocity of the fluid, $\mathbf{F}$ is the external force, $p$ is the pressure and $\mu$ is the fluid viscosity, as $Re=\rho u L/\mu \to 0 $ where $u$ is the magnitude of the fluid velocity $\mathbf{u}$\cite{Trombley2019BasicFlows}.
+as $Re=\rho |\bm{u}| L/\mu \to 0$ where 
+$\rho$ is the fluid density, $\mathbf{u}$ is the velocity of the fluid, $\mathbf{F}$ is the external force, $p$ is the pressure and $\mu$ is the fluid viscosity \cite{Trombley2019BasicFlows}.
 In this limit the steady-state Stokes equations in two or three dimensions are obtained as 
 \begin{subequations}
 \label{eq:StokesFlow}
 \begin{align}
-    \mu\Delta\boldsymbol{u} &= \nabla p - \boldsymbol{F} \label{eq:StokesFlow1} \\
-    \nabla \cdot \boldsymbol{u} &= 0 \label{eq:StokesFlow2}
+    \mu\Delta\bm{u} &= \nabla p - \bm{F} \label{eq:StokesFlow1} \\
+    \nabla \cdot \bm{u} &= 0 \label{eq:StokesFlow2}
 \end{align}
 \end{subequations}
 where $\bm{u}$ is the velocity of the fluid, $\bm{F}$ is the external body force, $p$ is the pressure and $\mu$ is the fluid viscosity. We typically also assume a no slip, no penetration boundary condition $\bm{u}(\bm{x},t)=\dot{\bm{x}}$, for all points $\bm{x}$ on the boundary. 
 
 When looking for solutions to the Stokes equation (eq.~\ref{eq:StokesFlow}) there are many different techniques that can used, both numerically and analytically. In this paper will be focusing on the use of the Green's function of Stokes flow $S_{jk}$ called a stokeslet\cite{Pozrikidis1992BoundaryFlow,Hancock1953TheLiquids} or Oseen tensor \cite{Oseen1927NeuereHydrodynamik}. The stokeslet represents a fundamental solution for the velocity of the fluid given that an external force per unit volume $\bm{F}$ acts on the fluid at the origin $\bm{F} = \bm{f_0}\delta(\bm{x})$\cite{Hancock1953TheLiquids, Batchelor2000AnDynamics}.
-Through similar methods to those shown later for deriving the regularised stokeslet equation eq.~\ref{eq:regstokeslet2} it is possible to derive the singular fundamental solutions to the Stokes equations as
+Through similar methods to those shown later for deriving the regularised stokeslet equation (eq.~\ref{eq:regstokeslet2}) it is possible to derive the singular fundamental solutions to the Stokes equations as
 \begin{equation}
 \label{eq:singularsolutions}
 \begin{aligned}
@@ -38,13 +39,13 @@ where $r=|\bm{x}-\bm{y}|$. The pair of tensors $S_{jk}$ and $P_k$ provide the so
 \end{equation*}
 where $\bm{f_{0}}$ is the force per unit area exerted by the fluid on the surface, concentrated at the point $\bm{y}$. The final tensor $T_{ijk}$ is known as the stresslet and allows for the stress corresponding the fluid velocity and pressure to be written as $\sigma_{ik}=(8 \pi \mu)^{-1}T_{ijk}$. 
 
-Before 2001 the majority of studies done with Stokes flow were done through methods such as slender body theory \cite{Walker2020AFilaments,Johnson1980AnFlow} or the standard boundary element method \cite{Acrivos1975StokesSolution,Pozrikidis1992BoundaryFlow,Tran-Cong1987APropulsion}. Slender body theory applies to only slender bodies in which the length of the body $l >> 2a$ where $a$ is the radius of the body. While this method allows for the modelling of flagella and cilia it has limited applications for more complex geometries. Work done by Youngren and Acrivos \cite{Acrivos1975StokesSolution} and later reviewed and expanded on by Pozrikidis \cite{Pozrikidis1992BoundaryFlow} shows that the singular stokeslet solution can be formulated into a boundary integral problem where the fluid flow in the domain can be found in terms of an integral over the boundaries of the problem. This led to the formulation of the Boundary Element Method (BEM) for numerically solving Stokes flow problems. While the BEM provides solutions for more complex geometries, both accurately and efficiently, it requires the generation of a smooth surface mesh and, managing the singular integrals, leads to complex implementation. Although this problem is eliminated partly by packages such as BEMLIB \cite{Pozrikidis2002ABEMLIB} its still requires some computational knowledge to implement efficiently.
+Before 2001 the majority of studies done with Stokes flow were done through methods such as slender body theory \cite{Walker2020AFilaments,Johnson1980AnFlow}, the immersed boundary method  \cite{Fauci1993,Maxian2020,Fauci1995,Peskin2002} or the standard boundary element method \cite{Acrivos1975StokesSolution,Pozrikidis1992BoundaryFlow,Tran-Cong1987APropulsion}. Slender body theory applies to only slender bodies in which the length of the body $l \gg 2a$ where $a$ is the radius of the body. While this method allows for the modelling of flagella and cilia it has limited applications for more complex geometries. Work done by Youngren and Acrivos \cite{Acrivos1975StokesSolution} and later reviewed and expanded on by Pozrikidis \cite{Pozrikidis1992BoundaryFlow} shows that the singular stokeslet solution can be formulated into a boundary integral problem where the fluid flow in the domain can be found in terms of an integral over the boundaries of the problem. This led to the formulation of the Boundary Element Method (BEM) for numerically solving Stokes flow problems. While the BEM provides solutions for more complex geometries, both accurately and efficiently, it requires the generation of a smooth surface mesh and, managing the singular integrals, leads to complex implementation. Although this problem is eliminated partly by packages such as BEMLIB \cite{Pozrikidis2002ABEMLIB} its still requires some computational knowledge to implement efficiently.
 
-In 2001, Cortez \cite{Cortez2001} proposed the method of regularised stokeslet which was later expanded into three dimensions in 2005 by Cortez, Fauci and Medovikov \cite{Cortez2005}. The method of regularised stokeslets removes the need to generate a smooth connected mesh as well as the requirement to evaluate singular integrals by replacing the Dirac delta force per-unit-volume with a cutoff function which spreads the force over a finite non zero volume. This allows for Stokes flow problem to be solved by simply scattering quadrature points over the surface of the boundary and then evaluating the velocity at the required collocation points.
+In 2001, Cortez \cite{Cortez2001} proposed the method of regularised stokeslets which was later expanded into three dimensions in 2005 by Cortez, Fauci and Medovikov \cite{Cortez2005}. The method of regularised stokeslets removes the need to generate a smooth connected mesh as well as the requirement to evaluate singular integrals by replacing the Dirac delta force per-unit-volume with a cutoff function which spreads the force over a finite non zero volume. This allows for Stokes flow problem to be solved by simply scattering quadrature points over the surface of the boundary and then evaluating the velocity at the required collocation points.
 
 \subsection{Regularising the Stokeslet}
 
-In order to remove the singularities in the stokelet and stresslet solutions, Cortez \cite{Cortez2001} introduced a cutoff function such that, instead of approximating the force at a singular point, it is approximated as a sphere centred at the same point. While the radius of the sphere is often infinite, the magnitude of the cutoff function decays rapidly away from the centre with the largest contribution obtained in the close vicinity of the centre of the sphere. A  control parameter $\epsilon$ is introduced to control the rate of decay of the function with its effect shown in \cref{fig:blobfunc}. To obtain similar results to that of the singular solutions, we dictate that $\int_0^\infty \phi^\epsilon(r) r dr=1$ for all values of $\epsilon$. This allows for the preservation of results obtained for the singular kernels for points far away from where the force is exerted, and obtain different non singular results close to the point due to the regularisation error introduced. To retain the singular solution, the condition that as $\epsilon \to 0$ the cutoff function must tend to the Dirac delta function such that we can recover the singular solutions. For simplicity of the paper and the application to a wider range of problems \cite{Olson2013ModelingFormulation}, we will only consider spherically symmetric functions.
+In order to remove the singularities in the stokelet and stresslet solutions, Cortez \cite{Cortez2001} introduced a cutoff function such that, instead of approximating the force at a singular point, it is approximated as a sphere centred at the same point. While the radius of the sphere is often infinite, the magnitude of the cutoff function decays rapidly away from the centre with the largest contribution obtained in the close vicinity of the centre of the sphere. A  control parameter $\epsilon$ is introduced to control the rate of decay of the function with its effect shown in \cref{fig:blobfunc}. To obtain similar results to that of the singular solutions, we dictate that $\int_0^\infty \phi^\epsilon(r) r^2 dr=1$ for all values of $\epsilon$. This allows for the preservation of results obtained for the singular kernels for points far away from where the force is exerted, and obtain different non singular results close to the point due to the regularisation error introduced. To retain the singular solution, the condition that as $\epsilon \to 0$ the cutoff function must tend to the Dirac delta function such that we can recover the singular solutions.
 
 \begin{figure}
     \centering
@@ -90,7 +91,6 @@ for all $j=1,2,3$. By taking the derivative of \cref{eq:regcondition1} with resp
 \begin{equation*}
     \frac{\partial S^\epsilon_{kj}(\bm{x},\bm{y})}{\partial x_i \partial x_i \partial x_k} = \frac{\partial^2 P^\epsilon_{j}(\bm{x},\bm{y})}{\partial x_k^2} - 8\pi\delta_{kj}\frac{\partial \phi^\epsilon(\bm{x}-\bm{y})}{\partial x_k}.
 \end{equation*}
-
 Summing over $k$ as per the convention and using \cref{eq:regcondition2} gives
 \begin{equation}
 \label{eq:regpressureeq}
@@ -106,7 +106,7 @@ To solve the regularised Stokes equation the regularised Laplace's equation (eq.
     \Delta B^\epsilon(\bm{x}-\bm{y})  &= G^\epsilon(\bm{x}-\bm{y}). \label{eq:inter2}
 \end{align}
 \end{subequations}
-In this change of variable, we are now working with scalar potentials $G^\epsilon$ and $B^\epsilon$ instead of the pressure and velocity. This allows the pressure tensor, second rank stokeslet and Stress tensors to be expressed in terms of these potentials. Combining \cref{eq:inter1,eq:regpressureeq,eq:regcondition1,eq:inter2} the solutions for $P^\epsilon$ and $S_{ij}$ can be expressed in terms of $G^\epsilon$ and $B^\epsilon$
+In this change of variable, we are now working with scalar potentials $G^\epsilon$ and $B^\epsilon$ instead of the pressure and velocity. This allows the pressure tensor, second rank stokeslet and stress tensors to be expressed in terms of these potentials. Combining \cref{eq:inter1,eq:regpressureeq,eq:regcondition1,eq:inter2} the solutions for $P^\epsilon_j$ and $S^\epsilon_{ij}$ can be expressed in terms of $G^\epsilon$ and $B^\epsilon$
 \begin{equation}
 \label{eq:pressuresol}
     P^\epsilon_{j}(\bm{x},\bm{y}) = 8 \pi \frac{\partial G^\epsilon(\bm{x}-\bm{y})}{\partial x_j}
@@ -122,7 +122,7 @@ Using the definition of the regularised stress tensor
 \label{eq:regstress}
     \sigma_{ij}^\epsilon(\bm{x}) = -\delta_{ik}p^\epsilon(\bm{x}) + \mu\left( \frac{\partial u^\epsilon_i}{\partial x_k} + \frac{\partial u^\epsilon_k}{\partial x_i} \right)
 \end{equation}
-and the definition of velocity in terms of the stokeslet (eq.~\ref{eq:regvelsol}) we find that the stress tensor can be written as 
+and the definition of velocity in terms of the regualrised stokeslet (eq.~\ref{eq:regvelsol}) the stress tensor is defined as
 \begin{equation}
 \label{eq:regDoubleLayerSol}
     T^\epsilon_{ijk}(\bm{x},\bm{y}) = -\delta_{ik} P^\epsilon_j(\bm{x},\bm{y}) + \mu\left( \frac{\partial S^\epsilon_{ij}(\bm{x},\bm{y})}{\partial x_k} + \frac{\partial S^\epsilon_{kj}(\bm{x},\bm{y})}{\partial x_i}\right).
@@ -158,7 +158,7 @@ Substituting \cref{eq:G,eq:B} into \cref{eq:pressuresol,eq:regstokeslet1,eq:regD
 It is easily checked that these solutions provide results consistent with those found by the singular solutions, as in the limit $\epsilon \to 0$  the singular solutions stated in \cref{eq:singularsolutions} are obtained.
 
 \subsubsection{Boundary Integral Equations}
-Work done by Pozrikidis \cite{Pozrikidis1992BoundaryFlow} shows that as the Stokes flow equations are elliptic partial differential equations the solution for the entire fluid domain can be represented in terms of a boundary integral over the surface of any bodies in the domain \cite{Stakgold1968Boundary2}. The most common starting point for deriving the Boundary integral equations is that of the Lorentz reciprocal identity which states, for any two non-singular (regular) flows $u$ and $u^\prime$ with stress $\sigma$ and $\sigma^\prime$ respectively, that
+Work done by Ladyzhenskaya \cite{ladyzhenskaya1969mathematical} shows that as the Stokes flow equations are elliptic partial differential equations the solution for the entire fluid domain can be represented in terms of a boundary integral over the surface of any bodies in the domain. The most common starting point for deriving the Boundary integral equations is that of the Lorentz reciprocal identity which states, for any two non-singular (regular) flows $u$ and $u^\prime$ with stress $\sigma$ and $\sigma^\prime$ respectively, that
 \begin{equation*}
     \frac{\partial}{\partial x_k}(u_i^\prime\sigma_{ik} - u_i \sigma^\prime_{ik}) = 0.
 \end{equation*}
@@ -210,7 +210,7 @@ As $f_{0,j}$ is constant it can be taken out of the derivative on the left-hand 
 \begin{figure}
     \centering
     \resizebox{.4\linewidth}{!}{\input{Images/BoundaryIntergralDiagram}}
-    \caption{A schematic diagram of the volume used in the derivation of the boundary integral for Stokes flow.}
+    \caption{A schematic diagram of the volume used in the derivation of the boundary integral for Stokes flow. Adapted from Cortez, Fauci and Medovikov 2005 \cite{Cortez2005}}
     \label{fig:SystematicDiagram}
 \end{figure}
 
@@ -236,7 +236,7 @@ where $\bm{n}$ is the outwards facing unit normal vector of $\partial S$. Now co
 
 Considering the fluid inside of the solid body $D$ we realise that the velocity must satisfy the zero-deformation condition
 \begin{equation*}
-  \frac{\partial u_i}{\partial k} + \frac{\partial u_k}{\partial i} = 0.
+  \frac{\partial u_i}{\partial x_k} + \frac{\partial u_k}{\partial x_i} = 0.
 \end{equation*}
 This must mean that the pressure is constant inside of $D$ and reduces the stress to $\sigma_{ik} = -p\delta_{ik}$ inside of $D$ and as such for each $j=1,2,3$
 \begin{equation*}
@@ -257,7 +257,7 @@ The divergence theorem is again used to convert the volume integral to a surface
   \label{eq:BIE5}
     \iiint_{\mathbb{R}^{3}} u_{j}(\bm{x}) \phi^{\epsilon}\left(\bm{x}-\bm{y}\right) d V(\bm{x})=-\frac{1}{8 \pi \mu} \iint_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) g_{i}(\bm{x}) d s(\bm{x}).
 \end{equation}
-As the traction $\bm{g}$ denotes the traction exerted by the fluid on the body it must have the opposite sign to the stokeslet traction $\bm{f}$ and as such $\bm{f} = -\bm{g}$ where $\bm{f}$ denotes the force per unit area acting on the fluid. To use \cref{eq:BIE5} we need to have an explicit equation for $\bm{u}(\bm{x})$, by taking the approximation that $\int_{\mathbb{R}^{3}} u_{j}(\bm{x}) \phi^{\epsilon}\left(\bm{x}-\bm{y}\right) d V(\bm{x}) \approx u_j(\bm{y})$. By taking the approximation as exact \cref{eq:BIE5} can be written as
+As the traction $\bm{g}$ denotes the traction exerted by the fluid on the body it must have the opposite sign to the stokeslet traction $\bm{f}$ and as such $\bm{f} = -\bm{g}$ where $\bm{f}$ denotes the force per unit area acting on the fluid. To use \cref{eq:BIE5} we need to have an explicit equation for $\bm{u}(\bm{x})$, by taking the approximation that $\iiint_{\;\mathbb{R}^{3}} u_{j}(\bm{x}) \phi^{\epsilon}\left(\bm{x}-\bm{y}\right) d V(\bm{x}) \approx u_j(\bm{y})$. By taking the approximation as exact \cref{eq:BIE5} can be written as
 \begin{equation}
     u_j(\bm{y}) = \frac{1}{8 \pi \mu} \iint_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) f_{i}(\bm{x}) d s(\bm{x}).
 \end{equation}
@@ -275,10 +275,10 @@ The analytical computation of \cref{eq:BIE} is possible for certain cases allowi
 \end{equation}
 where ${f}_{i}({\bm{y}}_n)$ is the $i$th component of the force on the fluid at the point ${\bm{y}}_n$ and $A_n$ combines both the corresponding quadrature weight of the $n$th stokeslet and surface metric.
 
-The discretisation of the integral in \cref{eq:BIE} introduced a discretisation error of $\mathcal{O}(h)$ where $h$ is the average spacing between quadrature points and also a quadrature error which is also dependent on $\epsilon$. Analysis done by Cortez, Fauci and Medovikov\cite{Cortez2005} estimated the quadrature error introduced by this method to be $\mathcal{O}(h^2\epsilon^{-3})$ although more recent analysis by Gallagher, Choudhuri and Smith\cite{Gallagher2019SharpEquation} refined this estimate to $\mathcal{O}(h^2\epsilon^{-1}) + \mathcal{O}(P\epsilon^{-1/P} h^{1-P})$ for any integer $P>3$. The $\mathcal{O}(h^2\epsilon^{-1})$ regularisation term provides the motivation for most of the subsequent work done in this paper as, for a fixed epsilon, reducing the regularisation error requires a reduction in $h$ which increases the number of quadrature points and as such the overall complexity of the numerical problem. 
+The discretisation of the integral in \cref{eq:BIE} introduced a discretisation error of $\mathcal{O}(h)$ where $h$ is the average spacing between quadrature points and also a quadrature error which is also dependent on $\epsilon$. Analysis done by Cortez, Fauci and Medovikov \cite{Cortez2005} estimated the quadrature error introduced by this method to be $\mathcal{O}(h^2\epsilon^{-3})$ although more recent analysis by Gallagher, Choudhuri and Smith \cite{Gallagher2019SharpEquation} refined this estimate to $\mathcal{O}(h^2\epsilon^{-1}) + \mathcal{O}(P\epsilon^{-1/P} h^{1-P})$ for any integer $P>3$. The $\mathcal{O}(h^2\epsilon^{-1})$ regularisation term provides the motivation for most of the subsequent work done in this paper as, for a fixed epsilon, reducing the regularisation error requires a reduction in $h$ which increases the number of quadrature points and as such the overall complexity of the numerical problem. 
 
 \subsection{Matrix Formulation} \label{subsec:MatrixForm}
-The computation of \cref{eq:Stokesletsum} for a set of collocation points $\{\bm{x}_m\}$  for $m = 1,...,M$ can be viewed as the product of a dense $3M \times 3N$ matrix with a $3N \times 1$ column vector where $M$ is the number of collocation points and $N$ the number of stokeslet points. By taking the Nyström discretisation \cite{Nystrom1930UberRandwertaufgaben} where $\{\bm{x}_m\} = \{\bm{y}_n\}$ the stokeslet matrix therefore becomes a $3N \times 3N$ matrix where the velocity can be calculated from a set of prescribed traction's $\{\bm{F}(\bm{x}_n)\}$ by
+The computation of \cref{eq:Stokesletsum} for a set of collocation points $\{\bm{x}_m\}$  for $m = 1,...,M$ can be viewed as the product of a dense $3M \times 3N$ matrix with a $3N \times 1$ column vector where $M$ is the number of collocation points and $N$ the number of stokeslet points. By taking the Nyström discretisation \cite{Nystrom1930UberRandwertaufgaben} where $\{\bm{x}_m\} = \{\bm{y}_n\}$ the stokeslet matrix therefore becomes a $3N \times 3N$ matrix where the velocity can be calculated from a set of prescribed tractions $\{\bm{F}(\bm{x}_n)\}$ by
 \begin{equation}
 \label{eq:Nystrom}
     u_{i}\left(\bm{x}_m\right)=\frac{1}{8 \pi \mu} \sum_{n=1}^{N} \sum_{i=1}^{3} S_{i j}^{\epsilon}\left(\bm{x}_m, {\bm{x}}_{n}\right) {F}_{j}({\bm{x}}_{n})
@@ -288,7 +288,7 @@ where $n=1,\dots,N$, $m=1,\dots,N$ and $j=1,2,3$. The computation of this matrix
 \label{eq:matrixvectorproduct}
     \underline{U} = A \underline{F}
 \end{equation}
-where $\underline{U}$ is a $3N \times 1$ column vector, $A$ is a $3N \times 3N$ matrix and $\underline{F}$ is a $3N \times 1$. We will make the choice to assemble to left-hand side of \cref{eq:matrixvectorproduct} as
+where $\underline{U}$ is a $3N \times 1$ column vector, $A$ is a $3N \times 3N$ matrix and $\underline{F}$ is a $3N \times 1$ column vector. We will make the choice to assemble to left-hand side of \cref{eq:matrixvectorproduct} as
 \small
 \begin{equation*}
     \underline{U} = [u_1({\bm{x}}_{1}), \; u_2({\bm{x}}_{1}), \; u_3({\bm{x}}_{1}), \; u_1({\bm{x}}_{2}), \; u_2({\bm{x}}_{2}), \; u_3({\bm{x}}_{2}), \; \dots \; u_1({\bm{x}}_{M}), \; u_2({\bm{x}}_{M}), \; u_3({\bm{x}}_{N})]^{T}u
@@ -322,7 +322,7 @@ We do note that this choice in the structure of $\underline{U}$ and $\underline{
 
 \subsection{Resistance Problem} \label{sec:resistance}
 A common problem to solve in Stokes flow is the resistance problem, where the force distribution, and hence total force and moment, on a body is calculated from a prescribed rigid body motion. By taking the Nyström discretisation
-and prescribing velocities at each point $\{\bm{x}_m\}$ a system of $3M$ equations with $3N$ unknowns $F_j(\bm{y}_n) := f_j(\bm{y}_n)A_n$ is formed. For each of the six rigid body motion modes (unit velocity translation along each axis and unit angular velocity rotation about each axis) are calculated we can form the grand resistance matrix $\mathcal{R}$\cite{Pozrikidis1992BoundaryFlow}. By the linearity of the Stokes equation, $\mathcal{R}$ relates the force $\mathbf{F}$ and moment $\mathbf{M}$ to the velocity $\mathbf{U}$ and angular velocity $\mathbf{\Omega}$ for any rigid body motion. 
+and prescribing velocities at each point $\{\bm{x}_m\}$ a system of $3M$ equations with $3N$ unknowns $F_j(\bm{y}_n) := f_j(\bm{y}_n)A_n$ is formed. For each of the six rigid body motion modes (unit velocity translation along each axis and unit angular velocity rotation about each axis) are calculated we can form the grand resistance matrix $\mathcal{R}$ \cite{Pozrikidis1992BoundaryFlow}. By the linearity of the Stokes equation, $\mathcal{R}$ relates the force $\mathbf{F}$ and moment $\mathbf{M}$ to the velocity $\mathbf{U}$ and angular velocity $\mathbf{\Omega}$ for any rigid body motion. 
 \begin{equation}
 \arraycolsep=1pt\def\arraystretch{1.2}
 \left(
@@ -349,4 +349,7 @@ A_{M U} & A_{M \Omega}
 \end{equation}
 where $I$ is the $3\times 3$ identity matrix and $0$ is a $3\times 3$ matrix of zeros.
 
-The most common method for solving the resistance problem is to generate the full stokeslet matrix and solve the subsequent linear system $\underline{U} = A\underline{F}$ for $\underline{F}$, this problem can either be solved through the inversion of the matrix $A$ or, in our implementation, the use of MATLAB's \textit{mldivide} ($\backslash$) function which both take $\mathcal{O}(N^3)$ operations to compute the solution for dense systems. For the Nyström discretisation we have a regularisation error term of $\mathcal{O}(h^2\epsilon^{-1})+\mathcal{O}(\epsilon)$ so, in order to keep a fixed $\epsilon$ and still reduce the error, the quadrature spacing needs to be decreased and as such the $N$ grows. For larger systems the use of \textit{mldivide} becomes too computationally costly, either from time or memory usage, but the solution can be solved using the Generalized Minimal RESidual (GMRES) method (See \cref{appendix:GMRES}) \cite{Saad1986GMRES:Systems,Elman2005FiniteDynamics}. GMRES can perform the inverse in at worst $\mathcal{O}(N)$ iterations (with each iteration requiring $\mathcal{O}(N^2)$ operations) however it will often converge to a solution with a small relative residual error in significantly fewer iterations, particularly when an appropriate preconditioner is used. 
+The most common method for solving the resistance problem is to generate the full stokeslet matrix and solve the subsequent linear system $\underline{U} = A\underline{F}$ for $\underline{F}$, this problem can either be solved through the inversion of the matrix $A$ or, in our implementation, the use of MATLAB's \textit{mldivide} ($\backslash$) function which both take $\mathcal{O}(N^3)$ operations to compute the solution for dense systems. For the Nyström discretisation we have a regularisation error term of $\mathcal{O}(h^2\epsilon^{-1})+\mathcal{O}(\epsilon)$ so, to reduce regularisation error via reducing epsilon, one must reduce $h$ accordingly like $\sqrt{\epsilon}$ hence the number of quadrature points $N$ grows like $1/(\sqrt{\epsilon})^2=1/\epsilon$.
+
+
+in order to keep a fixed $\epsilon$ and still reduce the error, the quadrature spacing needs to be decreased and as such the $N$ grows. For larger systems the use of \textit{mldivide} becomes too computationally costly, either from time or memory usage, but the solution can be solved using the Generalized Minimal RESidual (GMRES) method (See \cref{appendix:GMRES}) \cite{Saad1986GMRES:Systems,Elman2005FiniteDynamics}. GMRES can perform the inverse in at worst $\mathcal{O}(N)$ iterations (with each iteration requiring $\mathcal{O}(N^2)$ operations) however it will often converge to a solution with a small relative residual error in significantly fewer iterations, particularly when an appropriate preconditioner is used. 

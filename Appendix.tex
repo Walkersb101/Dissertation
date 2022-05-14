@@ -74,7 +74,7 @@ The post order traversal is used in cases where we need to look at all the child
 
 Another way in which we can traverse tree structures in the pre order traversal where we work our way down from the root of the tree. We use this in fast multipole methods so we can use local to local translation (eq.~\ref{eq:L2L}). The pre order traversal differs from post order traversal as, in this case, we visit the current node first before recursively traversing each subtree. For example the tree in \cref{fig:BlankTree} can be traversed using pre order traversal in the order $1, 2, 4, 5, 3$ as illustrated in \cref{fig:Preorder}.
 
-For application of both traversals to an octree, where we traverse each subtree individually, the order in which each subtree is traversed does not matter and only comes down to convention, however we do need to make sure that every subtree is traversed for each node.
+For application of both traversals to an octtree, where we traverse each subtree individually, the order in which each subtree is traversed does not matter and only comes down to convention, however we do need to make sure that every subtree is traversed for each node.
 
 \begin{algorithm}
 \caption{Binary Post Order Traversal}
@@ -86,7 +86,7 @@ For application of both traversals to an octree, where we traverse each subtree 
 \end{algorithm}
 
 \begin{algorithm}
-\caption{Binary pre order Traversal}
+\caption{Binary Pre Order Traversal}
 \begin{algorithmic}[1]
 \State Visit the current node
 \State Recursively traverse the current node's left subtree

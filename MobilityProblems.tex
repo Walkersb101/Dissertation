@@ -15,11 +15,12 @@ We can redefine the velocity in terms of the rigid-body velocity $\bm{U}$ and an
 \end{equation*}
 The fluid flow can be described through the Stokes flow equation defined in \cref{eq:BIE},
 \begin{equation*}
-    u_i(\bm{y}) = \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) f_{j}(\bm{y}) d s(\bm{y}) \quad \forall \bm{x}\in\partial D
+    u_i(\bm{y}) = \frac{1}{8 \pi \mu} \iint_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) f_{j}(\bm{y}) d s(\bm{y}) \quad \forall \bm{x}\in\partial D
 \end{equation*}
 The nonslip boundary condition means that the velocity of the fluid on the boundary of the rigid body $\partial D$ is the same as the velocity of the boundary $\dot{\bm{x}}$
+
 \begin{equation*}
-    \dot{\bm{x}}_i = \frac{1}{8 \pi \mu} \int_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) f_{j}(\bm{y}) d s(\bm{y}) \quad \forall \bm{x}\in\partial D
+    \dot{\bm{x}}_i = \frac{1}{8 \pi \mu} \iint_{\partial D} S_{i j}^{\epsilon}\left(\bm{x}, \bm{y}\right) f_{j}(\bm{y}) d s(\bm{y}) \quad \forall \bm{x}\in\partial D
 \end{equation*}
 By substituting the full equation for the velocity we can define the full swimming problem as
 \begin{equation}
@@ -30,7 +31,7 @@ By substituting the full equation for the velocity we can define the full swimmi
     \iint_{\partial D} \epsilon_{i k j} (y_{k}-x_{0 k}) f_{j}(\bm{y}) d S({\bm{y}})=T_i,
 \end{gathered}
 \end{equation}
-where $\epsilon_{ijk}$ is the Levi-Civita symbol. We have taken the total force and moment on the body to be $\bm{G}$ and $T$ respectively. Numerical discretisation of the problem leads to $3N$ scalar degrees of freedom in the traction $\bm{f}$ and a further $6$ scalar degrees of freedom to describe the total velocity $\bm{U}$ and angular momentum $\bm{\Omega}$ totalling $3N+6$ scalar degrees of freedom.
+where $\epsilon_{ijk}$ is the Levi-Civita symbol. We have taken the total force and moment on the body to be $\bm{G}$ and $\bm{T}$ respectively. Numerical discretisation of the problem leads to $3N$ scalar degrees of freedom in the traction $\bm{f}$ and a further $6$ scalar degrees of freedom to describe the total velocity $\bm{U}$ and angular momentum $\bm{\Omega}$ totalling $3N+6$ scalar degrees of freedom.
 
 \subsubsection{Numerical Implementation}
 The discretisation of the swimming problem is based on the same discretisation as that derived in \cref{sec:MRS} or through the use of the NEAREST (\cref{sec:NEAREST}) method. The discretisation of the problem using the NEAREST method will be described here and the Nyström method described in \cref{appedix:NystromSwim}. Discretising \cref{eq:swimmingProblem} through the use of the nearest neighbour matrix (eq.~\ref{eq:NNMatrix})
@@ -38,15 +39,14 @@ The discretisation of the swimming problem is based on the same discretisation a
     \nu [q, \hat{n}]= \begin{cases} 1/k & \text { if } \hat{n}=\underset{n=1, \ldots, N}{\operatorname{argmin}}|x_n-X_q| , \\ 0 & \text { otherwise. }\end{cases}
 \end{equation*}
 where $k$ is the number of points in $\{\bm{x}_n\}$ which are equidistant to $\{\bm{X}_q\}$ the problem obtained takes the form
-\begin{equation*}
-\begin{gathered}
-    -U_{i}-\epsilon_{i j k} \Omega_{j}\left(x_k[{m}]-x_{0 k}\right)+\frac{1}{8 \pi\mu} \sum_{n=1}^N f_{j}(\bm{x}_n) A_n \sum_{q=1}^Q S_{i j}^{\epsilon}(\bm{x}_m, \bm{X}_q)\nu [q, n]  =  B_{i j} \dot{\xi}_{j}[m] \\ \text { for all } m = 1,\dots,N\\
+\begin{gather*}
+    -U_{i}-\epsilon_{i j k} \Omega_{j}\left(x_k[{m}]-x_{0 k}\right)+\frac{1}{8 \pi\mu} \sum_{n=1}^N f_{j}(\bm{x}_n) A_n \sum_{q=1}^Q S_{i j}^{\epsilon}(\bm{x}_m, \bm{X}_q)\nu [q, n]  =  B_{i j} \dot{\xi}_{j}[m] \\ \text { for all } m = 1,\dots,N \\
     \sum_{n=1}^N f_{i}(\bm{x}_n) A_n \sum_{q=1}^Q \delta_{i j}\nu [q, n]= G_i \\
     \sum_{n=1}^N f_{j}(\bm{x}_n) A_n \sum_{q=1}^Q \epsilon_{i k j} (X_{k}[q]-x_{0 k}) \nu [q, n] = T_i.
-\end{gathered}
-\end{equation*}
+\end{gather*}
+
 This corresponds to $3N + 6$ equations in $3N + 6$ unknowns $F_j(\bm{x}_n)$, $U_j$ and $\Omega_j$ for $n=1,\dots,N$ and $j=1,2,3$.
-This problem can be formulated in terms of a block matrix as was done for the resistance problem (\cref{sec:resistance}) where the stokeslet matrix is augmented with two matrices $B$ and $B'$ which correspond to the force and torque summation and rigid body motion respectively. This requires the force vector of unknowns to be augmented with the velocity $\boldsymbol{U}$ and angular velocity $\boldsymbol{\Omega}$ which are both $3 \times 1$ column vectors. The right hand side of the equation is augmented with two $3 \times 1$ column vectors of zeros which denote the prescribed zero total force and moment on the rigid body. This gives a final form of the block matrix system as
+This problem can be formulated in terms of a block matrix as was done for the resistance problem (\cref{sec:resistance}) where the stokeslet matrix is augmented with two matrices $B$ and $B'$ which correspond to the force and torque summation and rigid body motion respectively. This requires the force vector of unknowns to be augmented with the velocity $\boldsymbol{U}$ and angular velocity $\boldsymbol{\Omega}$ which are both $3 \times 1$ column vectors. The right-hand side of the equation is augmented with two $3 \times 1$ column vectors of zeros which denote the prescribed zero total force and moment on the rigid body. This gives a final form of the block matrix system as
 
 \begin{equation}
 \label{eq:swimmingStructure}
@@ -96,18 +96,17 @@ B_{3 j}\dot{\xi}_{j}({\bm{x}}_{N}) \\
 \end{array}\right),
 \end{equation}
 where the blocks for the NEAREST discretisation are given as
-\begin{equation*}
-\begin{aligned}
+
+\begin{align*}
 A_{ij}(m,n) &= \frac{1}{8\pi\mu} \sum_{q=1}^Q S_{ij}^\epsilon (\bm{x}_m,\bm{X}_{q})\nu[q,n] \text { for } m,n = 1,\dots,N \\
 B_{i}^{U}(m,j) &= -\delta_{ij} \text { for } m = 1,\dots,N \\
 B_{i}^{\Omega}(m,j) &= -\epsilon_{ijk}(x_k[m]-x_{0k}) \text { for } m = 1,\dots,N \\
 B_{j}^{F}(i,n) &= \delta_{ij} \sum_{q=1}^Q \nu[q,n] \text { for } n = 1,\dots,N \\
 B_{j}^{M}(i,n) &= \epsilon_{ikj} \sum_{q=1}^Q (X_k[q]-x_{0 k}) \nu[q,n] \text { for } n = 1,\dots,N
-\end{aligned}
-\end{equation*}
+\end{align*}
 
 \subsubsection{Boundaries} \label{sec:boundries}
-Often when working with Stokes flow the problem includes the interaction of boundaries with the swimmers. These might be simulating microswimmers sandwiched between microscope slides and a coverslip \cite{Gallagher2019RapidAnalysis} or simulating blood cells in cylindrical arteries. Any such boundary will have a noticeable effect on the stokeslets and therefore the rigid body motion \cite{Liron1981ExistenceBoundaries}. While solutions around large infinite planes can be simulated through the use of the Blakelet solution \cite{Ainley2008TheStokeslets,Cortez2015}, more complex geometry requires the use of a quadrature rule over the boundary $B$. Taking the boundary of $B$ to be $\partial B$
+Often when working with Stokes flow the problem includes the interaction of boundaries with the swimmers. These might be simulating microswimmers sandwiched between microscope slides and a coverslip \cite{Gallagher2019RapidAnalysis} or simulating blood cells in cylindrical arteries. Any such boundary will have a noticeable effect on the stokeslets and therefore the rigid body motion \cite{Liron1981ExistenceBoundaries}. While flows around large infinite planes can be simulated through the use of the Blakelet solution \cite{blake_1971,Ainley2008TheStokeslets,Cortez2015}, more complex geometry requires the use of a quadrature rule over the boundary $B$. Taking the boundary of $B$ to be $\partial B$
 \begin{equation}
 \label{eq:swimmingProblemBnd}
 \begin{gathered}
@@ -150,7 +149,7 @@ Considering $N_{sw}$ swimmers which each have collocation points $x_i^{(1)}[\cdo
     \bm{x} = (\bm{x}_1,\bm{x}_2,\bm{x}_3)^T \text{ with } \bm{x}_1=(x_i^{(1)}[\cdot],\dots,x_i^{(N_{sw})}[\cdot],x_i^{(B)}[\cdot]).
 \end{equation*}
 
-The translational and angular velocities are given by $U_i^{(1)},\dots,U_i^{(N_{sw})}$ and $\Omega_i^{(1)},\dots,\Omega_i^{(N_{sw})}$ respectively and the boundary collocation points by $x_i^{(b)}[\cdot]$. The ordering of discritisation remains the same as \cref{eq:swimmingStructure} where we denote the vector of unknowns as \newline $(\bm{F}_1, \bm{F}_2, \bm{F}_3, \bm{U}_1,\bm{U}_2,\bm{U}_3,\bm{\Omega}_1,\bm{\Omega}_2,\bm{\Omega}_3)^T$ where $\bm{F}_i = (F_i^{(1)}[\cdot],\dots,F_i^{(N_{sw})}[\cdot],F_i^{(b)}[\cdot])$,\newline $\bm{U}_i = (U_i^{(1)},\dots,U_i^{(N_{sw})})^T$ and $\bm{\Omega}_i = (\Omega_i^{(1)},\dots,\Omega_i^{(N_{sw})})^T$. The same ordering convention is used for the right-hand side velocities, total forces and moments. If the number of force points associated with a swimmer $s$ is $N_{D}(s)$ and the number of force points on the boundary is $N_B$ then the total number of points is $N_F=\sum_{s=1}^{N_{sw}} N_D(s) + N_B$. Define the index $\iota(s)=\sum_{\alpha=1}^{s-1}N_D(\alpha)$ for $1<s\leq N_{sw}$ to be the location of the $s$th swimmer in $\bm{x}_i$, as $\iota(s)$ is defined above for all of $1<s\leq N_{sw}$ $\iota(1)$ is taken to equal $1$. The Stokeslet matrix remains the same and is constructed by
+The translational and angular velocities are given by $U_i^{(1)},\dots,U_i^{(N_{sw})}$ and $\Omega_i^{(1)},\dots,\Omega_i^{(N_{sw})}$ respectively and the boundary collocation points by $x_i^{(b)}[\cdot]$. The ordering of discritisation remains the same as \cref{eq:swimmingStructure} where we denote the vector of unknowns as \newline $(\bm{F}_1, \bm{F}_2, \bm{F}_3, \bm{U}_1,\bm{U}_2,\bm{U}_3,\bm{\Omega}_1,\bm{\Omega}_2,\bm{\Omega}_3)^T$ where $\bm{F}_i = (F_i^{(1)}[\cdot],\dots,F_i^{(N_{sw})}[\cdot],F_i^{(b)}[\cdot])$,\newline $\bm{U}_i = (U_i^{(1)},\dots,U_i^{(N_{sw})})^T$ and $\bm{\Omega}_i = (\Omega_i^{(1)},\dots,\Omega_i^{(N_{sw})})^T$. The same ordering convention is used for the right-hand side velocities, total forces and moments. If the number of force points associated with a swimmer $s$ is $N_{D}(s)$ and the number of force points on the boundary is $N_B$ then the total number of points is $N_F=\sum_{s=1}^{N_{sw}} N_D(s) + N_B$. Define the index $\iota(s)=\sum_{\alpha=1}^{s-1}N_D(\alpha)$ for $1<s\leq N_{sw}$ to be the location of the $s$th swimmer in $\bm{x}_i$, as $\iota(s)$ is defined above for all of $1<s\leq N_{sw}$ $\iota(1)$ is taken to equal $1$. The stokeslet matrix remains the same and is constructed by
 \begin{equation*}
     A_{ij}(\alpha,\beta) = \frac{1}{8\pi\mu} \sum_{q=1}^Q S_{ij}^\epsilon (\bm{x}_\alpha,\bm{X}_{q})\nu[q,\beta] \text { for } \alpha,\beta = 1,\dots,N_F
 \end{equation*}

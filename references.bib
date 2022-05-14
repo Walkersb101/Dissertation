@@ -491,21 +491,6 @@
     keywords = {Boundary integral, Meshfree, Regularized stokeslet, Stokes flow}
 }
 
-@article{Smith2018AEquationb,
-    title = {{A nearest-neighbour discretisation of the regularized stokeslet boundary integral equation}},
-    year = {2018},
-    journal = {J. Comput. Phys.},
-    author = {Smith, David J.},
-    month = {4},
-    pages = {88--102},
-    volume = {358},
-    publisher = {Academic Press},
-    doi = {10.1016/J.JCP.2017.12.008},
-    issn = {0021-9991},
-    arxivId = {1704.09022},
-    keywords = {Boundary integral, Meshfree, Regularized stokeslet, Stokes flow}
-}
-
 @article{Greengard1997ADimensions,
     title = {{A new version of the Fast Multipole Method for the Laplace equation in three dimensions}},
     year = {1997},
@@ -1478,7 +1463,7 @@
     title = {{Stokes flow past a particle of arbitrary shape: a numerical method of solution}},
     year = {1975},
     journal = {J. Fluid Mech},
-    author = {Acrivos, D A},
+    author = {Acrivos, D A and Youngren, G. K.},
     number = {2},
     pages = {377--403},
     volume = {69},
@@ -1660,3 +1645,146 @@
     doi = {10.1007/BF02547521},
     issn = {0001-5962}
 }
+
+@article{Kouhia1995,
+abstract = {We introduce a new triangular element for nearly incompressible elasticity and incompressible fluid flow. The method consists of conforming linear elements for one of the displacement (or velocity for flows) component and linear non-conforming elements for the other component. The element is proved to give an optimal approximation and this is also confirmed by several numerical examples. {\textcopyright} 1995.},
+author = {Kouhia, Reijo and Stenberg, Rolf},
+doi = {10.1016/0045-7825(95)00829-P},
+issn = {0045-7825},
+journal = {Comput. Methods Appl. Mech. Eng.},
+number = {3},
+pages = {195--212},
+publisher = {North-Holland},
+title = {{A linear nonconforming finite element method for nearly incompressible elasticity and stokes flow}},
+volume = {124},
+year = {1995}
+}
+
+@article{Wagner2001,
+abstract = {A new method for the simulation of particulate flows, based on the extended finite element method (X-FEM), is described. In this method, the particle surfaces need not conform to the finite element boundaries, so that moving particles can be simulated without remeshing. The near field form of the fluid flow about each particle is built into the finite element basis using a partition of unity enrichment, allowing the simple enforcement of boundary conditions and improved accuracy over other methods on a coarse mesh. We present a weak form of the equations of motion useful for the simulation of freely moving particles, and solve example problems for particles with prescribed and unknown velocities. Copyright {\textcopyright} 2001 John Wiley {\&} Sons, Ltd.},
+author = {Wagner, G. J. and Mo{\"{e}}s, N. and Liu, W. K. and Belytschko, T.},
+doi = {10.1002/NME.169},
+issn = {1097-0207},
+journal = {Int. J. Numer. Methods Eng.},
+keywords = {Stokes flow,enrichment,fictitious domain method,multiphase flow},
+number = {3},
+pages = {293--313},
+publisher = {John Wiley {\&} Sons, Ltd},
+title = {{The extended finite element method for rigid particles in Stokes flow}},
+url = {https://onlinelibrary.wiley.com/doi/full/10.1002/nme.169 https://onlinelibrary.wiley.com/doi/abs/10.1002/nme.169 https://onlinelibrary.wiley.com/doi/10.1002/nme.169},
+volume = {51},
+year = {2001}
+}
+
+@article{Biros2003,
+abstract = {We present a new method for the solution of the Stokes equations. The main features of our method are: (1) it can be applied to arbitrary geometries in a black-box fashion; (2) it is second-order accurate; and (3) it has optimal algorithmic complexity. Our approach, to which we refer as the embedded boundary integral method (EBI), is based on Anita Mayo{\~{O}}s work for the Poisson{\~{O}}s equation: ''The Fast Solution of Poisson{\~{O}}s and the Biharmonic Equations on Irregular Regions'', SIAM Journal on Numerical Analysis, 21 (1984) 285-299. We embed the domain in a rectangular domain, for which fast solvers are available, and we impose the boundary conditions as interface (jump) conditions on the velocities and tractions. We use an indirect boundary integral formulation for the homogeneous Stokes equations to compute the jumps. The resulting equations are discretized by Nystr€ o om{\~{O}}s method. The rectangular domain problem is discretized by finite elements for a velocity-pressure formulation with equal order interpolation bilinear elements (Q1-Q1). Stabilization is used to circumvent the inf-sup condition for the pressure space. For the integral equations, fast matrix-vector multiplications are achieved via an N log N algorithm based on a block representation of the discrete integral operator, combined with (kernel independent) singular value decomposition to sparsify low-rank blocks. The regular grid solver is a Krylov method (conjugate residuals) combined with an optimal two-level Schwartz-precondi-tioner. For the integral equation we use GMRES. We have tested our algorithm on several numerical examples and we have observed optimal convergence rates.},
+author = {Biros, George and Ying, Lexing and Zorin, Denis},
+doi = {10.1016/j.jcp.2003.08.011},
+file = {:C$\backslash$:/Users/Sam/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Biros, Ying, Zorin - 2003 - A fast solver for the Stokes equations with distributed forces in complex geometries q.pdf:pdf},
+journal = {J. Comput. Phys.},
+keywords = {Cartesian grid methods,Double-layer potential,Embedded domain methods,Fast multipole methods,Fast solvers,Fictitious domain methods,Immersed interface methods,Integral equations,Moving boundaries,Stokes equations},
+title = {{A fast solver for the Stokes equations with distributed forces in complex geometries q}},
+url = {www.elsevier.com/locate/jcp},
+volume = {193},
+year = {2003}
+}
+
+@software{gmsh,
+  author = {{Geuzaine, Christophe and Remacle, Jean-Francois}},
+  title = {Gmsh},
+  url = {http://http://gmsh.info/},
+  version = {4.6.0},
+  date = {2020-06-22},
+}
+
+@book{schroeder2006visualization,
+  title={The Visualization Toolkit: An Object-oriented Approach to 3D Graphics},
+  author={Schroeder, W. and Martin, K. and Lorensen, B. and Kitware, Inc},
+  isbn={9781930934191},
+  url={https://books.google.co.uk/books?id=rx4vPwAACAAJ},
+  year={2006},
+  publisher={Kitware}
+}
+
+@article{Peskin2002,
+abstract = {This paper is concerned with the mathematical structure of the immersed boundary (IB) method, which is intended for the computer simulation of fluid-structure interaction, especially in biological fluid dynamics. The IB formulation of such problems, derived here from the principle of least action, involves both Eulerian and Lagrangian variables, linked by the Dirac delta function. Spatial discretization of the IB equations is based on a fixed Cartesian mesh for the Eulerian variables, and a moving curvilinear mesh for the Lagrangian variables. The two types of variables are linked by interaction equations that involve a smoothed approximation to the Dirac delta function. Eulerian/Lagrangian identities govern the transfer of data from one mesh to the other. Temporal discretization is by a second-order Runge-Kutta method. Current and future research directions are pointed out, and applications of the IB method are briefly discussed.},
+author = {Peskin, Charles S},
+doi = {10.1017/S0962492902000077},
+file = {:C$\backslash$:/Users/Sam/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Peskin - 2002 - The immersed boundary method.pdf:pdf},
+issn = {14740508},
+journal = {Acta Numer.},
+pages = {479--517},
+title = {{The immersed boundary method}},
+volume = {11},
+year = {2002}
+}
+
+@article{Fauci1995,
+abstract = {The fluid dynamics of sperm motility near both rigid and elastic walls is studied using the immersed boundary method. Simulations of both single and interacting organisms are presented. In particular, we find that nearby organisms originally undulating with a 90° phase shift may adjust their relative swimming velocities and phase-lock. Comparisons with previous analytical results are also discussed. The tendency of a near-wall to attract organisms is demonstrated. {\textcopyright} 1995 Society for mathematical Biology.},
+author = {Fauci, Lisa J. and McDonald, Amy},
+doi = {10.1007/BF02461846},
+issn = {15229602},
+journal = {Bull. Math. Biol.},
+keywords = {A McDonald,Animals,Biological*,Comparative Study,Elasticity,Humans,L J Fauci,MEDLINE,Male,Mathematics*,Models,NCBI,NIH,NLM,National Center for Biotechnology Information,National Institutes of Health,National Library of Medicine,Non-P.H.S.,Non-U.S. Gov't,PubMed Abstract,Research Support,Sperm Head / physiology,Sperm Motility*,Sperm Tail / physiology,U.S. Gov't,doi:10.1007/BF02461846,pmid:7606221},
+number = {5},
+pages = {679--699},
+pmid = {7606221},
+publisher = {Bull Math Biol},
+title = {{Sperm motility in the presence of boundaries}},
+url = {https://pubmed.ncbi.nlm.nih.gov/7606221/},
+volume = {57},
+year = {1995}
+}
+
+@article{Maxian2020,
+abstract = {The immersed boundary (IB) method is a numerical and mathematical formulation for solving fluid-structure interaction problems. It relies on solving fluid equations on an Eulerian fluid grid and interpolating the resulting velocity back onto immersed structures. To resolve slender fibers, the grid spacing must be on the order of the fiber radius, and thus the number of required grid points along the filament must be of the same order as the aspect ratio. Simulations of slender bodies using the IB method can therefore be intractable. A technique is presented to address this problem in the context of Stokes flow. The velocity of the structure is split into a component coming from the underlying fluid grid, which is coarser than normally required, and a component proportional to the force (a drag term). The drag coefficient is set so that a single sphere is represented exactly on a grid of arbitrary meshwidth. Implicit treatment of the drag term removes some of the stability restrictions normally associated with the IB method. This comes at a loss of accuracy, although tests are conducted that show 1-2 digits of relative accuracy can be obtained on coarser grids. After its accuracy and stability are tested, the method is applied to two real world examples: fibers in shear flow and a suspension of fibers. These examples show that the method can reproduce existing results and make reasonable predictions about the viscosity of an aligned fiber suspension.},
+archivePrefix = {arXiv},
+arxivId = {2003.08216},
+author = {Maxian, Ondrej and Peskin, Charles S.},
+doi = {10.1137/19M1280879},
+eprint = {2003.08216},
+file = {:C$\backslash$:/Users/Sam/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Maxian, Peskin - 2020 - An immersed boundary method with subgrid resolution and improved numerical stability applied to slender bodies i.pdf:pdf},
+issn = {10957197},
+journal = {SIAM J. Sci. Comput.},
+keywords = {Immersed boundary method,Slender fibers,Stokes flow},
+month = {3},
+number = {4},
+pages = {B847--B868},
+publisher = {Society for Industrial and Applied Mathematics Publications},
+title = {{An immersed boundary method with subgrid resolution and improved numerical stability applied to slender bodies in stokes flow}},
+url = {https://arxiv.org/abs/2003.08216v1},
+volume = {42},
+year = {2020}
+}
+
+@article{Fauci1993,
+abstract = {Truncated Newton minimization methods are combined with Peskin's immersed boundary method to facilitate investigation of the dynamic interaction between a viscous, incompressible fluid and immersed elastic objects of complex structure. Applications to aquatic animal locomotion and platelet aggregation during blood clotting are presented. {\textcopyright} 1993 John Wiley {\&} Sons, Inc. Copyright {\textcopyright} 1993 Wiley Periodicals, Inc., A Wiley Company},
+author = {Fauci, Lisa J. and Fogelson, Aaron L.},
+doi = {10.1002/cpa.3160460602},
+issn = {10970312},
+journal = {Commun. Pure Appl. Math.},
+month = {7},
+number = {6},
+pages = {787--818},
+publisher = {John Wiley {\&} Sons, Ltd},
+title = {{Truncated newton methods and the modeling of complex immersed elastic structures}},
+url = {https://onlinelibrary.wiley.com/doi/full/10.1002/cpa.3160460602 https://onlinelibrary.wiley.com/doi/abs/10.1002/cpa.3160460602 https://onlinelibrary.wiley.com/doi/10.1002/cpa.3160460602},
+volume = {46},
+year = {1993}
+}
+
+@book{ladyzhenskaya1969mathematical,
+  title={The mathematical theory of viscous incompressible flow},
+  author={Ladyzhenskaya, Olga Aleksandrovna},
+  volume={2},
+  year={1969},
+  publisher={Gordon and Breach New York}
+}
+
+@article{blake_1971,
+title={A note on the image system for a stokeslet in a no-slip boundary},
+volume={70}, DOI={10.1017/S0305004100049902}, number={2}, journal={Mathematical Proceedings of the Cambridge Philosophical Society},
+publisher={Cambridge University Press},
+author={Blake, J. R.},
+year={1971},
+pages={303–310}}
